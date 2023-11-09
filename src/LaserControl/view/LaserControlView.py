@@ -1,12 +1,10 @@
 import logging
-import sys
 
-from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QDoubleSpinBox, \
-    QGridLayout, QWidget, QGroupBox
+from PySide6.QtWidgets import QMainWindow
 
-from LaserControl.controller.LaserControlController import LaserControlController
-from LaserControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
-from LaserControl.model.LaserControlModel import LaserControlModel
+from controller.LaserControlController import LaserControlController
+from view.Ui_LaserControlWindow import Ui_LaserControlWindow
+from model.LaserControlModel import LaserControlModel
 from view.WidgetLaserInformation import WidgetLaserInformation
 
 

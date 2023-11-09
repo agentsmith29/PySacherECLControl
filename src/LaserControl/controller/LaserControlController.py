@@ -1,11 +1,10 @@
 import logging
-import os
 import time
-from multiprocessing import Value, Lock, Process, Array
+from multiprocessing import Value, Lock, Process
 
 from PySide6.QtCore import QThreadPool
 
-from LaserControl.model.LaserControlModel import LaserControlModel
+from model.LaserControlModel import LaserControlModel
 from controller.LaserCon import LaserCon
 from controller.multiprocess.LaserStateArray import LaserStateArray
 from controller.multiprocess.move_to_wavelength import move_to_wavelength

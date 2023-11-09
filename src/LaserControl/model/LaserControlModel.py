@@ -1,6 +1,6 @@
 #import mcpy
-from LaserControl.LaserConfig import LaserConfig
-from LaserControl.model.LaserControlSignals import LaserControlSignals
+from LaserConfig import LaserConfig
+from model.LaserControlSignals import LaserControlSignals
 
 
 #from LaserControl.model.LaserControlSignals import LaserControllerSignals

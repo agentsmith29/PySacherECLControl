@@ -1,0 +1,20 @@
+[project]
+name = "lasercontrol"
+version = "0.0.1"
+authors = [
+  { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
+]
+description = "A UI for controlling the Sacher TEC Laser"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    'pyside6', 'rich', 'pyyaml'
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3.0",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://gitlab.tugraz.at/flexsensor-public/lasercontrol"
