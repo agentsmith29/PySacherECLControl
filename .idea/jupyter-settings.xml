@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JupyterPersistentConnectionParameters">
+    <option name="moduleParameters">
+      <map>
+        <entry key="G:/Andere Computer/Arbeits-Laptop/Documents/2_mmWave/2_workspace/mmWaveProject/.idea/mmWaveProject.iml">
+          <value>
+            <JupyterConnectionParameters>
+              <option name="managed" value="true" />
+            </JupyterConnectionParameters>
+          </value>
+        </entry>
+        <entry key="G:/Meine Ablage/Dokumente/TU Graz/PhD Elektrotechnik/1_workspace/2d-to-3d/.idea/2d-to-3d.iml">
+          <value>
+            <JupyterConnectionParameters>
+              <option name="managed" value="true" />
+            </JupyterConnectionParameters>
+          </value>
+        </entry>
+        <entry key="G:/Meine Ablage/Dokumente/TU Graz/PhD Elektrotechnik/1_workspace/mmWave_lense_optimization/.idea/mmWaveProject.iml">
+          <value>
+            <JupyterConnectionParameters>
+              <option name="managed" value="true" />
+            </JupyterConnectionParameters>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

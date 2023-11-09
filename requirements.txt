@@ -1,0 +1,10 @@
+matplotlib~=3.7.1
+numpy~=1.24.2
+pandas~=1.5.3
+PySide6~=6.5.2
+scipy~=1.10.1
+rich
+# add the git repo
+git+https://gitlab.tugraz.at/flexsensor-public/confighandler.git@develop
+git+https://gitlab.tugraz.at/flexsensor-public/fswidgets.git@develop
+

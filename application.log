@@ -1,0 +1,31 @@
+INFO:Laser Driver (Simulator):Laser (Generic): Laser Simulator initialized.
+INFO:controller.LaserConn:Connection to Laser on Port USB0.
+DEBUG:Laser Driver (Simulator):Laser (Generic):Connecting to Laser Simulator.
+INFO:Laser Driver (Simulator):Laser (Generic): Connected to Laser Simulator.
+DEBUG:FieldInt:Field FieldInt created with value 840 of type <class 'int'>
+DEBUG:FieldInt:Field FieldInt created with value 850 of type <class 'int'>
+DEBUG:FieldFloat:Field FieldFloat created with value 2.0 of type <class 'float'>
+DEBUG:FieldFloat:Field FieldFloat created with value 1.0 of type <class 'float'>
+DEBUG:FieldFloat:Field FieldFloat created with value 1.0 of type <class 'float'>
+DEBUG:FieldList:Field FieldList created with value ['USB0', 'USB1', 'USB2', 'USB3', 'USB4', 'USB5', 'USB6', 'USB7', 'USB8', 'USB9'] of type <class 'list'>
+DEBUG:FieldString:Field FieldString created with value USB0 of type <class 'str'>
+INFO:FieldInt:Field assigned to LaserConfig with name wl_sweep_start
+INFO:FieldInt:Field assigned to LaserConfig with name wl_sweep_stop
+INFO:FieldFloat:Field assigned to LaserConfig with name velocity
+INFO:FieldFloat:Field assigned to LaserConfig with name acceleration
+INFO:FieldFloat:Field assigned to LaserConfig with name deceleration
+INFO:FieldList:Field assigned to LaserConfig with name available_ports
+INFO:FieldString:Field assigned to LaserConfig with name port
+DEBUG:LaserControlWindow:Attempting to connect to laser on port: USB0
+INFO:Laser Driver (Simulator):Laser (Generic): Laser Simulator initialized.
+INFO:controller.LaserConn:Connection to Laser on Port USB0.
+DEBUG:Laser Driver (Simulator):Laser (Generic):Connecting to Laser Simulator.
+INFO:Laser Driver (Simulator):Laser (Generic): Connected to Laser Simulator.
+INFO:Laser Driver (Simulator):Laser (Generic): Laser Simulator initialized.
+INFO:controller.LaserConn:Connection to Laser on Port USB0.
+DEBUG:Laser Driver (Simulator):Laser (Generic):Connecting to Laser Simulator.
+INFO:Laser Driver (Simulator):Laser (Generic): Connected to Laser Simulator.
+DEBUG:Laser Driver (Simulator):Laser (Generic): Current wavelength is 830 nm
+DEBUG:Laser Driver (Simulator):Laser (Generic): Current wavelength is 830 nm
+INFO:Laser Driver (Simulator):Laser (Generic): Disconnecting from Laser Simulator
+INFO:controller.LaserConn:Laser Connection Closed
