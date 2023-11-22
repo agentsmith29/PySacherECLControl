@@ -17,7 +17,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     conf = Laser.Config()
-    conf.load("config.yaml")
+    #conf.load("config.yaml")
 
     model = Laser.Model(conf)
     controller = Laser.Controller(model)
