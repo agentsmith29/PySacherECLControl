@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a50ed504-7e8f-431b-bd6d-7011e1ba5ef6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/LaserControl/controller/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LaserControl/model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LaserControl/view/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/fileTemplates/internal/Python Script.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lasercontrol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lasercontrol.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a50ed504-7e8f-431b-bd6d-7011e1ba5ef6" name="Changes" comment="Removed old source">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LaserConfig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/LaserConfig.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LaserControl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/controller/LaserCon.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/controller/LaserCon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/LaserLibSimulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/LaserLibSimulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +17,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -36,6 +38,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "true",
@@ -63,18 +66,19 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="LASER_SIM" value="TRUE" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="SDK_NAME" value="Python 3.10 (lasercontrol) (2)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="false" />
+      <option name="ADD_SOURCE_ROOTS" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
@@ -89,14 +93,36 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1700651272522</updated>
-      <workItem from="1700651273767" duration="559000" />
+      <workItem from="1700651273767" duration="1075000" />
     </task>
+    <task id="LOCAL-00001" summary="Updated import statements">
+      <option name="closed" value="true" />
+      <created>1700651985749</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1700651985749</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Removed old source">
+      <option name="closed" value="true" />
+      <created>1700652165504</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1700652165504</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated import statements" />
+    <MESSAGE value="Removed old source" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed old source" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/lasercontrol$main.coverage" NAME="main Coverage Results" MODIFIED="1700651871709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/lasercontrol$main.coverage" NAME="main Coverage Results" MODIFIED="1700652441160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

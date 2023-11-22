@@ -8,7 +8,7 @@ from contextlib import contextmanager
 from controller.ErrorConverter import ErrorConverter
 
 if os.getenv("LASER_SIM") == "TRUE":
-    from src.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
+    from libs.LaserLibSimulator import LaserLibSimulator as LaserLib
 else:
     from libs.LaserLib import laserSacher as LaserLib
 

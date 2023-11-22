@@ -4,7 +4,7 @@ from rich.logging import RichHandler
 from PySide6.QtWidgets import QApplication
 
 sys.path.append('./src')
-import src.LaserControl as Laser
+import LaserControl as Laser
 
 if __name__ == "__main__":
     FORMAT = "%(message)s"

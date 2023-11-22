@@ -163,7 +163,7 @@ class LaserControlView(QMainWindow):
 
     def _on_btn_move_to_wavelength_clicked(self):
         self.logger.debug(f"Attempting to set wavelength to: {self._ui.sb_set_wavelength.value()}")
-        self.controller._move_to_wavelength(self._ui.sb_set_wavelength.value(), False)
+        self.controller.move_to_wavelength(False)
 
     def _on_sb_sweep_start_changed(self, value):
         try:

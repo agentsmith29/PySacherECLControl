@@ -3,14 +3,14 @@ import time
 
 from random import randint
 
-from src.libs.LaserSceleton import LaserScelton
+from libs.LaserSceleton import LaserScelton
 
 
 class LaserLibSimulator(LaserScelton):
     connected = False
     def __init__(self) -> None:
         super().__init__()
-        self.pref = "Laser (Generic)"
+        self.pref = "Laser (Simulator)"
         self.port_list = ['Simulator']
 
         self._connected = False
