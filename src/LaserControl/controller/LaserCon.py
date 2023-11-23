@@ -5,12 +5,21 @@ import sys
 import tempfile
 from contextlib import contextmanager
 
-from controller.ErrorConverter import ErrorConverter
+from PySide6.QtWidgets import QFileDialog, QApplication
+
+from LaserControl.controller.ErrorConverter import ErrorConverter
+
+
+
 
 if os.getenv("LASER_SIM") == "TRUE":
-    from libs.LaserLibSimulator import LaserLibSimulator as LaserLib
+    from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
 else:
-    from libs.LaserLib import laserSacher as LaserLib
+    try:
+        from LaserControl.libs import laserSacher as LaserLib
+    except Exception as e:
+        from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
+
 
 @contextmanager
 def stdout_redirector(stream):

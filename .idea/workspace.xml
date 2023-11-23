@@ -4,12 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a50ed504-7e8f-431b-bd6d-7011e1ba5ef6" name="Changes" comment="Removed old source">
+    <list default="true" id="a50ed504-7e8f-431b-bd6d-7011e1ba5ef6" name="Changes" comment="Updated imports for simulator">
+      <change afterPath="$PROJECT_DIR$/src/LaserControl/libs_/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lasercontrol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lasercontrol.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LaserConfig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/LaserConfig.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/controller/ErrorConverter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/controller/ErrorConverter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LaserControl/controller/LaserCon.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/controller/LaserCon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libs/LaserLibSimulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/LaserLibSimulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/controller/LaserControlController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/controller/LaserControlController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/model/LaserControlModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/model/LaserControlModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LaserControl/view/LaserControlView.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/view/LaserControlView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/EposCmd64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/EposCmd64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/EposCmd64.lib" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/EposCmd64.lib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/LaserLib.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/LaserLib_.pyd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/LaserLibSimulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/LaserLibSimulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/LaserSceleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/LaserSceleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/dc_motor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LaserControl/libs_/dc_motor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +41,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2YWpcvYpVcWaxnmlV5VcPRCDFRU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -43,20 +56,26 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "H:/ET PhD - Dokumente/Silicon Photonics/FlexSensor 6/flexsensor-public/lasercontrol/src/LaserControl/view",
+    "last_opened_file_path": "H:/ET PhD - Dokumente/Silicon Photonics/FlexSensor 6/flexsensor-public/lasercontrol/src/LaserControl/libs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\LaserControl\libs" />
+      <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\libs" />
       <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\LaserControl\view" />
       <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\LaserControl\model" />
       <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\LaserControl\controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\ET PhD - Dokumente\Silicon Photonics\FlexSensor 6\flexsensor-public\lasercontrol\src\LaserControl" />
     </key>
   </component>
   <component name="RunManager">
@@ -66,7 +85,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="LASER_SIM" value="TRUE" />
+        <env name="LASER_SIM" value="FALSE" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="SDK_NAME" value="Python 3.10 (lasercontrol) (2)" />
@@ -93,7 +112,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1700651272522</updated>
-      <workItem from="1700651273767" duration="1075000" />
+      <workItem from="1700651273767" duration="3373000" />
+      <workItem from="1700728983624" duration="3471000" />
     </task>
     <task id="LOCAL-00001" summary="Updated import statements">
       <option name="closed" value="true" />
@@ -111,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700652165504</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated imports for simulator">
+      <option name="closed" value="true" />
+      <created>1700652568711</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700652568711</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,9 +148,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated import statements" />
     <MESSAGE value="Removed old source" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed old source" />
+    <MESSAGE value="Updated imports for simulator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated imports for simulator" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/lasercontrol$main.coverage" NAME="main Coverage Results" MODIFIED="1700652441160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/lasercontrol$main.coverage" NAME="main Coverage Results" MODIFIED="1700739934989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

@@ -1,4 +1,4 @@
-from controller.LaserControlErrors import LaserNotConnectedError
+from LaserControl.controller.LaserControlErrors import LaserNotConnectedError
 
 
 class ErrorConverter:

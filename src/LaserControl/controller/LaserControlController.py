@@ -4,11 +4,11 @@ from multiprocessing import Value, Lock, Process
 
 from PySide6.QtCore import QThreadPool
 
-from model.LaserControlModel import LaserControlModel
-from controller.LaserCon import LaserCon
-from controller.multiprocess.LaserStateArray import LaserStateArray
-from controller.multiprocess.move_to_wavelength import move_to_wavelength
-from controller.multiprocess.wavelength_sweep import wavelength_sweep
+from LaserControl.model.LaserControlModel import LaserControlModel
+from LaserControl.controller.LaserCon import LaserCon
+from LaserControl.controller.multiprocess.LaserStateArray import LaserStateArray
+from LaserControl.controller.multiprocess.move_to_wavelength import move_to_wavelength
+from LaserControl.controller.multiprocess.wavelength_sweep import wavelength_sweep
 
 
 class LaserControlController:

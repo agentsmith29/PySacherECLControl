@@ -3,7 +3,7 @@ import time
 
 from random import randint
 
-from libs.LaserSceleton import LaserScelton
+from LaserControl.libs.LaserSceleton import LaserScelton
 
 
 class LaserLibSimulator(LaserScelton):

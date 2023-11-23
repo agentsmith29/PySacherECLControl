@@ -14,7 +14,10 @@ if __name__ == "__main__":
         ]
     )
 
-    app = QApplication(sys.argv)
+    if not QApplication.instance():
+        app = QApplication(sys.argv)
+    else:
+        app = QApplication.instance()
 
     conf = Laser.Config()
     #conf.load("config.yaml")
@@ -27,4 +30,4 @@ if __name__ == "__main__":
     window.show()
 
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

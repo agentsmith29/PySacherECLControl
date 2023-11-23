@@ -2,10 +2,10 @@ import logging
 
 from PySide6.QtWidgets import QMainWindow
 
-from controller.LaserControlController import LaserControlController
-from view.Ui_LaserControlWindow import Ui_LaserControlWindow
-from model.LaserControlModel import LaserControlModel
-from view.WidgetLaserInformation import WidgetLaserInformation
+from LaserControl.controller.LaserControlController import LaserControlController
+from LaserControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
+from LaserControl.model.LaserControlModel import LaserControlModel
+from LaserControl.view.WidgetLaserInformation import WidgetLaserInformation
 
 
 class LaserControlView(QMainWindow):
