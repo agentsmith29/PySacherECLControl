@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generiert durch Microsoft Visio, SVG Export icon_adc.svg Page-4 -->
+
+<svg
+   width="1.49467in"
+   height="1.50392in"
+   viewBox="0 0 107.616 108.282"
+   xml:space="preserve"
+   color-interpolation-filters="sRGB"
+   class="st4"
+   version="1.1"
+   id="svg264"
+   sodipodi:docname="icon_adc.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs268" /><sodipodi:namedview
+   id="namedview266"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:document-units="in"
+   showgrid="false"
+   inkscape:zoom="2.8709695"
+   inkscape:cx="132.01116"
+   inkscape:cy="41.797727"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg264" />
+	<style
+   type="text/css"
+   id="style243">
+	<![CDATA[
+		.st1 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st2 {stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:6}
+		.st3 {stroke:#d8d8d8;stroke-linecap:round;stroke-linejoin:round;stroke-width:6}
+		.st4 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g
+   id="g262"
+   transform="matrix(1.516085,0,0,1.5455756,-27.769528,-29.356357)">
+		<title
+   id="title245">Zeichenblatt-4</title>
+		<g
+   id="shape26-1"
+   transform="translate(18.375,-19.0411)">
+			<title
+   id="title247">Tabelle.26</title>
+			<rect
+   x="0"
+   y="37.4161"
+   width="70.866096"
+   height="70.866096"
+   class="st1"
+   id="rect249" />
+		</g>
+		<g
+   id="shape12-3"
+   transform="rotate(180,36.7305,67.961)">
+			<title
+   id="title252">Signalwelle</title>
+			<path
+   d="m 0,87.03 a 16.0866,53.1425 0 0 1 25.74,0 16.0866,53.1425 -180 0 0 25.74,0"
+   class="st2"
+   id="path254" />
+		</g>
+		<g
+   id="shape11-6"
+   transform="translate(27.5397,-28.7745)">
+			<title
+   id="title257">Tabelle.11</title>
+			<path
+   d="M 0,87.03 H 6.43 V 70.2 h 6.44 v -4.43 h 6.43 v 4.43 h 6.44 v 16.83 h 6.43 v 16.82 h 6.44 v 4.43 h 6.43 v -4.43 h 6.44 V 87.03 h 6.3"
+   class="st3"
+   id="path259" />
+		</g>
+	</g>
+</svg>

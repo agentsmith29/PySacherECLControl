@@ -256,7 +256,7 @@ QComboBox::drop-down {
 	border-left-style: solid;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;	
-	background-image: url(:/icons/flexsensorpy/images/icons/cil-arrow-bottom.png);
+	background-image: url(:/icons/icons/cil-arrow-bottom.png);
 	background-position: center;
 	background-repeat: no-reperat;
  }
@@ -266,9 +266,9 @@ QComboBox QAbstractItemView {
 	padding: 10px;
 	selection-background-color: rgb(39, 44, 54);
 }
-QComboBox QAbstractItemView::item {
+/*QComboBox QAbstractItemView::item {
   min-height: 150px;
-}
+}*/
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Sliders */
@@ -822,6 +822,8 @@ QTabBar::tab:selected {
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

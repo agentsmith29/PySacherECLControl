@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'LaserControlWindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.5.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QDoubleSpinBox, QFrame,
     QGridLayout, QGroupBox, QLCDNumber, QLabel,
     QMainWindow, QPushButton, QSizePolicy, QSlider,
     QTabWidget, QVBoxLayout, QWidget)
+import resources_rc
 
 class Ui_LaserControlWindow(object):
     def setupUi(self, LaserControlWindow):
@@ -275,7 +276,7 @@ class Ui_LaserControlWindow(object):
 "	border-top-right-radius"
                         ": 3px;\n"
 "	border-bottom-right-radius: 3px;	\n"
-"	background-image: url(:/icons/flexsensorpy/images/icons/cil-arrow-bottom.png);\n"
+"	background-image: url(:/icons/icons/cil-arrow-bottom.png);\n"
 "	background-position: center;\n"
 "	background-repeat: no-reperat;\n"
 " }\n"
@@ -285,9 +286,9 @@ class Ui_LaserControlWindow(object):
 "	padding: 10px;\n"
 "	selection-background-color: rgb(39, 44, 54);\n"
 "}\n"
-"QComboBox QAbstractItemView::item {\n"
+"/*QComboBox QAbstractItemView::item {\n"
 "  min-height: 150px;\n"
-"}\n"
+"}*/\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Sliders */\n"
@@ -307,9 +308,9 @@ class Ui_LaserControlWindow(object):
 "    width: 8px;\n"
 "    margin: 0px;\n"
 "	border-radius: 5px;\n"
-""
-                        "}\n"
-"QSlider::handle:horizontal:hover {\n"
+"}\n"
+"QSlider"
+                        "::handle:horizontal:hover {\n"
 "    background-color: rgb(42, 141, 211);\n"
 "    border: none;\n"
 "    height: 10px;\n"
@@ -346,9 +347,9 @@ class Ui_LaserControlWindow(object):
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"CommandLin"
-                        "kButton */\n"
-"QCommandLinkButton {	\n"
+"CommandLinkButton */\n"
+""
+                        "QCommandLinkButton {	\n"
 "	color: rgb(255, 121, 198);\n"
 "	border-radius: 5px;\n"
 "	padding: 5px;\n"
@@ -389,8 +390,8 @@ class Ui_LaserControlWindow(object):
 "\n"
 "\n"
 "\n"
-"/* QMenu ---------------------------------------------------"
-                        "---------------\n"
+"/* QMenu ------------------------------------------------------------------"
+                        "\n"
 "\n"
 "examples: https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qmenu\n"
 "\n"
@@ -431,9 +432,9 @@ class Ui_LaserControlWindow(object):
 "    width: 13px;\n"
 "    height: 13px;\n"
 "}\n"
-""
-                        "\n"
-"QTabWidget::pane {\n"
+"\n"
+"QTabWidge"
+                        "t::pane {\n"
 "  border: 1px solid lightgray;\n"
 "  top:-1px; \n"
 "  background:  rgb(40, 44, 52); \n"
