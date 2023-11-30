@@ -8,6 +8,7 @@ from LaserControl.libs.LaserSceleton import LaserScelton
 
 class LaserLibSimulator(LaserScelton):
     connected = False
+
     def __init__(self) -> None:
         super().__init__()
         self.pref = "Laser (Simulator)"
@@ -23,7 +24,7 @@ class LaserLibSimulator(LaserScelton):
         self._deceleration: float = 2
 
         self.port = "SIM"
-        #self.connected = False
+        # self.connected = False
 
         self.logger = logging.getLogger("Laser Driver (Simulator)")
         self.logger.info(f"{self.pref}: Laser Simulator initialized.")
@@ -103,19 +104,26 @@ class LaserLibSimulator(LaserScelton):
     # ==================================================================================================================
     def goToWvl(self, wavelength: float, fast: bool) -> None:
         num_wavelength = int(wavelength)
+
+        #et_acc_dec = self._velocity / self._acceleration
+        #wl_after_acc = self._current_wavelength + 0.5 * self._acceleration * et_acc_dec ** 2
+        #wl_bevore_dec = num_wavelength - 0.5 * self._deceleration * et_acc_dec ** 2
+        #eta = 2 * et_acc_dec + (wl_bevore_dec - wl_after_acc) / self._velocity
+        #steps_per_second = (eta / 100)*1000
+
+        print(f"Moving from {self._current_wavelength} to {num_wavelength}")
         if int(self._current_wavelength) > num_wavelength:
             print(f"Going down: {self._current_wavelength} -> {num_wavelength}")
-            for i in range(int(self._current_wavelength), num_wavelength, -1):
+            for i in range(num_wavelength, int(self._current_wavelength), -1):
                 print(f"{i} |  ", end="")
-                time.sleep(0.5)
+                time.sleep(1)
         else:
             print(f"Going up: {self._current_wavelength} -> {num_wavelength}")
-            for i in range(num_wavelength, int(self._current_wavelength)):
+            for i in range(int(self._current_wavelength), num_wavelength):
                 print(f"{i} |  ", end="")
-                time.sleep(0.5)
-
-        print(f"Done!")
+                time.sleep(1)
         self._current_wavelength = num_wavelength
+        print(f"Done: {self._current_wavelength}")
 
     def startScan(self, wavelength: float, target: float) -> None:
         self.goToWvl(wavelength, True)

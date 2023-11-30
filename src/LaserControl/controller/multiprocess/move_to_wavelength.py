@@ -2,8 +2,8 @@ import io
 import time
 from multiprocessing import Value
 
-from controller.LaserCon import LaserCon
-from controller.multiprocess.logging import log_debug, log_info
+from LaserControl.controller.LaserCon import LaserCon
+#from LaserControl.controller.multiprocess.logging import log_debug, log_info
 
 
 def move_to_wavelength(laser_port, current_wavelength: Value,

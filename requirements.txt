@@ -5,6 +5,12 @@ PySide6~=6.5.2
 scipy~=1.10.1
 rich
 # add the git repo
-git+https://gitlab.tugraz.at/flexsensor-public/confighandler.git@develop
+#git+https://gitlab.tugraz.at/flexsensor-public/confighandler.git@develop
+../confighandler
+
 git+https://gitlab.tugraz.at/flexsensor-public/fswidgets.git@develop
 
+#git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop
+../captdevicecontrol
+
+../../pyside-multiprocessing

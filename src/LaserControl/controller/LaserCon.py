@@ -6,6 +6,7 @@ import tempfile
 from contextlib import contextmanager
 
 from PySide6.QtWidgets import QFileDialog, QApplication
+from rich.logging import RichHandler
 
 from LaserControl.controller.ErrorConverter import ErrorConverter
 
@@ -63,7 +64,12 @@ def stdout_redirector(stream):
 class LaserCon(object):
 
     def __init__(self, port=0):
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.handler = RichHandler(rich_tracebacks=True)
+        self.logger = logging.getLogger(f"AD2Controller({os.getpid()})")
+        self.logger.handlers = [self.handler]
+        self.logger.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(name)s %(message)s')
+        self.handler.setFormatter(formatter)
         #self.logger.addHandler(logging.StreamHandler())
         #self.logger.setLevel(logging.DEBUG)
         self.laser_con = LaserLib()
