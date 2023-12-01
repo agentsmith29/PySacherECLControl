@@ -8,7 +8,13 @@ description = "A UI for controlling the Sacher TEC Laser"
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
-    'pyside6', 'rich', 'pyyaml'
+    'PySide6',
+    'rich',
+    'pyyaml',
+    'git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp@develop',
+    'git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop',
+    'git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop
+
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

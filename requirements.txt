@@ -1,16 +1,18 @@
-matplotlib~=3.7.1
-numpy~=1.24.2
-pandas~=1.5.3
-PySide6~=6.5.2
-scipy~=1.10.1
+matplotlib
+numpy
+pandas
+PySide6
+scipy
 rich
+pyyaml
+
 # add the git repo
-#git+https://gitlab.tugraz.at/flexsensor-public/confighandler.git@develop
-../confighandler
+git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop
+git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop
+git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop
+git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp@develop
 
-git+https://gitlab.tugraz.at/flexsensor-public/fswidgets.git@develop
-
-#git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop
-../captdevicecontrol
-
-../../pyside-multiprocessing
+# Local installs
+#../confighandler
+#../captdevicecontrol
+#../modules/cmp
