@@ -10,7 +10,7 @@ pyyaml
 git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop
 git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop
 git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop
-git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp@develop
+git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp.git@develop
 
 # Local installs
 #../confighandler
