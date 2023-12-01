@@ -27,6 +27,7 @@
           <option value="dict.is_set" />
           <option value="libs.LaserLib" />
           <option value="Laser.LaserControl.controller.LaserSLLIB.laserSacher" />
+          <option value="FlexSensor" />
         </list>
       </option>
     </inspection_tool>
