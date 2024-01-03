@@ -288,7 +288,7 @@ class LaserControlModel(object):
     @capturing_device_connected.setter
     def capturing_device_connected(self, value):
         self._capturing_device_connected = value
-        self.signals.capturing_device_connected_changed.emit(self._capturing_device_connected)
+        self.signals.capturing_device_connected_changed.emit(self.capturing_device_connected)
 
     @property
     def capturing_device(self) -> captdev.Controller:

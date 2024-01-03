@@ -82,7 +82,9 @@ class LaserControlController:
         self.mp_laser_controller.mp_read_laser_settings(self.model.port)
         if isinstance(device, captdev.Controller):
             self.model.capturing_device = device
-            self.model.capturing_device_connected = True
+            self.model.capturing_device.model.device_information.signals.device_connected_changed.connect(
+                lambda x: type(self.model).capturing_device_connected.fset(self.model, x)
+            )
 
 
 
@@ -135,7 +137,7 @@ class LaserControlController:
         # self.capt_device.clear_data()
         # Reset the flag
         # self.capt_device.model.capturing_finished = False
-
+        self.model.capturing_device.reset_capture()
         if start_wavelength is None:
             start_wavelength = self.model.sweep_start_wavelength
         if stop_wavelength is None:

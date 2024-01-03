@@ -138,7 +138,7 @@ class MPLaserDevice(cmp.CProcess):
 
             time_start = 0
             # with stdout_redirector(f) as s:
-            print(self.logger)
+            #print(self.logger)
             self._internal_logger.info(f"**** Go to selected wavelength. Started moving laser to {wavelength}. ****")
             # laser_finished_flag.value = False
             # laser_moving_flag.value = True
