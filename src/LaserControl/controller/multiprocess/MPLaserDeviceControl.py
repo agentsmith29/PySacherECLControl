@@ -1,6 +1,7 @@
 import logging
 from multiprocessing import Value
 
+import cmp
 from PySide6.QtCore import Signal
 from cmp.CProcessControl import CProcessControl
 
@@ -38,19 +39,19 @@ class MPLaserDeviceControl(CProcessControl):
     def set_start_capture_flag(self, start_capture_flag: Value):
         self._start_capture_flag = start_capture_flag
 
-    @CProcessControl.register_function(get_connected_finished)
+    @cmp.CProcessControl.register_function(get_connected_finished)
     def get_connected(self):
         self._internal_logger.info("Reading current connection state from process.")
 
-    @CProcessControl.register_function(get_current_wavelength_finished)
+    @cmp.CProcessControl.register_function(get_current_wavelength_finished)
     def get_current_wavelength(self):
         self._internal_logger.info("Reading current wavelength from process.")
 
-    @CProcessControl.register_function(get_min_wavelength_finished)
+    @cmp.CProcessControl.register_function(get_min_wavelength_finished)
     def get_min_wavelength(self):
         self._internal_logger.info("Reading minimum wavelength from process.")
 
-    @CProcessControl.register_function(get_max_wavelength_finished)
+    @cmp.CProcessControl.register_function(get_max_wavelength_finished)
     def get_max_wavelength(self):
         self._internal_logger.info("Reading maximum wavelength from process.")
 
@@ -58,22 +59,22 @@ class MPLaserDeviceControl(CProcessControl):
     def get_velocity(self):
         self._internal_logger.info("Reading velocity from process.")
 
-    @CProcessControl.register_function(get_acceleration_finished)
+    @cmp.CProcessControl.register_function(get_acceleration_finished)
     def get_acceleration(self):
         self._internal_logger.info("Reading acceleration from process.")
 
-    @CProcessControl.register_function(get_deceleration_finished)
+    @cmp.CProcessControl.register_function(get_deceleration_finished)
     def get_deceleration(self):
         self._internal_logger.info("Reading deceleration from process.")
 
-    @CProcessControl.register_function(mp_read_laser_settings_finished)
+    @cmp.CProcessControl.register_function(mp_read_laser_settings_finished)
     def mp_read_laser_settings(self, usb_port: str):
         self._internal_logger.info(f"Reading laser settings from process using {usb_port}")
 
-    @CProcessControl.register_function(move_to_wavelength_finished)
+    @cmp.CProcessControl.register_function(move_to_wavelength_finished)
     def move_to_wavelength(self, usb_port: str, wavelength: float):
         print(f"Moving laser ({usb_port}) to wavelength {wavelength} from process")
 
-    @CProcessControl.register_function(wavelength_sweep_finished)
+    @cmp.CProcessControl.register_function(wavelength_sweep_finished)
     def wavelength_sweep(self, usb_port: str, wavelength_start: float, wavelength_end: float):
         print(f"Sweeping laser ({usb_port}): Wavelength {wavelength_start} - {wavelength_end} from process")

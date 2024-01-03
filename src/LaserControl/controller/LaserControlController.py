@@ -137,7 +137,8 @@ class LaserControlController:
         # self.capt_device.clear_data()
         # Reset the flag
         # self.capt_device.model.capturing_finished = False
-        self.model.capturing_device.reset_capture()
+        if self.model.capturing_device is not None:
+            self.model.capturing_device.reset_capture()
         if start_wavelength is None:
             start_wavelength = self.model.sweep_start_wavelength
         if stop_wavelength is None:
