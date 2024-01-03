@@ -1,6 +1,6 @@
 [project]
 name = "lasercontrol"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
 ]

@@ -13,8 +13,12 @@ class MPLaserDevice(cmp.CProcess):
                  laser_moving_flag: Value,
                  laser_finished_flag: Value,
                  start_capture_flag: Value,
-                 enable_internal_logging):
-        super().__init__(state_queue, cmd_queue, enable_internal_logging=enable_internal_logging)
+                 kill_flag: Value,
+                 internal_log, internal_log_level):
+        super().__init__(state_queue, cmd_queue,
+                         kill_flag=kill_flag,
+                         internal_log=internal_log,
+                         internal_log_level=internal_log_level)
 
         self.logger, self.ha = None, None
         # if not self.logger.handlers:
@@ -45,48 +49,48 @@ class MPLaserDevice(cmp.CProcess):
         #self.logger.debug(f"Result of {func.__name__} is {res}")
         return res
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_connected(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> bool:
         def func(_con: LaserCon):
             return _con.connected
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_current_wavelength(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(_con: LaserCon):
             return _con.current_wavelength
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_min_wavelength(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(_con: LaserCon):
             return _con.min_wavelength
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_max_wavelength(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(_con: LaserCon):
             return _con.max_wavelength
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_velocity(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(_con: LaserCon):
             return _con.velocity
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_acceleration(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(con: LaserCon): return con.acceleration
 
         return self.wrap_func(func, con, usb_port)
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def get_deceleration(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> float:
         def func(_con: LaserCon):
             return _con.deceleration
@@ -107,17 +111,17 @@ class MPLaserDevice(cmp.CProcess):
 
         self.wrap_func(_read, con, usb_port)
 
-    @cmp.CProcess.register_for_signal(postfix="_changed")
+    @cmp.CProcess.register_signal(postfix="_changed")
     def laser_is_moving(self, moving: bool, to_wavelength: float = -1):
         self.laser_moving_flag.value = moving
         return self.laser_moving_flag.value, to_wavelength
 
-    @cmp.CProcess.register_for_signal(postfix="_changed")
+    @cmp.CProcess.register_signal(postfix="_changed")
     def movement_finished(self, finished: bool):
         self.laser_finished_flag.value = finished
         return self.laser_finished_flag.value
 
-    @cmp.CProcess.register_for_signal()
+    @cmp.CProcess.register_signal()
     def move_to_wavelength(self, usb_port: str = None, wavelength: float = None, capture: bool = False,
                            con: LaserCon = None, *args, **kwargs):
         # laser_moving_flag.value = False

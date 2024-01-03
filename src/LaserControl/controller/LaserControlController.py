@@ -11,7 +11,7 @@ import CaptDeviceControl as captdev
 
 class LaserControlController:
 
-    def __init__(self, model: LaserControlModel, start_capture_flag: Value):
+    def __init__(self, model: LaserControlModel, start_capture_flag: Value = None):
 
         self.logger = logging.Logger("Laser Driver (Generic)")
 
@@ -27,9 +27,10 @@ class LaserControlController:
         self._laser_finished_flag = Value('i', False, lock=self.lock)
 
         #if self.model.capturing_device is None or not self.model.capturing_device_connected:
-        self._start_capture_flag = start_capture_flag
-        #else:
-        #    self._start_capture_flag = self.model.capturing_device.start_capture_flag
+        if start_capture_flag is not None:
+            self._start_capture_flag = start_capture_flag
+        else:
+            self._start_capture_flag = Value('i', False, lock=self.lock)
 
         #self._current_wavelength = Value('f', 0.0, lock=self.lock)
 
@@ -147,10 +148,10 @@ class LaserControlController:
 
     def stop_process(self):
         time_start = time.time()
-        if self.proc is not None:
-            while self.proc.is_alive():
-                time.sleep(0.1)
-            self.logger.warning(f"Laser process exited after {time.time() - time_start}s")
+        #if self.proc is not None:
+        #    while self.proc.is_alive():
+        #        time.sleep(0.1)
+        #    self.logger.warning(f"Laser process exited after {time.time() - time_start}s")
         self.kill_thread = True
 
     def __del__(self):
