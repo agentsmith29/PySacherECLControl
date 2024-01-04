@@ -1,8 +1,9 @@
 # import mcpy
+import CaptDeviceControl as captdev
+
 from LaserControl.LaserConfig import LaserConfig
 from LaserControl.model.LaserControlSignals import LaserControlSignals
 
-import CaptDeviceControl as captdev
 
 # from LaserControl.model.LaserControlSignals import LaserControllerSignals
 # from LaserControlOld.LaserConfig import LaserConfig

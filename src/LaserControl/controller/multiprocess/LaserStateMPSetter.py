@@ -1,6 +1,3 @@
-from ctypes import c_int, c_byte
-
-
 class LaserState:
     def __init__(self):
         # Multiprocessing Information

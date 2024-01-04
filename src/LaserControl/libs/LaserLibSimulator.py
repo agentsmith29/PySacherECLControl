@@ -1,6 +1,5 @@
 import logging
 import time
-
 from random import randint
 
 from LaserControl.libs.LaserSceleton import LaserScelton

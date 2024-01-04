@@ -1,20 +1,19 @@
 import logging
 import os
-import time
 
-from PySide6.QtCore import QThread, QTimer
+from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QMainWindow, QProgressDialog
 from rich.logging import RichHandler
 
-from LaserControl.controller.LaserControlController import LaserControlController
-from LaserControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
+from LaserControl.controller.LaserDeviceControl import MPLaserDeviceControl
 from LaserControl.model.LaserControlModel import LaserControlModel
+from LaserControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
 from LaserControl.view.WidgetLaserInformation import WidgetLaserInformation
 
 
 class LaserControlView(QMainWindow):
 
-    def __init__(self, model: LaserControlModel, controller: LaserControlController):
+    def __init__(self, model: LaserControlModel, controller: MPLaserDeviceControl):
         super().__init__()
         self.handler = RichHandler(rich_tracebacks=True)
         self.logger = logging.getLogger(f"{self.__class__.__name__}({os.getpid()})")

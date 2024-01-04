@@ -5,13 +5,9 @@ import sys
 import tempfile
 from contextlib import contextmanager
 
-from PySide6.QtWidgets import QFileDialog, QApplication
 from rich.logging import RichHandler
 
 from LaserControl.controller.ErrorConverter import ErrorConverter
-
-
-
 
 if os.getenv("LASER_SIM") == "TRUE":
     from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib

@@ -3,6 +3,8 @@ import time
 from multiprocessing import Value
 
 from LaserControl.controller.LaserCon import LaserCon
+
+
 #from LaserControl.controller.multiprocess.logging import log_debug, log_info
 
 

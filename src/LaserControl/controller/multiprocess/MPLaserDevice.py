@@ -1,7 +1,6 @@
-import logging
-import os
 import time
 from multiprocessing import Value
+
 import cmp
 
 from LaserControl.controller.LaserCon import LaserCon
@@ -10,18 +9,15 @@ from LaserControl.controller.LaserCon import LaserCon
 class MPLaserDevice(cmp.CProcess):
 
     def __init__(self, state_queue, cmd_queue,
-
                  laser_moving_flag: Value,
                  laser_finished_flag: Value,
                  start_capture_flag: Value,
                  kill_flag: Value,
-                 internal_log, internal_log_level):
+                 internal_log, internal_log_level, log_file):
         super().__init__(state_queue, cmd_queue,
                          kill_flag=kill_flag,
-                         internal_log=internal_log,
-                         internal_log_level=internal_log_level,)
+                         internal_log=internal_log, internal_log_level=internal_log_level, log_file=log_file)
 
-        self.logger, self.ha = None, None
         # if not self.logger.handlers:
         #     self.logger.setLevel(level=logging.DEBUG)
         # self.logger.disabled = False
@@ -32,8 +28,6 @@ class MPLaserDevice(cmp.CProcess):
         self.laser_finished_flag = laser_finished_flag
         self.start_capture_flag = start_capture_flag
 
-    def init_loggers(self):
-        self.logger, self.ha = self.create_new_logger(f"{self.__class__.__name__}/({os.getpid()})")
 
     def wrap_func(self, func, con: LaserCon = None, usb_port: str = None):
         res = None
