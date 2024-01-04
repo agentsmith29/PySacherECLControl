@@ -11,10 +11,10 @@ dependencies = [
     'PySide6',
     'rich',
     'pyyaml',
-    'captdevicecontrol@git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop',
-    'fswidgets@git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop',
-    'confighandler@git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop',
-    'cmp@git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp.git@develop'
+    'captdevicecontrol@git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@main',
+    'fswidgets@git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@main',
+    'confighandler@git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@main',
+    'cmp@git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp.git@main'
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
