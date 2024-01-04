@@ -20,7 +20,8 @@ if __name__ == "__main__":
         app = QApplication.instance()
 
     conf_capt_dev = captdev.Config()
-    #conf.load("config.yaml")
+    conf_capt_dev.load("CaptDeviceConfig.yaml")
+    conf_capt_dev.autosave()
 
     start_capture_flag = Value('i', 0)
     capt_dev_model = captdev.Model(conf_capt_dev)

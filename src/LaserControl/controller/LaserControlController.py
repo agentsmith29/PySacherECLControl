@@ -9,6 +9,7 @@ from LaserControl.model.LaserControlModel import LaserControlModel
 
 import CaptDeviceControl as captdev
 
+
 class LaserControlController:
 
     def __init__(self, model: LaserControlModel, start_capture_flag: Value = None):
@@ -18,30 +19,30 @@ class LaserControlController:
         self.model = model
 
         # Multiprocess variables
-        #self.proc: Process = None
+        # self.proc: Process = None
         self.lock = Lock()
-        #self._laser_port = Value('i', 0, lock=self.lock)
-        #self._laser_connected_flag = Value('i', False, lock=self.lock)
+        # self._laser_port = Value('i', 0, lock=self.lock)
+        # self._laser_connected_flag = Value('i', False, lock=self.lock)
 
         self._laser_moving_flag = Value('i', False, lock=self.lock)
         self._laser_finished_flag = Value('i', False, lock=self.lock)
 
-        #if self.model.capturing_device is None or not self.model.capturing_device_connected:
+        # if self.model.capturing_device is None or not self.model.capturing_device_connected:
         if start_capture_flag is not None:
             self._start_capture_flag = start_capture_flag
         else:
             self._start_capture_flag = Value('i', False, lock=self.lock)
 
-        #self._current_wavelength = Value('f', 0.0, lock=self.lock)
+        # self._current_wavelength = Value('f', 0.0, lock=self.lock)
 
-        #self._laser_state = Value(LaserStateArray, (False, False, False, 0, 0, 0), lock=self.lock)
+        # self._laser_state = Value(LaserStateArray, (False, False, False, 0, 0, 0), lock=self.lock)
 
         # For the sweep
-        #self.laser_at_start_position_flag = Value('i', False, lock=self.lock)
-        #self.laser_at_end_position_flag = Value('i', False, lock=self.lock)
+        # self.laser_at_start_position_flag = Value('i', False, lock=self.lock)
+        # self.laser_at_end_position_flag = Value('i', False, lock=self.lock)
 
         # Threads for acquiring data from the process
-        #self.thread_manager = QThreadPool()
+        # self.thread_manager = QThreadPool()
         self.mp_laser_controller = MPLaserDeviceControl(None,
                                                         self._laser_moving_flag,
                                                         self._laser_finished_flag,
@@ -76,9 +77,9 @@ class LaserControlController:
 
         self.kill_thread = False
 
-
     def connect_capture_device(self, device: captdev.Controller):
-        self.logger.info("***********************************************Connecting to capture device..***********************************")
+        self.logger.info(
+            "***********************************************Connecting to capture device..***********************************")
         self.mp_laser_controller.mp_read_laser_settings(self.model.port)
         if isinstance(device, captdev.Controller):
             self.model.capturing_device = device
@@ -86,12 +87,9 @@ class LaserControlController:
                 lambda x: type(self.model).capturing_device_connected.fset(self.model, x)
             )
 
-
-
     def connect_device(self):
         self.logger.info("Connecting to laser...")
         self.mp_laser_controller.mp_read_laser_settings(self.model.port)
-
 
     def _move_to_wavelength_finished(self, wavelength: float):
         self.logger.info(f"Move to wavelength finished. Current wavelength: {wavelength}")
@@ -105,7 +103,6 @@ class LaserControlController:
 
     def _laser_movement_finished(self, is_finished: bool):
         pass
-
 
     # def _monitor_laser_state(self):
     #     while not self.kill_thread:
@@ -137,13 +134,30 @@ class LaserControlController:
         # self.capt_device.clear_data()
         # Reset the flag
         # self.capt_device.model.capturing_finished = False
+        self.logger.info(f"Starting wavelength sweep from {start_wavelength} to {stop_wavelength}")
         if self.model.capturing_device is not None:
             self.model.capturing_device.reset_capture()
-        if start_wavelength is None:
-            start_wavelength = self.model.sweep_start_wavelength
-        if stop_wavelength is None:
-            stop_wavelength = self.model.sweep_stop_wavelength
-        self.mp_laser_controller.wavelength_sweep(self.model.port, start_wavelength, stop_wavelength)
+            if not self.model.capturing_device.model.device_information.device_connected:
+                self.model.capturing_device.open_device()
+                self.model.capturing_device.ready_for_recording_changed.connect(
+                    lambda ready: self.start_wavelength_sweep_emitted(start_wavelength, stop_wavelength, ready=ready)
+                )
+            self.logger.info("Capturing device is connected.")
+
+            if self.model.capturing_device.model.capturing_information.ready_for_recording:
+                self.start_wavelength_sweep_emitted(start_wavelength, stop_wavelength)
+
+
+        else:
+            self.start_wavelength_sweep_emitted(start_wavelength, stop_wavelength)
+
+    def start_wavelength_sweep_emitted(self, start_wavelength: float = None, stop_wavelength: float = None, ready=True):
+        if ready:
+            if start_wavelength is None:
+                start_wavelength = self.model.sweep_start_wavelength
+            if stop_wavelength is None:
+                stop_wavelength = self.model.sweep_stop_wavelength
+            self.mp_laser_controller.wavelength_sweep(self.model.port, start_wavelength, stop_wavelength)
 
     def move_to_wavelength(self, wavelength: float) -> None:
         self.logger.info(f"Move to wavelength {wavelength}")
@@ -151,7 +165,7 @@ class LaserControlController:
 
     def stop_process(self):
         time_start = time.time()
-        #if self.proc is not None:
+        # if self.proc is not None:
         #    while self.proc.is_alive():
         #        time.sleep(0.1)
         #    self.logger.warning(f"Laser process exited after {time.time() - time_start}s")

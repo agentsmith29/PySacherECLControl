@@ -122,7 +122,7 @@ class MPLaserDevice(cmp.CProcess):
         self.laser_finished_flag.value = finished
         return self.laser_finished_flag.value
 
-    @cmp.CProcess.register_signal(postfix="_finsihed")
+    @cmp.CProcess.register_signal(postfix="_finished")
     def move_to_wavelength(self, usb_port: str = None, wavelength: float = None, capture: bool = False,
                            con: LaserCon = None, *args, **kwargs):
         # laser_moving_flag.value = False
