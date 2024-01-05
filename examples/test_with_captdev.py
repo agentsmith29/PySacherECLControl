@@ -11,8 +11,12 @@ sys.path.append('./src')
 import LaserControl as Laser
 
 if __name__ == "__main__":
-    #logging.basicConfig(level=logging.INFO,
-    #                    format='%(asctime)s [%(levelname)s] (%(threadName)-10s) %(message)s', )
+    FORMAT = "%(name)s %(message)s"
+    logging.basicConfig(
+        level="DEBUG", format=FORMAT, datefmt="[%X]", handlers=[
+            RichHandler(rich_tracebacks=True)
+        ]
+    )
 
     if not QApplication.instance():
         app = QApplication(sys.argv)

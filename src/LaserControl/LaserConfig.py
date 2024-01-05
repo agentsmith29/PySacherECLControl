@@ -6,7 +6,7 @@ import confighandler as cfg
 class LaserConfig(cfg.ConfigNode):
 
     def __init__(self) -> None:
-        super().__init__(internal_log_level=logging.DEBUG, internal_log=True)
+        super().__init__()
         self.wl_sweep_start = cfg.Field(857)
         self.wl_sweep_stop = cfg.Field(870)
         self.velocity = cfg.Field(2.0)

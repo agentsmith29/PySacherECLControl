@@ -11,8 +11,10 @@ from LaserControl.model.LaserControlModel import LaserControlModel
 
 
 class MPLaserDeviceControl(CProcessControl):
-    get_connected_finished = Signal(bool, name='get_connected_finished')
-    get_current_wavelength_finished = Signal(float, name='get_current_wavelength_finished')
+    connected_changed = Signal(bool, name='connected_changed')
+    current_wavelength_changed = Signal(float, name='current_wavelength_changed')
+
+
     get_min_wavelength_finished = Signal(float, name='get_min_wavelength_finished')
     get_max_wavelength_finished = Signal(float, name='get_max_wavelength_finished')
     get_velocity_finished = Signal(float, name='get_velocity_finished')
@@ -24,31 +26,30 @@ class MPLaserDeviceControl(CProcessControl):
     wavelength_sweep_finished = Signal(float, float, name='wavelength_sweep_finished')
 
     laser_is_moving_changed = Signal(bool, float, name='laser_is_moving_changed')
+    wavelength_sweep_running_changed = Signal(bool, name='wavelength_sweep_running_changed')
     movement_finished_changed = Signal(bool, name='movement_finished_changed')
 
     def __init__(self, model: LaserControlModel,
-                 start_capture_flag: Value,
-                 internal_log_level=logging.WARNING,
-                 internal_log=True,
-                 log_file=None):
-        super().__init__(internal_log_level=internal_log_level, internal_log=internal_log, log_file=log_file)
+                 start_capture_flag: Value):
+        super().__init__()
 
         self.model = model
 
         self.lock = Lock()
         self._laser_moving_flag = Value('i', False, lock=self.lock)
         self._laser_finished_flag = Value('i', False, lock=self.lock)
+        if start_capture_flag is None:
+            start_capture_flag = Value('i', 0)
 
         self.register_child_process(MPLaserDevice,
                                     self._laser_moving_flag,
                                     self._laser_finished_flag,
                                     start_capture_flag)
 
-
-        self.get_connected_finished.connect(
+        self.connected_changed.connect(
             lambda x: type(self.model).connected.fset(self.model, bool(x)))
 
-        self.get_current_wavelength_finished.connect(
+        self.current_wavelength_changed.connect(
             lambda x: type(self.model).current_wavelength.fset(self.model, x))
 
         self.get_min_wavelength_finished.connect(
@@ -70,43 +71,44 @@ class MPLaserDeviceControl(CProcessControl):
 
         self.laser_is_moving_changed.connect(self._laser_is_moving_changed)
         self.movement_finished_changed.connect(self._laser_movement_finished)
+        self.wavelength_sweep_running_changed.connect(self._on_wavelength_sweep_running_changed)
 
         self.kill_thread = False
 
     def set_start_capture_flag(self, start_capture_flag: Value):
         self._start_capture_flag = start_capture_flag
 
-    @cmp.CProcessControl.register_function(get_connected_finished)
+    @cmp.CProcessControl.register_function(connected_changed)
     def get_connected(self):
-        self._internal_logger.info("Reading current connection state from process.")
+        self._module_logger.info("Reading current connection state from process.")
 
-    @cmp.CProcessControl.register_function(get_current_wavelength_finished)
+    @cmp.CProcessControl.register_function(current_wavelength_changed)
     def get_current_wavelength(self):
-        self._internal_logger.info("Reading current wavelength from process.")
+        self._module_logger.info("Reading current wavelength from process.")
 
     @cmp.CProcessControl.register_function(get_min_wavelength_finished)
     def get_min_wavelength(self):
-        self._internal_logger.info("Reading minimum wavelength from process.")
+        self._module_logger.info("Reading minimum wavelength from process.")
 
     @cmp.CProcessControl.register_function(get_max_wavelength_finished)
     def get_max_wavelength(self):
-        self._internal_logger.info("Reading maximum wavelength from process.")
+        self._module_logger.info("Reading maximum wavelength from process.")
 
     @CProcessControl.register_function(get_velocity_finished)
     def get_velocity(self):
-        self._internal_logger.info("Reading velocity from process.")
+        self._module_logger.info("Reading velocity from process.")
 
     @cmp.CProcessControl.register_function(get_acceleration_finished)
     def get_acceleration(self):
-        self._internal_logger.info("Reading acceleration from process.")
+        self._module_logger.info("Reading acceleration from process.")
 
     @cmp.CProcessControl.register_function(get_deceleration_finished)
     def get_deceleration(self):
-        self._internal_logger.info("Reading deceleration from process.")
+        self._module_logger.info("Reading deceleration from process.")
 
     @cmp.CProcessControl.register_function(mp_read_laser_settings_finished)
-    def mp_read_laser_settings(self, usb_port: str):
-        self._internal_logger.info(f"Reading laser settings from process using {usb_port}")
+    def read_laser_settings(self, usb_port: str):
+        self._module_logger.info(f"Reading laser settings from process using {usb_port}")
 
     @cmp.CProcessControl.register_function(move_to_wavelength_finished)
     def move_to_wavelength(self, usb_port: str, wavelength: float):
@@ -122,7 +124,7 @@ class MPLaserDeviceControl(CProcessControl):
     def connect_capture_device(self, device: captdev.Controller):
         self.logger.info(
             "***********************************************Connecting to capture device..***********************************")
-        self.mp_read_laser_settings(self.model.port)
+        self.read_laser_settings(self.model.port)
         if isinstance(device, captdev.Controller):
             self.model.capturing_device = device
             self.model.capturing_device.model.device_information.signals.device_connected_changed.connect(
@@ -133,24 +135,29 @@ class MPLaserDeviceControl(CProcessControl):
         self.logger.info(f"Move to wavelength finished. Current wavelength: {wavelength}")
 
     def _laser_is_moving_changed(self, is_moving: bool, to_wavelength: float):
-        self.logger.info(f"************** Laser is moving: {is_moving}."
+        self.logger.info(f"************** Laser is moving: {is_moving}. "
                          f"Moving to {self.model.laser_moving_to_wavelength} nm")
         self.model.laser_is_moving = (is_moving, to_wavelength)
-        self.logger.info(f"************** Laser is moving: {is_moving}."
+        self.logger.info(f"************** Laser is moving: {is_moving}. "
                          f"Moving to {self.model.laser_moving_to_wavelength} nm")
 
     def _laser_movement_finished(self, is_finished: bool):
         pass
 
+    def _on_wavelength_sweep_running_changed(self, running: bool):
+        self.model.wavelength_sweep_running = running
+        if running:
+            self.logger.info(f"Wavelength sweep running.")
+        else:
+            self.logger.info(f"Wavelength sweep stopped.")
+
     def start_wavelength_sweep(self, start_wavelength: float = None, stop_wavelength: float = None) -> None:
-        # self.capt_device.clear_data()
-        # Reset the flag
-        # self.capt_device.model.capturing_finished = False
+        self.model.wavelength_sweep_running = True
         self.logger.info(f"Starting wavelength sweep from {start_wavelength} to {stop_wavelength}")
         if self.model.capturing_device is not None:
             self.model.capturing_device.reset_capture()
             if not self.model.capturing_device.model.device_information.device_connected:
-                #self.model.
+                # self.model.
                 self.model.capturing_device.open_device()
                 self.model.capturing_device.ready_for_recording_changed.connect(
                     lambda ready: self.start_wavelength_sweep_emitted(start_wavelength, stop_wavelength, ready=ready)

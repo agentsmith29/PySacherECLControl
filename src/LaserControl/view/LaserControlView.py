@@ -15,12 +15,8 @@ class LaserControlView(QMainWindow):
 
     def __init__(self, model: LaserControlModel, controller: MPLaserDeviceControl):
         super().__init__()
-        self.handler = RichHandler(rich_tracebacks=True)
-        self.logger = logging.getLogger(f"{self.__class__.__name__}({os.getpid()})")
-        self.logger.handlers = [self.handler]
-        self.logger.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(name)s %(message)s')
-        self.handler.setFormatter(formatter)
+
+        self.logger = controller.logger
 
         self._ui = Ui_LaserControlWindow()
 
@@ -140,8 +136,8 @@ class LaserControlView(QMainWindow):
                                                   f"Connected: {self.model.capturing_device.model.device_information.device_name}")
 
     def _on_wavelength_changed(self, wavelength):
-        # self.logger.debug(f"Wavelength changed to: {wavelength}. "
-        #                  f"Range ({self.model.min_laser_wavelength}-{self.model.max_laser_wavelength})nm")
+        self.logger.debug(f"Wavelength changed to: {wavelength}. "
+                    f"Range ({self.model.min_laser_wavelength}-{self.model.max_laser_wavelength})nm")
 
         # self._ui.lbl_min_wavelength.setText(str(self.model.min_laser_wavelength))
         # self._ui.lbl_max_wavelength.setText(str(self.model.max_laser_wavelength))
@@ -212,30 +208,32 @@ class LaserControlView(QMainWindow):
     def _on_btn_connect_clicked(self):
         if self.model.connected:
             self.logger.debug("Attempting to disconnect from laser")
-            # self.controller.read_laser_settings()
+            self.controller.read_laser_settings()
         elif not self.model.connected:
             self.logger.debug(f"Attempting to connect to laser on port: {self.model.port}")
-            self.controller.connect_device()
+            self.controller.read_laser_settings(usb_port=self.model.port)
 
     def _on_btn_move_to_wavelength_clicked(self):
         self.logger.debug(f"Attempting to set wavelength to: {self._ui.sb_set_wavelength.value()}")
-        self.controller.move_to_wavelength(self._ui.sb_set_wavelength.value())
+        self.controller.move_to_wavelength(
+            self.model.port,
+            self._ui.sb_set_wavelength.value())
 
     def _on_sb_sweep_start_changed(self, value):
         try:
             self.logger.debug(f"Sweep start changed. New Range {value}-{self.model.sweep_stop_wavelength}")
-            self.model.sweep_start_wavelength = value
+            self.model.sweep_start_wavelength = int(value)
         except Exception as e:
             self.logger.error(e)
-            self.model.sweep_stop_wavelength = value
+            self.model.sweep_stop_wavelength = int(value)
 
     def _on_sb_sweep_stop_changed(self, value):
         try:
             self.logger.debug(f"Sweep stop changed. New Range {self.model.sweep_start_wavelength}-{value}")
-            self.model.sweep_stop_wavelength = value
+            self.model.sweep_stop_wavelength = int(value)
         except Exception as e:
             self.logger.error(e)
-            self.model.sweep_start_wavelength = value
+            self.model.sweep_start_wavelength = int(value)
         # self.controller.set_sweep_wavelength_range(self._ui.sb_sweep_start.value(), self._ui.sb_sweep_stop.value())
 
     def _on_btn_start_sweep_clicked(self):

@@ -8,9 +8,9 @@ from contextlib import contextmanager
 from rich.logging import RichHandler
 
 from LaserControl.controller.ErrorConverter import ErrorConverter
-
+from LaserControl.libs.LaserLibSimulator import LaserLibSimulator
 if os.getenv("LASER_SIM") == "TRUE":
-    from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
+    from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib#, LaserLibSimulator
 else:
     try:
         from LaserControl.libs import laserSacher as LaserLib
@@ -59,16 +59,25 @@ def stdout_redirector(stream):
 
 class LaserCon(object):
 
-    def __init__(self, port=0):
-        self.handler = RichHandler(rich_tracebacks=True)
-        self.logger = logging.getLogger(f"AD2Controller({os.getpid()})")
-        self.logger.handlers = [self.handler]
-        self.logger.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(name)s %(message)s')
-        self.handler.setFormatter(formatter)
+    def __init__(self, port, logger=None):
+        #self.handler = RichHandler(rich_tracebacks=True)
+        if logger is None or not isinstance(logger, logging.Logger):
+            self.logger = logging.getLogger("LaserCon")
+        else:
+            self.logger = logger
+        #self.logger.handlers = [self.handler]
+        #self.logger.setLevel(logging.DEBUG)
+        #formatter = logging.Formatter('%(name)s %(message)s')
+        #self.handler.setFormatter(formatter)
         #self.logger.addHandler(logging.StreamHandler())
         #self.logger.setLevel(logging.DEBUG)
-        self.laser_con = LaserLib()
+        if isinstance(LaserLib, LaserLibSimulator):
+            self.logger.info("Using Laser Simulator")
+            self.laser_con = LaserLib()
+        else:
+            self.logger.info("Using Laser")
+            self.laser_con = LaserLib()
+
         self._connected = False
         self._connect_to_laser(self.laser_con, port)
 

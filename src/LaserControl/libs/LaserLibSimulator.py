@@ -8,7 +8,7 @@ from LaserControl.libs.LaserSceleton import LaserScelton
 class LaserLibSimulator(LaserScelton):
     connected = False
 
-    def __init__(self) -> None:
+    def __init__(self, logger=None) -> None:
         super().__init__()
         self.pref = "Laser (Simulator)"
         self.port_list = ['Simulator']
@@ -25,7 +25,7 @@ class LaserLibSimulator(LaserScelton):
         self.port = "SIM"
         # self.connected = False
 
-        self.logger = logging.getLogger("Laser Driver (Simulator)")
+        self.logger = logger or logging.getLogger(f"{__name__} (Sim)")
         self.logger.info(f"{self.pref}: Laser Simulator initialized.")
 
     # ==================================================================================================================
