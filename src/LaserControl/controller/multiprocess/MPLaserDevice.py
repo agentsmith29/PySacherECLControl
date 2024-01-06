@@ -80,7 +80,6 @@ class MPLaserDevice(cmp.CProcess):
     def get_connected(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs) -> bool:
         def func(_con: LaserCon):
             return _con.connected
-
         self.connected = self.wrap_func(func, con, usb_port)
         return self.connected
 
@@ -127,10 +126,9 @@ class MPLaserDevice(cmp.CProcess):
         return self.wrap_func(func, con, usb_port)
 
     def read_laser_settings(self, con: LaserCon = None, usb_port: str = None, *args, **kwargs):
-        self.logger.info(f"Reading laser settings from process using {usb_port}")
+        self.logger.info(f"Reading laser settings.")
 
         def _read(con: LaserCon):
-            self.get_connected(con)
             self.get_min_wavelength(con)
             self.get_max_wavelength(con)
             self.get_current_wavelength(con)
@@ -169,6 +167,8 @@ class MPLaserDevice(cmp.CProcess):
                 self.start_capture_flag.value = int(True)
                 self.logger.info(
                     f"******************** Capture flag set to {self.start_capture_flag.value} **********************")
+
+            time.sleep(1)
             con.go_to_wvl(wavelength, False)
             self.start_capture_flag.value = int(False)
             self._module_logger.info(

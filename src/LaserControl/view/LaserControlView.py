@@ -109,7 +109,7 @@ class LaserControlView(QMainWindow):
         self._ui.btn_start_sweep.setEnabled(not is_moving)
         self.laser_information.set_movement_state(is_moving, "Moving" if is_moving else "Stopped")
         if is_moving:
-            self.logger.info(f">>>>> {self.model.current_wavelength},  {to_wl}")
+            self.logger.info(f"Moving from {self.model.current_wavelength} nm to  {to_wl} nm")
             self._display_estimated_progress(
                 self.model.current_wavelength,
                 self.model.laser_moving_to_wavelength)
@@ -248,7 +248,12 @@ class LaserControlView(QMainWindow):
         et_acc_dec = self.model.velocity / self.model.acceleration
         wl_after_acc = start_wavelength + 0.5 * self.model.acceleration * et_acc_dec ** 2
         wl_bevore_dec = stop_wavelength - 0.5 * self.model.deceleration * et_acc_dec ** 2
-        self.eta = 2 * et_acc_dec + (wl_bevore_dec - wl_after_acc) / self.model.velocity
+        if wl_bevore_dec > wl_after_acc:
+            self.eta = 2 * et_acc_dec + (wl_bevore_dec - wl_after_acc) / self.model.velocity
+        else:
+            self.eta = 2 * et_acc_dec + (wl_after_acc - wl_bevore_dec) / self.model.velocity
+
+
         self.laser_moving_progress_dialog.setLabelText(
             f"Laser is moving {start_wavelength}-{stop_wavelength}."
             f"\nEstimated time until sweep is finished: {self.eta}")

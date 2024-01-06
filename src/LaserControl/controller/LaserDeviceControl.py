@@ -46,8 +46,7 @@ class MPLaserDeviceControl(CProcessControl):
                                     self._laser_finished_flag,
                                     start_capture_flag)
 
-        self.connected_changed.connect(
-            lambda x: type(self.model).connected.fset(self.model, bool(x)))
+        self.connected_changed.connect(self._on_connected_changed)
 
         self.current_wavelength_changed.connect(
             lambda x: type(self.model).current_wavelength.fset(self.model, x))
@@ -74,6 +73,14 @@ class MPLaserDeviceControl(CProcessControl):
         self.wavelength_sweep_running_changed.connect(self._on_wavelength_sweep_running_changed)
 
         self.kill_thread = False
+
+    def _on_connected_changed(self, connected: bool):
+        if connected:
+            self.logger.info(f"[{connected}] Laser connection established.")
+        else:
+            self.logger.info(f"[{connected}] Laser disconnected.")
+        self.model.connected = connected
+
 
     def set_start_capture_flag(self, start_capture_flag: Value):
         self._start_capture_flag = start_capture_flag
@@ -112,7 +119,7 @@ class MPLaserDeviceControl(CProcessControl):
 
     @cmp.CProcessControl.register_function(move_to_wavelength_finished)
     def move_to_wavelength(self, usb_port: str, wavelength: float):
-        print(f"Moving laser ({usb_port}) to wavelength {wavelength} from process")
+        self._module_logger.info(f"Moving laser ({usb_port}) to wavelength {wavelength} from process")
 
     @cmp.CProcessControl.register_function(wavelength_sweep_finished)
     def wavelength_sweep(self, usb_port: str, wavelength_start: float, wavelength_end: float):
@@ -135,11 +142,14 @@ class MPLaserDeviceControl(CProcessControl):
         self.logger.info(f"Move to wavelength finished. Current wavelength: {wavelength}")
 
     def _laser_is_moving_changed(self, is_moving: bool, to_wavelength: float):
-        self.logger.info(f"************** Laser is moving: {is_moving}. "
-                         f"Moving to {self.model.laser_moving_to_wavelength} nm")
         self.model.laser_is_moving = (is_moving, to_wavelength)
-        self.logger.info(f"************** Laser is moving: {is_moving}. "
+        if is_moving:
+            self.logger.info(f"************** Laser is moving: {is_moving}. "
                          f"Moving to {self.model.laser_moving_to_wavelength} nm")
+        else:
+            if is_moving:
+                self.logger.info(f"************** Laser is moving: {is_moving}. "
+                                 f"Stopped at {self.model.laser_moving_to_wavelength} nm")
 
     def _laser_movement_finished(self, is_finished: bool):
         pass
