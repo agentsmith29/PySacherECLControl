@@ -28,8 +28,8 @@ class LaserControlModel(object):
 
         self._laser_moving_to_wavelength: float = 0
         self._current_wavelength = -1
-        self._min_laser_wavelength = -1
-        self._max_laser_wavelength = -1
+        self._min_laser_wavelength = 1
+        self._max_laser_wavelength = 99999
 
         self._min_deceleration = -10
         self._max_deceleration = 10
@@ -87,15 +87,15 @@ class LaserControlModel(object):
 
     @sweep_start_wavelength.setter
     def sweep_start_wavelength(self, value):
-        if value < self.min_laser_wavelength:
-            raise Exception(f"Sweep start wavelength ({value}) can not be smaller than "
-                            f"minimum laser wavelength {self.min_laser_wavelength})!")
-        if value >= self.max_laser_wavelength:
-            raise Exception(f"Sweep start wavelength ({value}) can not be greater or equal to the "
-                            f"maximum laser wavelength ({self.min_laser_wavelength})!")
-        if value > self.sweep_stop_wavelength:
-            raise Exception(f"Sweep start wavelength ({value}) can not be greater than "
-                            f"sweep stop wavelength ({self.sweep_stop_wavelength})!")
+        #if value < self.min_laser_wavelength:
+        #    raise Exception(f"Sweep start wavelength ({value}) can not be smaller than "
+        #                    f"minimum laser wavelength {self.min_laser_wavelength})!")
+        #if value >= self.max_laser_wavelength:
+        #    raise Exception(f"Sweep start wavelength ({value}) can not be greater or equal to the "
+        #                    f"maximum laser wavelength ({self.min_laser_wavelength})!")
+        #if value > self.sweep_stop_wavelength:
+        #    raise Exception(f"Sweep start wavelength ({value}) can not be greater than "
+        #                    f"sweep stop wavelength ({self.sweep_stop_wavelength})!")
         self.laser_config.wl_sweep_start.set(value)
         self.signals.sweep_start_wavelength_changed.emit(self.sweep_start_wavelength)
 
@@ -105,15 +105,15 @@ class LaserControlModel(object):
 
     @sweep_stop_wavelength.setter
     def sweep_stop_wavelength(self, value):
-        if value < self.min_laser_wavelength:
-            raise Exception(f"Sweep stop wavelength ({value}) can not be smaller than "
-                            f"minimum laser wavelength {self.min_laser_wavelength})!")
-        if value > self.max_laser_wavelength:
-            raise Exception(f"Sweep stop wavelength ({value}) can not be greater or equal to the "
-                            f"maximum laser wavelength ({self.max_laser_wavelength})!")
-        if value < self.sweep_start_wavelength:
-            raise Exception(f"Sweep stop wavelength ({value}) can not be smaller than "
-                            f"sweep start wavelength ({self.sweep_start_wavelength})!")
+        #if value < self.min_laser_wavelength:
+        #    raise Exception(f"Sweep stop wavelength ({value}) can not be smaller than "
+        #                    f"minimum laser wavelength {self.min_laser_wavelength})!")
+        #if value > self.max_laser_wavelength:
+        #    raise Exception(f"Sweep stop wavelength ({value}) can not be greater or equal to the "
+        #                    f"maximum laser wavelength ({self.max_laser_wavelength})!")
+        #if value < self.sweep_start_wavelength:
+        #    raise Exception(f"Sweep stop wavelength ({value}) can not be smaller than "
+        #                    f"sweep start wavelength ({self.sweep_start_wavelength})!")
         self.laser_config.wl_sweep_stop.set(value)
         self.signals.sweep_stop_wavelength_changed.emit(self.sweep_stop_wavelength)
 

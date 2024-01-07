@@ -188,6 +188,8 @@ class LaserControlView(QMainWindow):
         self._ui.sb_acc.setValue(acceleration)
 
     def _on_sweep_start_changed(self, sweep_start):
+        self.logger.debug(f"View: Sweep start changed. "
+                          f"Min {self.model.min_laser_wavelength}, Max {self.model.max_laser_wavelength}")
         self._ui.sb_sweep_start.setRange(self.model.min_laser_wavelength, self.model.max_laser_wavelength)
         self._ui.sb_sweep_start.setValue(sweep_start)
 

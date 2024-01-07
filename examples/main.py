@@ -21,12 +21,16 @@ if __name__ == "__main__":
 
 
     conf = Laser.Config()
-    #conf.load("config.yaml")
+    conf.load('./LaserConfig.yaml', as_auto_save=True)
+    conf.autosave(True, './LaserConfig.yaml')
+    conf.module_log_level = logging.DEBUG
+    conf.module_log_enabled = True
+
 
     model = Laser.Model(conf)
     controller = Laser.Controller(model, None)
-    #controller.internal_log_level = logging.DEBUG
-    #controller.internal_log_enabled = True
+    controller.internal_log_level = logging.DEBUG
+    controller.internal_log_enabled = True
     window = Laser.View(model, controller)
 
 
