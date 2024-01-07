@@ -32,7 +32,7 @@ if __name__ == "__main__":
     controller.internal_log_level = logging.DEBUG
     controller.internal_log_enabled = True
     window = Laser.View(model, controller)
-    controller.start_wavelength_sweep(
+    controller.start_wavelength_sweep.emit(
         model.sweep_start_wavelength,
         model.sweep_stop_wavelength,
     )

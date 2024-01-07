@@ -240,7 +240,7 @@ class LaserControlView(QMainWindow):
 
     def _on_btn_start_sweep_clicked(self):
         self.logger.warning("Sweep manually started")
-        self.controller.start_wavelength_sweep(self.model.sweep_start_wavelength, self.model.sweep_stop_wavelength)
+        self.controller.start_wavelength_sweep.emit(self.model.sweep_start_wavelength, self.model.sweep_stop_wavelength)
 
     def _display_estimated_progress(self, start_wavelength: float, stop_wavelength: float):
 

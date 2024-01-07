@@ -29,6 +29,8 @@ class MPLaserDeviceControl(CProcessControl):
     wavelength_sweep_running_changed = Signal(bool, name='wavelength_sweep_running_changed')
     movement_finished_changed = Signal(bool, name='movement_finished_changed')
 
+    start_wavelength_sweep = Signal(float, float, name='start_wavelength_sweep')
+
     def __init__(self, model: LaserControlModel,
                  start_capture_flag: Value, module_log=True, module_log_level=logging.WARNING):
         super().__init__(module_log=module_log, module_log_level=module_log_level)
@@ -71,6 +73,8 @@ class MPLaserDeviceControl(CProcessControl):
         self.laser_is_moving_changed.connect(self._laser_is_moving_changed)
         self.movement_finished_changed.connect(self._laser_movement_finished)
         self.wavelength_sweep_running_changed.connect(self._on_wavelength_sweep_running_changed)
+
+        self.start_wavelength_sweep.connect(self._start_wavelength_sweep)
 
         self.kill_thread = False
 
@@ -161,7 +165,7 @@ class MPLaserDeviceControl(CProcessControl):
         else:
             self.logger.info(f"Wavelength sweep stopped.")
 
-    def start_wavelength_sweep(self, start_wavelength: float = None, stop_wavelength: float = None) -> None:
+    def _start_wavelength_sweep(self, start_wavelength: float = None, stop_wavelength: float = None) -> None:
         self.model.wavelength_sweep_running = True
         self.logger.info(f"Starting wavelength sweep from {start_wavelength} to {stop_wavelength}")
         if self.model.capturing_device is not None:
