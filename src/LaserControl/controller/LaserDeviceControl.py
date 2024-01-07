@@ -30,8 +30,8 @@ class MPLaserDeviceControl(CProcessControl):
     movement_finished_changed = Signal(bool, name='movement_finished_changed')
 
     def __init__(self, model: LaserControlModel,
-                 start_capture_flag: Value):
-        super().__init__()
+                 start_capture_flag: Value, module_log=True, module_log_level=logging.WARNING):
+        super().__init__(module_log=module_log, module_log_level=module_log_level)
 
         self.model = model
 
