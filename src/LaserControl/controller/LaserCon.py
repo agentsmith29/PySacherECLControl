@@ -14,14 +14,14 @@ if os.getenv("LASER_SIM") == "TRUE":
     from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib#, LaserLibSimulator
     print("********** SIMUALTOR **********")
 else:
-    #try:
-    #dir = pathlib.Path(f"{os.path.dirname(os.path.realpath(__file__))}/../libs")
-    #dir = str(dir.resolve())
-    #with os.add_dll_directory(dir):
-    #os.environ['PATH'] = dir + os.pathsep + os.environ['PATH']
-    #from LaserControl.libs.LaserLib import laserSacher as LaserLib
-    #except Exception as e:
-   #     from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
+    try:
+        dir = pathlib.Path(f"{os.path.dirname(os.path.realpath(__file__))}/../libs")
+        dir = str(dir.resolve())
+        with os.add_dll_directory(dir):
+            os.environ['PATH'] = dir + os.pathsep + os.environ['PATH']
+        from LaserControl.libs.LaserLib import laserSacher as LaserLib
+    except Exception as e:
+        from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
     print(f"********** SIMUALTOR (Fallback) **********")
 
 
