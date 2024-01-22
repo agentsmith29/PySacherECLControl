@@ -28,6 +28,7 @@ if __name__ == "__main__":
     conf_capt_dev.autosave()
 
     start_capture_flag = Value('i', 0)
+
     capt_dev_model = captdev.Model(conf_capt_dev)
     capt_dev_controller = captdev.Controller(capt_dev_model, start_capture_flag)
     capt_dev_window = captdev.View(capt_dev_model, capt_dev_controller)

@@ -269,3 +269,7 @@ class LaserControlView(QMainWindow):
     def handle_timer(self):
         value = self.laser_moving_progress_dialog.value() + 1
         self.laser_moving_progress_dialog.setValue(value)
+
+    def closeEvent(self, event):
+        # do stuff
+        self.controller.safe_exit()
