@@ -1,11 +1,44 @@
-# LaserControl
+# Laser Control: Python Project for Sacher TEC Laser Control
+LaserControl is a Python project developed to control Sacher TEC lasers. This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various operations for laser control and management.
+Features
 
-## Requirements
+* Laser Parameter Adjustment: Laser Control allows users to adjust parameters such as wavelength and speed settings.
+* User-friendly Interface: The project offers an intuitive graphical user interface (GUI) for easy navigation and control.
+* Works with the Analog Discovery 2 driver: 
+Requirements
+
+* Python 3.x
+* Sacher TEC laser hardware (compatible models)
+* Dependencies specified in requirements.txt
+
+#  Installation
+
+    Clone the repository:
 ```bash
-pip install git+https://gitlab.tugraz.at/flexsensor-public/confighandler.git@develop
+git clone https://github.com/agentsmith29/fs.lasercontrol.git
 ```
-or
+## Install dependencies:
+
 ```bash
-pip install -e ../flexsensor-public/confighandler/
-pip install ../flexsensor-public/fswidgets/
+pip install -r requirements.txt
 ```
+
+# Usage
+
+Run the main script:
+
+```bash
+python examples/main.py
+```
+Use the graphical interface to adjust laser parameters, monitor data, and control the laser.
+Refer to the user manual or documentation for detailed instructions on specific operations and functionalities.
+
+# Contributing
+
+Contributions to Laser Control are welcome! If you have suggestions for improvements, encounter any issues, or would like to add new features, please feel free to open an issue or submit a pull request on the GitHub repository.
+
+# License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+# Acknowledgements

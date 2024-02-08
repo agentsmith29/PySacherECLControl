@@ -3,7 +3,7 @@ from LaserControl.controller.LaserControlErrors import LaserNotConnectedError
 
 class ErrorConverter:
 
-    @staticmethod
+    #@staticmethod
     def convert(msg, additional_message=""):
 
         msg = msg.replace('>>>>>>>>>>>>>>>>>>>>  ', '').strip()

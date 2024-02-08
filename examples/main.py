@@ -3,7 +3,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 from rich.logging import RichHandler
 
-sys.path.append('./src')
+sys.path.append('../src')
 import LaserControl as Laser
 
 if __name__ == "__main__":
