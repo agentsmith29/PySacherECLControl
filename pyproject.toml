@@ -1,6 +1,6 @@
 [project]
 name = "lasercontrol"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
 ]
@@ -11,10 +11,10 @@ dependencies = [
     'PySide6',
     'rich',
     'pyyaml',
-    'captdevicecontrol@git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop',
-    'fswidgets@git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop',
-    'confighandler@git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop',
-    'cmp@git+https://gitlab.tugraz.at/flexsensor-public/modules/cmp.git@develop'
+    'captdevicecontrol@git+https://github.com/agentsmith29/fs.captdevicecontrol@develop',
+    'fswidgets@git+https://github.com/agentsmith29/fstools.fswidgets@develop',
+    'confighandler@git+https://github.com/agentsmith29/fstools.confighandler@develop',
+    'cmp@git+https://github.com/agentsmith29/fstools.cmp@develop'
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
