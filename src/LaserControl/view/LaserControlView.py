@@ -210,10 +210,10 @@ class LaserControlView(QMainWindow):
     def _on_btn_connect_clicked(self):
         if self.model.connected:
             self.logger.debug("Attempting to disconnect from laser")
-            self.controller.read_laser_settings()
+            #self.controller
         elif not self.model.connected:
             self.logger.debug(f"Attempting to connect to laser on port: {self.model.port}")
-            self.controller.read_laser_settings(usb_port=self.model.port)
+            self.controller.dev_connect(usb_port=self.model.port)
 
     def _on_btn_move_to_wavelength_clicked(self):
         self.logger.debug(f"Attempting to set wavelength to: {self._ui.sb_set_wavelength.value()}")

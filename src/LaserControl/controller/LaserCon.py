@@ -19,10 +19,12 @@ else:
         dir = str(dir.resolve())
         with os.add_dll_directory(dir):
             os.environ['PATH'] = dir + os.pathsep + os.environ['PATH']
-        from LaserControl.libs.LaserLib import laserSacher as LaserLib
+        from LaserControl.libs import SacherMotorControl as LaserLib
+
     except Exception as e:
         from LaserControl.libs.LaserLibSimulator import LaserLibSimulator as LaserLib
-    print(f"********** SIMUALTOR (Fallback) **********")
+        print(f"********** SIMUALTOR (Fallback) ********** {e}")
+    #exit()
 
 
 @contextmanager
@@ -64,6 +66,8 @@ def stdout_redirector(stream):
         # os.dup2(saved_stdout_fd, sys.stdout.fileno())
         # sys.stdout = original
 
+
+
 class LaserCon(object):
 
     def __init__(self, port, logger=None):
@@ -98,9 +102,9 @@ class LaserCon(object):
 
     def _connect_to_laser(self, laser_conn, laser_port):
         self.logger.info(f"Connection to Laser on Port {laser_port}.")
-        f = io.StringIO()
-        # with stdout_redirector(f):
-        #     laser_conn.connectMotor(f"{laser_port}")
+
+        laser_conn.connect(f"{laser_port}")
+
         self._connected = True
         return self._connected
 

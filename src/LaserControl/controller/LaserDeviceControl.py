@@ -12,10 +12,20 @@ from LaserControl.model.LaserControlModel import LaserControlModel
 
 class MPLaserDeviceControl(CProcessControl):
     connected_changed = Signal(bool, name='connected_changed')
+
+
+    # Properties
     current_wavelength_changed = Signal(float, name='current_wavelength_changed')
+    min_wavelength_changed = Signal(float, name='min_wavelength_changed')
+    max_wavelength_changed = Signal(float, name='max_wavelength_changed')
+    velocity_changed = Signal(float, name='velocity_changed')
+    acceleration_changed = Signal(float, name='acceleration_changed')
+    deceleration_changed = Signal(float, name='deceleration_changed')
 
 
     get_min_wavelength_finished = Signal(float, name='get_min_wavelength_finished')
+
+
     get_max_wavelength_finished = Signal(float, name='get_max_wavelength_finished')
     get_velocity_finished = Signal(float, name='get_velocity_finished')
     get_acceleration_finished = Signal(float, name='get_acceleration_finished')
@@ -53,19 +63,19 @@ class MPLaserDeviceControl(CProcessControl):
         self.current_wavelength_changed.connect(
             lambda x: type(self.model).current_wavelength.fset(self.model, x))
 
-        self.get_min_wavelength_finished.connect(
+        self.min_wavelength_changed.connect(
             lambda x: type(self.model).min_laser_wavelength.fset(self.model, x))
 
-        self.get_max_wavelength_finished.connect(
+        self.max_wavelength_changed.connect(
             lambda x: type(self.model).max_laser_wavelength.fset(self.model, x))
 
-        self.get_velocity_finished.connect(
+        self.velocity_changed.connect(
             lambda x: type(self.model).velocity.fset(self.model, x))
 
-        self.get_acceleration_finished.connect(
+        self.acceleration_changed.connect(
             lambda x: type(self.model).acceleration.fset(self.model, x))
 
-        self.get_deceleration_finished.connect(
+        self.deceleration_changed.connect(
             lambda x: type(self.model).deceleration.fset(self.model, x))
 
         self.move_to_wavelength_finished.connect(self._move_to_wavelength_finished)
@@ -77,6 +87,7 @@ class MPLaserDeviceControl(CProcessControl):
         self.start_wavelength_sweep.connect(self._start_wavelength_sweep)
 
         self.kill_thread = False
+        print("Inintializing MPLaserDeviceControl")
 
     def _on_connected_changed(self, connected: bool):
         if connected:
@@ -116,6 +127,10 @@ class MPLaserDeviceControl(CProcessControl):
     @cmp.CProcessControl.register_function(get_deceleration_finished)
     def get_deceleration(self):
         self._module_logger.info("Reading deceleration from process.")
+
+    @cmp.CProcessControl.register_function()
+    def dev_connect(self, usb_port: str):
+        self._module_logger.info(f"RConnecting to process using {usb_port}")
 
     @cmp.CProcessControl.register_function(mp_read_laser_settings_finished)
     def read_laser_settings(self, usb_port: str):
