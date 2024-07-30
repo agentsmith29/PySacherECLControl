@@ -3,7 +3,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 from rich.logging import RichHandler
 
-sys.path.append('./src')
+sys.path.append('../src')
 import LaserControl as Laser
 
 if __name__ == "__main__":
@@ -33,10 +33,10 @@ if __name__ == "__main__":
     controller.internal_log_enabled = True
     window = Laser.View(model, controller)
 
-    controller.start_wavelength_sweep.emit(
-        model.sweep_start_wavelength,
-        model.sweep_stop_wavelength,
-    )
+    #controller.start_wavelength_sweep.emit(
+    #    model.sweep_start_wavelength,
+    #    model.sweep_stop_wavelength,
+    #)
 
 
     window.show()

@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QApplication
 
 import CaptDeviceControl as captdev
 
-sys.path.append('./src')
+sys.path.append('../src')
 import LaserControl as Laser
 
 if __name__ == "__main__":
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         app = QApplication.instance()
 
     conf_capt_dev = captdev.Config()
-    conf_capt_dev.load("CaptDeviceConfig.yaml")
+    #conf_capt_dev.load("CaptDeviceConfig.yaml")
     conf_capt_dev.autosave()
 
     start_capture_flag = Value('i', 0)

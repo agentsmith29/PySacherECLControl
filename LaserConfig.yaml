@@ -1,4 +1,4 @@
-# - Configuration file stored 2024-01-22 15:16:36.656752 - 
+# - Configuration file stored 2024-07-30 12:55:54.088188 - 
 LaserConfig: #!!python/object:controller.LaserConfig
  wl_sweep_start: 857 # wl_sweep_start: None
  wl_sweep_stop: 870 # wl_sweep_stop: None
