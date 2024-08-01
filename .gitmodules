@@ -1,0 +1,3 @@
+[submodule "src/LaserControl/libs/SacherLibrary"]
+	path = src/LaserControl/libs/SacherLibrary
+	url = https://github.com/agentsmith29/fs.sacherlib

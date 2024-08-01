@@ -1,5 +1,6 @@
 import logging
 import sys
+import os
 from multiprocessing import Value
 
 from rich.logging import RichHandler
@@ -7,7 +8,11 @@ from PySide6.QtWidgets import QApplication
 
 import CaptDeviceControl as captdev
 
-sys.path.append('../src')
+file_path, _ = os.path.split(os.path.realpath(__file__))
+src_path = f"{file_path}/../src"
+print("src_path:", src_path)
+sys.path.append(src_path)
+
 import LaserControl as Laser
 
 if __name__ == "__main__":

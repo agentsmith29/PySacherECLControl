@@ -1,0 +1,9 @@
+# - Configuration file stored 2024-07-31 11:25:23.500548 - 
+LaserConfig: #!!python/object:controller.LaserConfig
+ wl_sweep_start: 857 # wl_sweep_start: None
+ wl_sweep_stop: 870 # wl_sweep_stop: None
+ velocity: 10.0 # velocity: None
+ acceleration: 2.0 # acceleration: None
+ deceleration: 2.0 # deceleration: None
+ available_ports: ['USB0', 'USB1', 'USB2', 'USB3', 'USB4', 'USB5', 'USB6', 'USB7', 'USB8', 'USB9'] # available_ports: None
+ port: "USB0" # port: None

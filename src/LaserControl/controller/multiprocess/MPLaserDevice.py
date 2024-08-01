@@ -13,8 +13,8 @@ dir = str(dir.resolve())
 # Copy the dll to the startup directory
 
 
-#from LaserControl.libs import SacherMotorControl as LaserLib
-from LaserControl.libs import LaserLibSimulator as LaserLib
+from LaserControl.libs import SacherMotorControl as LaserLib
+#from LaserControl.libs import LaserLibSimulator as LaserLib
 
 
 class MPLaserDevice(mpPy6.CProcess):
