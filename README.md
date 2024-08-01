@@ -18,8 +18,15 @@ Requirements
 git clone https://github.com/agentsmith29/fs.lasercontrol.git
 ```
 ## Install dependencies:
-
+## Place the Sacher Laser Library in your working directory
 ```bash
+
+# Create a virtual environment
+python -m venv .venv
+# Activate the virtual environment
+. .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
