@@ -13,36 +13,14 @@ Requirements
 
 #  Installation
 
-## Device Drivers
-### Maxon Motor Drivers
-Install the required Maxon Motor drivers:
-The Maxon Motor drivers are required to communicate with the Sacher TEC laser hardware. The Sacher laser 
-has a Maxon EPOS2 digital positioning controller. The drivers can be downloaded from the Maxon website. 
-The installation instructions are available in the user manual or documentation provided by Maxon. 
-[EPOS USB Driver Installation](https://www.maxongroup.com/maxon/view/product/control/Positionierung/390438)
-
-A up-to-date (08/2024) release can also be found in this repository [here (2.12.28.0)](./addtitional_files/EPOS-USB-Driver-Installation-En_2.12.28.0.zip)
-
-### Analog Discovery 2/3 Drivers
-If the Laser Controller is used with the Analog Discovery 2/3, the WaveForms SDK must be installed.
-See the readme of the corresponding repository for installation instructions.
-https://github.com/agentsmith29/fs.captdevicecontrol
-
-It should be sufficient to install the [WaveForms SDK](https://reference.digilentinc.com/reference/software/waveforms/waveforms-sdk/start)
-from the Digilent website.
-
-## Installation and Setup
-Clone the repository:
+    Clone the repository:
 ```bash
 git clone https://github.com/agentsmith29/fs.lasercontrol.git
 ```
-The library for controlling the software can be found in
-[./src/LaserControl/libs/Python*/SacherMotorControl.pyd](./src/LaserControl/libs)
-Place the correct Sacher-Laser-Library (*SacherMotorControl.pyd*) in your working directory.
-This library may be changed and thus can be updated and so far is only available for Windows.
-
-Create a new environment and install the dependencies:
+## Install dependencies:
+## Place the Sacher Laser Library in your working directory
 ```bash
+
 # Create a virtual environment
 python -m venv .venv
 # Activate the virtual environment
