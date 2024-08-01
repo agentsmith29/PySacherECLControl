@@ -6,12 +6,13 @@ scipy
 rich
 pyyaml
 
-# add the git repo
-git+https://github.com/agentsmith29/fs.captdevicecontrol@develop
-git+https://github.com/agentsmith29/fstools.cmp@develop
-git+https://github.com/agentsmith29/fstools.confighandler@develop
-git+https://github.com/agentsmith29/fstools.fswidgets@develop
+# my packages
+mpPy6
+confPy6
 
+# add the git repo
+git+https://github.com/agentsmith29/fs.captdevicecontrol
+git+https://github.com/agentsmith29/fstools.fswidgets
 
 # Local installs
 #../confighandler

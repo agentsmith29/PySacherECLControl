@@ -3,23 +3,29 @@
 ################################################################################
 ## Form generated from reading UI file 'LaserControlWindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
-from PySide6.QtWidgets import (QComboBox, QDoubleSpinBox, QFrame,
-                               QGridLayout, QGroupBox, QLCDNumber, QLabel,
-                               QPushButton, QSlider,
-                               QTabWidget, QVBoxLayout, QWidget)
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDoubleSpinBox,
+    QFrame, QGridLayout, QGroupBox, QLCDNumber,
+    QLabel, QMainWindow, QPushButton, QSizePolicy,
+    QSlider, QTabWidget, QVBoxLayout, QWidget)
+import resources_rc
 
 class Ui_LaserControlWindow(object):
     def setupUi(self, LaserControlWindow):
         if not LaserControlWindow.objectName():
             LaserControlWindow.setObjectName(u"LaserControlWindow")
-        LaserControlWindow.resize(619, 679)
+        LaserControlWindow.resize(697, 678)
         self.centralwidget = QWidget(LaserControlWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
@@ -489,6 +495,8 @@ class Ui_LaserControlWindow(object):
 
         self.group_wavelength_settings = QGroupBox(self.tab_control)
         self.group_wavelength_settings.setObjectName(u"group_wavelength_settings")
+        self.group_wavelength_settings.setMinimumSize(QSize(0, 210))
+        self.group_wavelength_settings.setMaximumSize(QSize(16777215, 300))
         self.gridLayout_5 = QGridLayout(self.group_wavelength_settings)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_12 = QGridLayout()
@@ -511,14 +519,16 @@ class Ui_LaserControlWindow(object):
 
         self.lcd_wavelength = QLCDNumber(self.group_wavelength_settings)
         self.lcd_wavelength.setObjectName(u"lcd_wavelength")
-        self.lcd_wavelength.setMaximumSize(QSize(16777215, 16777215))
-        self.lcd_wavelength.setFrameShape(QFrame.Box)
-        self.lcd_wavelength.setFrameShadow(QFrame.Sunken)
+        self.lcd_wavelength.setEnabled(True)
+        self.lcd_wavelength.setMinimumSize(QSize(0, 62))
+        self.lcd_wavelength.setMaximumSize(QSize(16777215, 62))
+        self.lcd_wavelength.setFrameShape(QFrame.Shape.Box)
+        self.lcd_wavelength.setFrameShadow(QFrame.Shadow.Sunken)
         self.lcd_wavelength.setLineWidth(1)
         self.lcd_wavelength.setMidLineWidth(0)
         self.lcd_wavelength.setSmallDecimalPoint(True)
         self.lcd_wavelength.setDigitCount(10)
-        self.lcd_wavelength.setSegmentStyle(QLCDNumber.Flat)
+        self.lcd_wavelength.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.lcd_wavelength.setProperty("value", 830.000000000000000)
         self.lcd_wavelength.setProperty("intValue", 830)
 
@@ -532,8 +542,8 @@ class Ui_LaserControlWindow(object):
         self.lbl_max_wavelength = QLabel(self.gridWidget)
         self.lbl_max_wavelength.setObjectName(u"lbl_max_wavelength")
         self.lbl_max_wavelength.setMaximumSize(QSize(16777215, 18))
-        self.lbl_max_wavelength.setLayoutDirection(Qt.LeftToRight)
-        self.lbl_max_wavelength.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.lbl_max_wavelength.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.lbl_max_wavelength.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout_2.addWidget(self.lbl_max_wavelength, 1, 1, 1, 1)
 
@@ -547,9 +557,9 @@ class Ui_LaserControlWindow(object):
         self.slider_wavelength = QSlider(self.gridWidget)
         self.slider_wavelength.setObjectName(u"slider_wavelength")
         self.slider_wavelength.setMinimumSize(QSize(0, 10))
-        self.slider_wavelength.setOrientation(Qt.Horizontal)
+        self.slider_wavelength.setOrientation(Qt.Orientation.Horizontal)
         self.slider_wavelength.setInvertedControls(False)
-        self.slider_wavelength.setTickPosition(QSlider.NoTicks)
+        self.slider_wavelength.setTickPosition(QSlider.TickPosition.NoTicks)
 
         self.gridLayout_2.addWidget(self.slider_wavelength, 0, 0, 1, 2)
 
@@ -598,40 +608,51 @@ class Ui_LaserControlWindow(object):
         self.gridLayout_10.addWidget(self.sb_sweep_start, 0, 1, 1, 1)
 
 
-        self.gridLayout_8.addLayout(self.gridLayout_10, 0, 0, 1, 1)
+        self.gridLayout_8.addLayout(self.gridLayout_10, 1, 0, 1, 1)
 
 
         self.grd_tab_settings.addWidget(self.group_sweep_settings, 2, 0, 1, 2)
 
         self.group_motor_profile = QGroupBox(self.tab_control)
         self.group_motor_profile.setObjectName(u"group_motor_profile")
+        self.group_motor_profile.setEnabled(True)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.group_motor_profile.sizePolicy().hasHeightForWidth())
+        self.group_motor_profile.setSizePolicy(sizePolicy)
         self.group_motor_profile.setMinimumSize(QSize(0, 0))
-        self.group_motor_profile.setMaximumSize(QSize(16777215, 120))
+        self.group_motor_profile.setMaximumSize(QSize(16777215, 150))
         self.gridLayout_7 = QGridLayout(self.group_motor_profile)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.gridLayout_11 = QGridLayout()
         self.gridLayout_11.setObjectName(u"gridLayout_11")
-        self.sb_acc = QDoubleSpinBox(self.group_motor_profile)
-        self.sb_acc.setObjectName(u"sb_acc")
+        self.gridLayout_11.setContentsMargins(-1, -1, 0, 0)
+        self.lbl_vel = QLabel(self.group_motor_profile)
+        self.lbl_vel.setObjectName(u"lbl_vel")
 
-        self.gridLayout_11.addWidget(self.sb_acc, 1, 1, 1, 1)
+        self.gridLayout_11.addWidget(self.lbl_vel, 0, 0, 1, 1)
 
         self.lbl_acc = QLabel(self.group_motor_profile)
         self.lbl_acc.setObjectName(u"lbl_acc")
 
         self.gridLayout_11.addWidget(self.lbl_acc, 1, 0, 1, 1)
 
-        self.lbl_vel = QLabel(self.group_motor_profile)
-        self.lbl_vel.setObjectName(u"lbl_vel")
-
-        self.gridLayout_11.addWidget(self.lbl_vel, 0, 0, 1, 1)
-
         self.sb_velocity = QDoubleSpinBox(self.group_motor_profile)
         self.sb_velocity.setObjectName(u"sb_velocity")
+        self.sb_velocity.setEnabled(True)
+        self.sb_velocity.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
 
         self.gridLayout_11.addWidget(self.sb_velocity, 0, 1, 1, 1)
+
+        self.sb_acc = QDoubleSpinBox(self.group_motor_profile)
+        self.sb_acc.setObjectName(u"sb_acc")
+        self.sb_acc.setEnabled(True)
+        self.sb_acc.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
+
+        self.gridLayout_11.addWidget(self.sb_acc, 1, 1, 1, 1)
 
         self.lbl_dec = QLabel(self.group_motor_profile)
         self.lbl_dec.setObjectName(u"lbl_dec")
@@ -640,6 +661,8 @@ class Ui_LaserControlWindow(object):
 
         self.sb_dec = QDoubleSpinBox(self.group_motor_profile)
         self.sb_dec.setObjectName(u"sb_dec")
+        self.sb_dec.setEnabled(True)
+        self.sb_dec.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
 
         self.gridLayout_11.addWidget(self.sb_dec, 2, 1, 1, 1)
 
@@ -711,10 +734,10 @@ class Ui_LaserControlWindow(object):
         self.btn_start_sweep.setText(QCoreApplication.translate("LaserControlWindow", u"Start Sweep", None))
         self.sb_sweep_start.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm", u"nm/s"))
         self.group_motor_profile.setTitle(QCoreApplication.translate("LaserControlWindow", u"Motor Profile", None))
-        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
-        self.lbl_acc.setText(QCoreApplication.translate("LaserControlWindow", u"Acceleration", None))
         self.lbl_vel.setText(QCoreApplication.translate("LaserControlWindow", u"Velocity", None))
+        self.lbl_acc.setText(QCoreApplication.translate("LaserControlWindow", u"Acceleration", None))
         self.sb_velocity.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
+        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
         self.lbl_dec.setText(QCoreApplication.translate("LaserControlWindow", u"Deceleration", None))
         self.sb_dec.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
         self.grp_system_info.setTitle(QCoreApplication.translate("LaserControlWindow", u"System Information", None))

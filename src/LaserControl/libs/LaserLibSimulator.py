@@ -4,7 +4,7 @@ import time
 from random import randint
 
 from LaserControl.libs.LaserSceleton import LaserScelton
-import confighandler as conf
+import confPy6 as conf
 
 
 class LaserLibSimulatorConfig(conf.ConfigNode):
@@ -14,8 +14,15 @@ class LaserLibSimulatorConfig(conf.ConfigNode):
         self.currentWavelengthPositionIs: conf.Field[float] = conf.Field(0.0,
                                                                           friendly_name="Current wavelength position",
                                                                           description="Current wavelength position in nm")
+
         self.current_wavelength: conf.Field[float] = conf.Field(857.0, friendly_name="Current wavelength",
                                                                  description="Current wavelength in nm")
+
+        self.min_wavelength: conf.Field[float] = conf.Field(830.0, friendly_name="Min wavelength",
+                                                                description="Minimum wavelength in nm")
+
+        self.max_wavelength: conf.Field[float] = conf.Field(880.0, friendly_name="Max wavelength",
+                                                                description="Maximum wavelength in nm")
 
         self.velocity: conf.Field[float] = conf.Field(1.0, friendly_name="Velocity",
                                                        description="Velocity in nm/s")
@@ -27,7 +34,8 @@ class LaserLibSimulatorConfig(conf.ConfigNode):
         self.register()
 
 
-class LaserLibSimulator(LaserScelton):
+# Implements the Simulator for Version
+class Motor(LaserScelton):
     connected = False
 
     def __init__(self, logger=None) -> None:
@@ -48,19 +56,13 @@ class LaserLibSimulator(LaserScelton):
         self.conf.module_log_enabled = True
         self.conf.module_log_level = logging.DEBUG
 
-        #self._currentWavelengthPositionIs: float = 0
-        #self._current_wavelength: float = 857
-
-        #self._velocity: float = 1
-        #self._acceleration: float = 2
-        #self._deceleration: float = 2
-
         self.port = "SIM"
         # self.connected = False
 
         self.logger = logger or logging.getLogger(f"{__name__} (Sim)")
         self.logger.info(f"{self.pref}: Laser Simulator initialized.")
 
+    # ==================================================================================================================
     @property
     def currentWaveLengthPositionIs(self) -> float:
         return self.conf.currentWavelengthPositionIs.get()
@@ -102,9 +104,17 @@ class LaserLibSimulator(LaserScelton):
         self.conf.deceleration.set(value)
 
     # ==================================================================================================================
+
+    # ==================================================================================================================
     # Connection functions
     # ==================================================================================================================
-    def connectMotor(self, port: str = "USB0") -> None:
+    def connect(self, port: str = "USB0") -> None:
+        """
+        Establishes a connection to the Epos and reads all the needed data saved on the internal
+        registry.
+        :param port: usb port on which the connection should be established, default=’USB0’
+        :return: None
+        """
         if self.connected:
             raise Exception("Already connected to Laser Simulator")
         self.logger.debug(f"{self.pref}: Connecting to Laser Simulator.")
@@ -112,116 +122,156 @@ class LaserLibSimulator(LaserScelton):
         self._connected = True
         self.logger.info(f"{self.pref}: Connected to Laser Simulator.")
 
-    def closeMotorConnection(self) -> None:
+    def disconnect(self) -> None:
+        """
+        Closes the connection to the Epos.
+        :return:
+        """
         self.logger.info(f"{self.pref}: Disconnecting from Laser Simulator")
         self._connected = False
 
     # ==================================================================================================================
-    # Motor Position functions
+    # Laser information/status functions
     # ==================================================================================================================
-    def getcurrentWavelengthPositionIs(self) -> float:
-        self.logger.debug(f"{self.pref}: Current wavelength position is {self.currentWaveLengthPositionIs} nm")
-        return self.currentWaveLengthPositionIs
 
-    def getCurrentWavelength(self) -> float:
+    def getWavelength(self) -> float:
+        """
+        Returns the wavelength from the current motor position stored on the epos.
+        :return: Wavelength in nm (float)
+        """
         self.logger.debug(f"{self.pref}: Current wavelength is {self.currentWavelength} nm")
         return self.currentWavelength
 
-    def setVelocity(self, velocity: float) -> None:
-        self.logger.info(f"{self.pref}: Velocity set to {velocity} nm/s")
-        self.velocity = velocity
+    def getWavelengthMinMax(self) -> tuple:
+        """
+        Return the minimum and maximum wavelength of the system.
+        :return: tuple(float,float) minimum wavelength, maximum wavelength
+        """
+        self.logger.debug(f"{self.pref}: Min/Max wavelength "
+                          f"{self.conf.min_wavelength.get()}/{self.conf.min_wavelength.get()} nm")
+        return self.conf.min_wavelength.get(), self.conf.max_wavelength.get()
 
-    def getVelocity(self) -> float:
-        self.logger.debug(f"{self.pref}: Current velocity is {self.velocity} nm/s")
-        return self.velocity
+    def setVelocityParameter(self, velocity: float, acceleration: float, deceleration) -> None:
+        """
+         Sets the velocity parameters on the Epos.
+        :param velocity:  velocity of the system in nm/s
+        :param acceleration: acceleration of the system in nm/s2
+        :param deceleration: deceleration of the system in nm/s2
+        :return: None
+        """
 
-    def setAcceleration(self, acceleration: float) -> None:
-        self.logger.info(f"{self.pref}: Acceleration set to {acceleration} nm/s^2")
-        self.acceleration = acceleration
-
-    def getAcceleration(self) -> float:
-        self.logger.debug(f"{self.pref}: Current acceleration is {self.acceleration} nm/s^2")
-        return self.acceleration
-
-    def setDeceleration(self, deceleration: float) -> None:
+        self.logger.info(f"{self.pref}:  set to {acceleration} nm/s^2")
         self.logger.info(f"{self.pref}: Deceleration set to {deceleration} nm/s^2")
+        self.velocity = velocity
+        self.acceleration = acceleration
         self.deceleration = deceleration
+        self.logger.info(f"{self.pref}: Velocity/acceleration/deceleration set to "
+                         f"{velocity}(nm/s)/{acceleration}(nm/s^2)/{deceleration}(nm/s^2)")
 
-    def getDeceleration(self) -> float:
-        self.logger.debug(f"{self.pref}: Current deceleration is {self.deceleration} nm/s^2")
-        return self.deceleration
+    def getVelocityParameter(self) -> tuple:
+        """
+        Returns the velocity in nm/s, acceleration and deceleration in nm/s2 stored on the
+        :return: tuple(float, float, float) velocity, acceleration, deceleration
+        """
+        self.logger.info(f"{self.pref}: Current velocity/acceleration/deceleration set to "
+                         f"{self.velocity}(nm/s)/{self.acceleration}(nm/s^2)/{self.deceleration}(nm/s^2)")
+        return (self.velocity, self.acceleration, self.deceleration)
 
-    def getStoredPosition(self, isWvl: bool = True) -> float:
-        if isWvl:
-            self.logger.debug(f"{self.pref}: Current stored position is {self._current_wavelength} nm")
-            return self._current_wavelength
-        else:
-            self.logger.debug(f"{self.pref}: Current stored position is {self.currentWaveLengthPositionIs} steps")
-            return self.currentWaveLengthPositionIs
+    def getMoving(self) -> bool:
+        """
+        Returns true or false whether the motor is moving or not.
+        :return: True, if moving, false otherwise
+        """
 
-    def getOffset(self) -> float:
-        self.logger.debug(f"{self.pref}: Current offset is {self.currentWaveLengthPositionIs} nm")
-        return self.currentWaveLengthPositionIs
+    # =================================================================================================================
+    # Movement functions
+    # =================================================================================================================
+    def moveToWavelength(self, wavelength: float, highPrecision: bool, trigger: int) -> None:
+        """
+        Moves the Motor to a given Wavelength.
+        :param wavelength: The wavelength to move to given in nm
+        :param highPrecision: High Precision Mode activated. When the relative movement is negative the Motor
+        drives 10000 steps below the goal to always come up to it with a positive movement.
+        If using a ballscrew system the steps will be reduced to 3000.
+        :param trigger:
+            0 - no trigger activated
+            1 - Position Compare trigger activated
+            2 - Motion trigger activated
+        :return: None
+        """
 
-    def getPositionIs(self) -> float:
-        self.logger.debug(f"{self.pref}: Current position is {self.currentWavelength} nm")
-        return self.currentWavelength
-
-    def resetPositionIs(self) -> None:
-        self.logger.info(f"{self.pref}: Resetting position to 0 nm")
-        self.currentWavelength = 0
-
-    # ==================================================================================================================
-    # Motor movement functions
-    # ==================================================================================================================
-    def goToWvl(self, wavelength: float, fast: bool) -> None:
         num_wavelength = int(wavelength)
 
-        # et_acc_dec = self._velocity / self._acceleration
-        # wl_after_acc = self._current_wavelength + 0.5 * self._acceleration * et_acc_dec ** 2
-        # wl_bevore_dec = num_wavelength - 0.5 * self._deceleration * et_acc_dec ** 2
-        # eta = 2 * et_acc_dec + (wl_bevore_dec - wl_after_acc) / self._velocity
-        # steps_per_second = (eta / 100)*1000
+        #def calcMovementTime():
+        #    et_acc_dec = self.velocity / self.acceleration
+        #    wl_after_acc = self.currentWavelength + 0.5 * self.acceleration * et_acc_dec ** 2
+        #    wl_before_dec = num_wavelength - 0.5 * self.deceleration * et_acc_dec ** 2
+        #    eta = 2 * et_acc_dec + (wl_before_dec - wl_after_acc) / self.velocity
+        #    # laser need eta in ms
+        #    steps_per_second = (eta / 100)*1000
+        #    return steps_per_second
 
         print(f"Moving from {self.currentWavelength} to {num_wavelength}")
         if int(self.currentWavelength) > num_wavelength:
             print(f"Going down: {self.currentWavelength} -> {num_wavelength}")
-            for i in range(int(self.currentWavelength), num_wavelength, -1):
-                print(f"{i} |  ", end="")
-                time.sleep(1)
+            for i in range(int(self.currentWavelength)*10, num_wavelength*10, -int(self.velocity)):
+                print(f"{i/10} |  ", end="")
+                time.sleep(0.1)
         else:
             print(f"Going up: {self.currentWavelength} -> {num_wavelength}")
-            for i in range(int(self.currentWavelength), num_wavelength):
-                print(f"{i} |  ", end="")
-                time.sleep(1)
+            for i in range(int(self.currentWavelength)*10, num_wavelength*10, int(self.velocity)):
+                print(f"{i/10} |  ", end="")
+                time.sleep(0.1)
         self.currentWavelength = num_wavelength
         print(f"Done: {self.currentWavelength}")
 
-    def startScan(self, wavelength: float, target: float) -> None:
-        self.goToWvl(wavelength, True)
-        self.goToWvl(target, True)
+    def moveSteps(self, steps: int, trigger: int) -> None:
+        """
+        Moves A certain amount of steps up to 10000 in either direction.
+        Parameter:
+        :param steps: Number of steps to move (int)
+        :param trigger: (int)
+                    0 - no trigger activated
+                    1 - Position Compare trigger activated
+                    2 - Motion trigger activated
+        :return: None
+        """
+        self.logger.info(f"{self.pref}: Moving {steps} steps")
+
+    def stopMovement(self) -> None:
+        """
+        Stops the movement of the motor.
+        :return: None
+        """
+        self.logger.info(f"{self.pref}: Stopping movement")
 
     # ==================================================================================================================
     # Calibration functions#
     # ==================================================================================================================
-    def Calibrate(self, wavelength: float) -> None:
+    def calibrate(self, wavelength: float) -> None:
+        """
+        Sets the current motor position to the wavelength position according to the given wavelength.
+        :param wavelength (float): wavelength in nm to calibrate the system
+        :return: None
+        """
         self.logger.info(f"{self.pref}: Calibrating to {wavelength} nm")
 
     # ==================================================================================================================
-    # Auxiliary functions, which read or store variables in the code and on the EPOS board.
+    # Trigger Methods
     # ==================================================================================================================
-    def setStartWvl(self, wavelength: float) -> None:
-        self.logger.info(f"{self.pref}: Setting start wavelength to {wavelength} nm")
-        self._current_wavelength = wavelength
 
-    def getStartWvl(self) -> float:
-        self.logger.info(f"{self.pref}: Start wavelength is {self._current_wavelength} nm")
-        return self._current_wavelength
+    def triggerParameter(self, intervalWidth) -> None:
+        """
+        Sets the parameters for the position compare trigger
+        :param intervalWidth: Interval width for the trigger signal in nm
+        :return: None
+        """
+        self.logger.info(f"{self.pref}: Setting trigger parameter to {intervalWidth} nm")
 
-    def setTargetWvl(self, wavelength: float) -> None:
-        self.logger.info(f"{self.pref}: Setting target wavelength to {wavelength} nm")
-        self._current_wavelength = wavelength
+    def reverseMotionTrigger(self) -> None:
+        """
+        Reverses the digital output for MotionTrigger. To change between active while moving
+        or active while standing.
+        """
+        self.logger.info(f"{self.pref}: Reversing Motion Trigger")
 
-    def getTargetWvl(self) -> float:
-        self.logger.info(f"{self.pref}: Target wavelength is {self._current_wavelength} nm")
-        return self._current_wavelength

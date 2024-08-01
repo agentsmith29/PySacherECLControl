@@ -2,9 +2,9 @@ import logging
 from multiprocessing import Value, Lock
 
 import CaptDeviceControl as captdev
-import cmp
+import mpPy6
 from PySide6.QtCore import Signal
-from cmp.CProcessControl import CProcessControl
+from mpPy6.CProcessControl import CProcessControl
 
 from LaserControl.controller.multiprocess.MPLaserDevice import MPLaserDevice
 from LaserControl.model.LaserControlModel import LaserControlModel
@@ -13,8 +13,7 @@ from LaserControl.model.LaserControlModel import LaserControlModel
 class MPLaserDeviceControl(CProcessControl):
     connected_changed = Signal(bool, name='connected_changed')
 
-
-    # Properties
+    # Properties, automatically triggerd on a change by the process class
     current_wavelength_changed = Signal(float, name='current_wavelength_changed')
     min_wavelength_changed = Signal(float, name='min_wavelength_changed')
     max_wavelength_changed = Signal(float, name='max_wavelength_changed')
@@ -22,8 +21,10 @@ class MPLaserDeviceControl(CProcessControl):
     acceleration_changed = Signal(float, name='acceleration_changed')
     deceleration_changed = Signal(float, name='deceleration_changed')
 
+    ## Triggered when the laser settings are changed
+    laser_settings_changed = Signal(float, name='laser_settings_changed')
 
-    get_min_wavelength_finished = Signal(float, name='get_min_wavelength_finished')
+
 
 
     get_max_wavelength_finished = Signal(float, name='get_max_wavelength_finished')
@@ -85,9 +86,7 @@ class MPLaserDeviceControl(CProcessControl):
         self.wavelength_sweep_running_changed.connect(self._on_wavelength_sweep_running_changed)
 
         self.start_wavelength_sweep.connect(self._start_wavelength_sweep)
-
         self.kill_thread = False
-        print("Inintializing MPLaserDeviceControl")
 
     def _on_connected_changed(self, connected: bool):
         if connected:
@@ -96,51 +95,55 @@ class MPLaserDeviceControl(CProcessControl):
             self.logger.info(f"[{connected}] Laser disconnected.")
         self.model.connected = connected
 
+    # ==================================================================================================================
+    # Connection
+    # ==================================================================================================================
+    @mpPy6.CProcessControl.register_function()
+    def connect_device(self, usb_port: str):
+        """
+        Establishes a connection to the Epos and reads all the needed data saved on the internal registry.
+        :param usb_port: usb port on which the connection should be established.
+        """
+        self._module_logger.info(f"Connecting to process using {usb_port}")
+
+    @mpPy6.CProcessControl.register_function()
+    def disconnect_device(self):
+        """
+        Disconnects the Epos device/laser.
+        """
+        self._module_logger.info("Disconnecting from laser.")
+
+    @mpPy6.CProcessControl.register_function()
+    def set_velocity(self, velocity: float) -> None:
+        """ Set the velocity of the laser. """
+        self._module_logger.info(f"Setting velocity to {velocity}.")
+
+    @mpPy6.CProcessControl.register_function()
+    def set_acceleration(self, acceleration: float) -> None:
+        """ Set the velocity of the laser. """
+        self._module_logger.info(f"Setting acceleration to {acceleration}.")
+
+    @mpPy6.CProcessControl.register_function()
+    def set_deceleration(self, acceleration: float) -> None:
+        """ Set the velocity of the laser. """
+        self._module_logger.info(f"Setting acceleration to {acceleration}.")
 
     def set_start_capture_flag(self, start_capture_flag: Value):
         self._start_capture_flag = start_capture_flag
 
-    @cmp.CProcessControl.register_function(connected_changed)
+    @mpPy6.CProcessControl.register_function(connected_changed)
     def get_connected(self):
         self._module_logger.info("Reading current connection state from process.")
 
-    @cmp.CProcessControl.register_function(current_wavelength_changed)
-    def get_current_wavelength(self):
-        self._module_logger.info("Reading current wavelength from process.")
+    @mpPy6.CProcessControl.register_function(laser_settings_changed)
+    def get_laser_settings(self):
+        self._module_logger.info("Reading current laser status.")
 
-    @cmp.CProcessControl.register_function(get_min_wavelength_finished)
-    def get_min_wavelength(self):
-        self._module_logger.info("Reading minimum wavelength from process.")
-
-    @cmp.CProcessControl.register_function(get_max_wavelength_finished)
-    def get_max_wavelength(self):
-        self._module_logger.info("Reading maximum wavelength from process.")
-
-    @CProcessControl.register_function(get_velocity_finished)
-    def get_velocity(self):
-        self._module_logger.info("Reading velocity from process.")
-
-    @cmp.CProcessControl.register_function(get_acceleration_finished)
-    def get_acceleration(self):
-        self._module_logger.info("Reading acceleration from process.")
-
-    @cmp.CProcessControl.register_function(get_deceleration_finished)
-    def get_deceleration(self):
-        self._module_logger.info("Reading deceleration from process.")
-
-    @cmp.CProcessControl.register_function()
-    def dev_connect(self, usb_port: str):
-        self._module_logger.info(f"RConnecting to process using {usb_port}")
-
-    @cmp.CProcessControl.register_function(mp_read_laser_settings_finished)
-    def read_laser_settings(self, usb_port: str):
-        self._module_logger.info(f"Reading laser settings from process using {usb_port}")
-
-    @cmp.CProcessControl.register_function(move_to_wavelength_finished)
+    @mpPy6.CProcessControl.register_function(move_to_wavelength_finished)
     def move_to_wavelength(self, usb_port: str, wavelength: float):
         self._module_logger.info(f"Moving laser ({usb_port}) to wavelength {wavelength} from process")
 
-    @cmp.CProcessControl.register_function(wavelength_sweep_finished)
+    @mpPy6.CProcessControl.register_function(wavelength_sweep_finished)
     def wavelength_sweep(self, usb_port: str, wavelength_start: float, wavelength_end: float):
         print(f"Sweeping laser ({usb_port}): Wavelength {wavelength_start} - {wavelength_end} from process")
 
@@ -150,7 +153,6 @@ class MPLaserDeviceControl(CProcessControl):
     def connect_capture_device(self, device: captdev.Controller):
         self.logger.info(
             "***********************************************Connecting to capture device..***********************************")
-        self.read_laser_settings(self.model.port)
         if isinstance(device, captdev.Controller):
             self.model.capturing_device = device
             self.model.capturing_device.model.device_information.signals.device_connected_changed.connect(
@@ -164,7 +166,7 @@ class MPLaserDeviceControl(CProcessControl):
         self.model.laser_is_moving = (is_moving, to_wavelength)
         if is_moving:
             self.logger.info(f"************** Laser is moving: {is_moving}. "
-                         f"Moving to {self.model.laser_moving_to_wavelength} nm")
+                             f"Moving to {self.model.laser_moving_to_wavelength} nm")
         else:
             if is_moving:
                 self.logger.info(f"************** Laser is moving: {is_moving}. "

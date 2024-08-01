@@ -19,8 +19,10 @@ class LaserControlView(QMainWindow):
         self.logger = controller.logger
 
         self._ui = Ui_LaserControlWindow()
-
         self._ui.setupUi(self)
+
+
+        self._enable_ui(enabled=False)
 
         self.laser_moving_progress_dialog = QProgressDialog(self)
         self.laser_moving_progress_dialog.cancel()
@@ -65,8 +67,13 @@ class LaserControlView(QMainWindow):
         self._ui.btn_start_sweep.clicked.connect(self._on_btn_start_sweep_clicked)
 
         # Connect the Spinboxes for the sweep settings. A change in values sets the new sweep settings
-        self._ui.sb_sweep_start.valueChanged.connect(self._on_sb_sweep_start_changed)
-        self._ui.sb_sweep_stop.valueChanged.connect(self._on_sb_sweep_stop_changed)
+        self._ui.sb_sweep_start.editingFinished.connect(self._on_sb_sweep_start_changed)
+        self._ui.sb_sweep_stop.editingFinished.connect(self._on_sb_sweep_stop_changed)
+
+        #self._ui.btn_save_velocity_params.clicked.connect(self._on_btn_save_velocity_params_clicked)
+        self._ui.sb_velocity.editingFinished.connect(self._on_sb_velocity_editing_finished)
+        self._ui.sb_acc.editingFinished.connect(self._on_sb_acc_editing_finished)
+        self._ui.sb_dec.editingFinished.connect(self._on_sb_dec_editing_finished)
 
     def _connect_signals(self):
 
@@ -96,6 +103,11 @@ class LaserControlView(QMainWindow):
         # Slots that are triggerd if the laser connection changes
         # ==================================================================================================================
 
+    def _enable_ui(self, enabled=True):
+        self._ui.group_motor_profile.setEnabled(enabled)
+        self._ui.group_wavelength_settings.setEnabled(enabled)
+        self._ui.group_sweep_settings.setEnabled(enabled)
+
     def _on_laser_connected_changed(self, connected):
         if connected:
             self._ui.btn_connect.setText("Disconnect")
@@ -103,6 +115,7 @@ class LaserControlView(QMainWindow):
         else:
             self._ui.btn_connect.setText("Connect")
             self.laser_information.set_connection_state(False)
+        self._enable_ui(connected)
 
     def _on_laser_is_moving_changed(self, is_moving, to_wl):
         self._ui.btn_move_to_wavelength.setEnabled(not is_moving)
@@ -119,8 +132,9 @@ class LaserControlView(QMainWindow):
     # ==================================================================================================================
     # Slots that are triggerd if the laser settings change7
     # ==================================================================================================================
-    def _on_connected_changed(self, connected):
-        self.laser_information.set_connection_state(connected)
+    #def _on_connected_changed(self, connected):
+    #    self.laser_information.set_connection_state(connected)
+    #
 
     # ==================================================================================================================
     # Slots that are triggered if the capturing device changes
@@ -210,10 +224,11 @@ class LaserControlView(QMainWindow):
     def _on_btn_connect_clicked(self):
         if self.model.connected:
             self.logger.debug("Attempting to disconnect from laser")
-            #self.controller
+            self.controller.disconnect_device()
         elif not self.model.connected:
             self.logger.debug(f"Attempting to connect to laser on port: {self.model.port}")
-            self.controller.dev_connect(usb_port=self.model.port)
+            self.controller.connect_device(usb_port=self.model.port)
+
 
     def _on_btn_move_to_wavelength_clicked(self):
         self.logger.debug(f"Attempting to set wavelength to: {self._ui.sb_set_wavelength.value()}")
@@ -241,6 +256,20 @@ class LaserControlView(QMainWindow):
     def _on_btn_start_sweep_clicked(self):
         self.logger.warning("Sweep manually started")
         self.controller.start_wavelength_sweep.emit(self.model.sweep_start_wavelength, self.model.sweep_stop_wavelength)
+
+    def _on_sb_velocity_editing_finished(self):
+        self.controller.set_velocity(self._ui.sb_velocity.value())
+
+    def _on_sb_acc_editing_finished(self):
+        self.controller.set_acceleration(self._ui.sb_acc.value())
+
+    def _on_sb_dec_editing_finished(self):
+        self.controller.set_deceleration(self._ui.sb_dec.value())
+
+    def _on_btn_save_velocity_params_clicked(self):
+        self.controller.set_velocity(self._ui.sb_velocity.value())
+        self.controller.set_acceleration(self._ui.sb_acc.value())
+        self.controller.set_deceleration(self._ui.sb_dec.value())
 
     def _display_estimated_progress(self, start_wavelength: float, stop_wavelength: float):
 

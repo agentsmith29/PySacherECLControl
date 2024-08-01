@@ -3,8 +3,8 @@ import pathlib
 import time
 from multiprocessing import Value
 
-import cmp
-from cmp.CProperty import CProperty
+import mpPy6
+from mpPy6.CProperty import CProperty
 
 # from LaserControl.controller.LaserCon import LaserCon
 dir = pathlib.Path(f"{os.path.dirname(os.path.realpath(__file__))}/../../libs")
@@ -13,11 +13,11 @@ dir = str(dir.resolve())
 # Copy the dll to the startup directory
 
 
+#from LaserControl.libs import SacherMotorControl as LaserLib
+from LaserControl.libs import LaserLibSimulator as LaserLib
 
-from LaserControl.libs import SacherMotorControl as LaserLib
 
-
-class MPLaserDevice(cmp.CProcess):
+class MPLaserDevice(mpPy6.CProcess):
 
     def __init__(self, state_queue, cmd_queue,
                  laser_moving_flag: Value,
@@ -43,9 +43,6 @@ class MPLaserDevice(cmp.CProcess):
         self._acceleration = 0
         self._deceleration = 0
 
-
-
-
         self._laser_moving = False
 
         self.laser_moving_flag = laser_moving_flag
@@ -57,41 +54,155 @@ class MPLaserDevice(cmp.CProcess):
     def postrun_init(self):
         self.laser = LaserLib.Motor()
 
-    @cmp.CProcess.register_signal()
-    def dev_connect(self, usb_port: str) -> bool:
+    # ==================================================================================================================
+    # Properties
+    # ==================================================================================================================
+    @CProperty
+    def connected(self):
+        """ Returns if the laser is connected. """
+        return self._connected
+
+    @connected.setter('connected_changed')
+    def connected(self, value: float):
+        """ Sets the connected state of the laser. Only used internally by the process. """
+        self._connected = value
+
+    @CProperty
+    def current_wavelength(self):
+        """
+        Returns the wavelength from the current motor position stored on the epos
+        """
+        return self._current_wavelength
+
+    @current_wavelength.setter('current_wavelength_changed')
+    def current_wavelength(self, value: float):
+        """
+        Sets the current wavelength of the laser. Only used internally by the process.
+        :param value: Wavelength read by the laser library
+        """
+        self._current_wavelength = value
+
+    @CProperty
+    def min_wavelength(self):
+        """
+        :return: Returns the minimum wavelength the laser can be set to.
+        """
+        return self._min_wavelength
+
+    @min_wavelength.setter('min_wavelength_changed')
+    def min_wavelength(self, value: float):
+        """
+        Sets the minimum wavelength of the laser. Only used internally by the process.
+        :param value: The minimum wavelength read by the laser library
+        :return:
+        """
+        self._min_wavelength = value
+
+    @CProperty
+    def max_wavelength(self):
+        """
+        :return: Returns the maximum wavelength the laser can be set to.
+        """
+        return self._max_wavelength
+
+    @max_wavelength.setter('max_wavelength_changed')
+    def max_wavelength(self, value: float):
+        """ Sets the maximum wavelength of the laser. Only used internally by the process."""
+        self._max_wavelength = value
+
+    @CProperty
+    def velocity(self):
+        """
+        :return: Returns the velocity of the laser.
+        :return:
+        """
+        return self._velocity
+
+    @velocity.setter('velocity_changed')
+    def velocity(self, value: float):
+        """ Sets the velocity of the laser. Only used internally by the process."""
+        self._velocity = value
+
+    @CProperty
+    def acceleration(self):
+        """
+        :return: Returns the acceleration of the laser.
+        :return:
+        """
+        return self._acceleration
+
+    @acceleration.setter('acceleration_changed')
+    def acceleration(self, value: float):
+        """
+        Sets the acceleration of the laser. Only used internally by the process.
+        :param value:
+        :return:
+        """
+        self._acceleration = value
+
+    # ==================================================================================================================
+
+    @CProperty
+    def deceleration(self):
+        """
+        :return: Returns the deceleration of the laser.
+        :return:
+        """
+        return self._deceleration
+
+    @deceleration.setter('deceleration_changed')
+    def deceleration(self, value: float):
+        """
+        Sets the deceleration of the laser. Only used internally by the process.
+        :param value:
+        :return:
+        """
+        self._deceleration = value
+
+    # ==================================================================================================================
+    # Connection
+    # ==================================================================================================================
+    @mpPy6.CProcess.register_signal()
+    def connect_device(self, usb_port: str) -> bool:
         """
         Connect to the laser on the specified USB port.
         :param usb_port: USB port to connect to
         :return: True if connected, False otherwise
         """
         self.logger.info(f"Connecting to laser on port {usb_port}")
-        self.read_laser_settings()
+
         try:
             self.laser.connect(usb_port)
             self.connected = True
         except Exception as e:
             self.logger.error(f"Error connecting to laser: {e}")
             self.connected = False
-
             raise e
 
-
-
+        self.get_laser_settings()
         return self._connected
 
-    @CProperty
-    def min_wavelength(self):
-        return self._min_wavelength
+    @mpPy6.CProcess.register_signal()
+    def disconnect_device(self) -> bool:
+        """
+        Closes the connection to the Epos.
+        """
+        self.logger.info(f"Disconnecting from laser.")
 
-    @CProperty
-    def max_wavelength(self):
-        return self._max_wavelength
+        try:
+            self.laser.disconnect()
+            self.connected = False
+        except Exception as e:
+            self.logger.error(f"Error disconnecting from laser: {e}")
+            self.connected = False
+            raise e
 
+        self.get_laser_settings()
+        return self._connected
 
-
-
-
-
+    # ==================================================================================================================#
+    #
+    # ==================================================================================================================#
     @CProperty
     def wavelength_sweep_running(self):
         return self._wavelength_sweep_running
@@ -100,78 +211,28 @@ class MPLaserDevice(cmp.CProcess):
     def wavelength_sweep_running(self, value: bool):
         self._wavelength_sweep_running = value
 
-
-    @CProperty
-    def connected(self):
-        return self._connected
-
-    @connected.setter('connected_changed')
-    def connected(self, value: float):
-        self._connected = value
+    # ==================================================================================================================
 
     # ==================================================================================================================
 
-    @CProperty
-    def current_wavelength(self):
-        return self._current_wavelength
-
-    @current_wavelength.setter('current_wavelength_changed')
-    def current_wavelength(self, value: float):
-        self._current_wavelength = value
-
-    @CProperty
-    def min_wavelength(self):
-        return self._min_wavelength
-
-    @min_wavelength.setter('min_wavelength_changed')
-    def min_wavelength(self, value: float):
-        self._min_wavelength = value
+    def _check_laser_state(self) -> bool:
+        """
+        Check if the laser is connected and the laser object is initialized.
+        This is a helper function to avoid code duplication.
+        :param func:
+        :return:
+        """
+        if self.laser is None or self._connected is False:
+            return False
+        else:
+            return True
 
     # ==================================================================================================================
 
-    @CProperty
-    def max_wavelength(self):
-        return self._max_wavelength
-
-    @max_wavelength.setter('max_wavelength_changed')
-    def max_wavelength(self, value: float):
-        self._max_wavelength = value
-
     # ==================================================================================================================
-
-    @CProperty
-    def velocity(self):
-        return self._velocity
-
-    @velocity.setter('velocity_changed')
-    def velocity(self, value: float):
-        self._velocity = value
-
+    # Reading functions. Updates the laser settings of this class.
     # ==================================================================================================================
-
-    @CProperty
-    def acceleration(self):
-        return self._acceleration
-
-    @acceleration.setter('acceleration_changed')
-    def acceleration(self, value: float):
-        self._acceleration = value
-
-    # ==================================================================================================================
-
-    @CProperty
-    def deceleration(self):
-        return self._deceleration
-
-    @deceleration.setter('deceleration_changed')
-    def deceleration(self, value: float):
-        self._deceleration = value
-
-
-
-
-
-    def read_current_wavelength(self) -> float:
+    def get_current_wavelength(self) -> float:
         if self.laser is None or self._connected is False:
             self.current_wavelength = 0
             return -1
@@ -179,8 +240,7 @@ class MPLaserDevice(cmp.CProcess):
             self.current_wavelength = float(self.laser.getWavelength())
         return self._current_wavelength
 
-
-    def read_min_wavelength(self) -> float:
+    def get_min_wavelength(self) -> float:
         if self.laser is None or self._connected is False:
             self.min_wavelength = 0
             return -1
@@ -189,7 +249,7 @@ class MPLaserDevice(cmp.CProcess):
 
         return self._min_wavelength
 
-    def read_max_wavelength(self) -> float:
+    def get_max_wavelength(self) -> float:
         if self.laser is None or self._connected is False:
             self.max_wavelength = 0
             return -1
@@ -197,40 +257,69 @@ class MPLaserDevice(cmp.CProcess):
             self.max_wavelength = float(self.laser.getWavelengthMinMax()[1])
         return self._max_wavelength
 
-    def read_velocity(self) -> float:
+    def get_velocity(self) -> float:
         if self.laser is None or self._connected is False:
             self.velocity = 0
             return -1
         else:
-            self.velocity = float(self.laser.getVelocity()[0])
+            self.velocity = float(self.laser.getVelocityParameter()[0])
         return self._velocity
 
-    def read_acceleration(self) -> float:
+    @mpPy6.CProcess.register_signal()
+    def set_velocity(self, velocity: float) -> None:
+        """ Set the velocity of the laser. """
+        if self._check_laser_state():
+            self.laser.setVelocityParameter(velocity, self._acceleration, self._deceleration)
+            self.get_laser_settings()
+        else:
+            raise Exception("Velocity could not be set. Laser is not connected.")
+
+    def get_acceleration(self) -> float:
         if self.laser is None or self._connected is False:
             self.acceleration = 0
             return -1
         else:
-            self.acceleration = float(self.laser.getVelocity()[1])
+            self.acceleration = float(self.laser.getVelocityParameter()[1])
         return self._acceleration
 
-    def read_deceleration(self) -> float:
+    @mpPy6.CProcess.register_signal()
+    def set_acceleration(self, acceleration: float) -> None:
+        """ Set the acceleration of the laser. """
+        if self._check_laser_state():
+            self.laser.setVelocityParameter(self._velocity, acceleration, self._deceleration)
+            self.get_laser_settings()
+        else:
+            raise Exception("Acceleration could not be set. Laser is not connected.")
+
+    def get_deceleration(self) -> float:
         if self.laser is None or self._connected is False:
             self.deceleration = 0
             return -1
         else:
-            self.deceleration = float(self.laser.getVelocity()[2])
+            self.deceleration = float(self.laser.getVelocityParameter()[2])
         return self._deceleration
 
+    @mpPy6.CProcess.register_signal()
+    def set_deceleration(self, deceleration: float) -> None:
+        """ Set the deceleration of the laser. """
+        if self._check_laser_state():
+            self.laser.setVelocityParameter(self._velocity, self._acceleration, deceleration)
+            self.get_laser_settings()
+        else:
+            raise Exception("Deceleration could not be set. Laser is not connected.")
 
-    def read_laser_settings(self, usb_port: str = None, *args, **kwargs):
+    @mpPy6.CProcess.register_signal(postfix="_changed")
+    def get_laser_settings(self, *args, **kwargs):
         self.logger.info(f"Reading laser settings.")
 
-        self.read_current_wavelength()
-        self.read_min_wavelength()
-        self.read_max_wavelength()
-        self.read_velocity()
-        self.read_acceleration()
-        self.read_deceleration()
+        self.get_min_wavelength()
+        self.get_max_wavelength()
+        self.get_current_wavelength()
+        self.get_velocity()
+        self.get_acceleration()
+        self.get_deceleration()
+
+
 
 
     @CProperty
@@ -242,14 +331,12 @@ class MPLaserDevice(cmp.CProcess):
         self.laser_moving_flag.value = int(value[0])
         self._laser_moving = value
 
-
-
-    @cmp.CProcess.register_signal(postfix="_changed")
+    @mpPy6.CProcess.register_signal(postfix="_changed")
     def movement_finished(self, finished: bool):
         self.laser_finished_flag.value = finished
         return self.laser_finished_flag.value
 
-    @cmp.CProcess.register_signal(postfix="_finished")
+    @mpPy6.CProcess.register_signal(postfix="_finished")
     def move_to_wavelength(self, usb_port: str = None,
                            wavelength: float = None, capture: bool = False, *args, **kwargs):
 
@@ -257,8 +344,7 @@ class MPLaserDevice(cmp.CProcess):
             return -1
         else:
 
-
-            self.read_laser_settings()
+            self.get_laser_settings()
             self.laser_is_moving = (False, wavelength)
             self.laser_finished_flag.value = False
             self.logger.info(f"**** Go to selected wavelength. Started moving laser to {wavelength}. ****")
@@ -270,7 +356,7 @@ class MPLaserDevice(cmp.CProcess):
                     f"******************** Capture flag set to {self.start_capture_flag.value} **********************")
 
             time.sleep(1)
-            self.laser.moveToWavelength(wavelength, False)
+            self.laser.moveToWavelength(wavelength, False, trigger=0)
             self.start_capture_flag.value = int(False)
             self._module_logger.info(
                 f"******************** Capture flag set to {self.start_capture_flag.value} **********************")
@@ -284,11 +370,10 @@ class MPLaserDevice(cmp.CProcess):
 
             # current_wavelength.value = con.current_wavelength
             self.logger.info(
-                f">>> Current Wavelength: {self.read_current_wavelength()}. Took {time_end - time_start} seconds to move.")
-            self.read_laser_settings()
+                f">>> Current Wavelength: {self.get_current_wavelength()}. Took {time_end - time_start} seconds to move.")
+            self.get_laser_settings()
             # laser_connected_flag.value = False  # We need to manually set this
-            return self.read_current_wavelength()
-
+            return self.get_current_wavelength()
 
     def wavelength_sweep(self, usb_port: str = None,
                          wavelength_start: float = None,
@@ -297,7 +382,7 @@ class MPLaserDevice(cmp.CProcess):
         # laser_finished_flag.value = False
         # laser_state.value.connected = False
         self.wavelength_sweep_running = True
-        self.read_laser_settings(usb_port)
+        self.get_laser_settings(usb_port)
         self.logger.info(f"Starting sweep from {wavelength_start} to {wavelength_end}.")
         self.logger.info(f"Resetting laser to start wavelength {wavelength_start}. "
                          f"Current wavelength is {self.current_wavelength}")

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>679</height>
+    <width>697</width>
+    <height>678</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -493,6 +493,18 @@ QTabBar::tab:selected {
           </item>
           <item row="1" column="0" colspan="2">
            <widget class="QGroupBox" name="group_wavelength_settings">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>210</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>300</height>
+             </size>
+            </property>
             <property name="title">
              <string>Wavelength</string>
             </property>
@@ -528,17 +540,26 @@ QTabBar::tab:selected {
                </item>
                <item row="9" column="0" colspan="2">
                 <widget class="QLCDNumber" name="lcd_wavelength">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>62</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>16777215</height>
+                   <height>62</height>
                   </size>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::Box</enum>
+                  <enum>QFrame::Shape::Box</enum>
                  </property>
                  <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
+                  <enum>QFrame::Shadow::Sunken</enum>
                  </property>
                  <property name="lineWidth">
                   <number>1</number>
@@ -553,7 +574,7 @@ QTabBar::tab:selected {
                   <number>10</number>
                  </property>
                  <property name="segmentStyle">
-                  <enum>QLCDNumber::Flat</enum>
+                  <enum>QLCDNumber::SegmentStyle::Flat</enum>
                  </property>
                  <property name="value" stdset="0">
                   <double>830.000000000000000</double>
@@ -581,13 +602,13 @@ QTabBar::tab:selected {
                      </size>
                     </property>
                     <property name="layoutDirection">
-                     <enum>Qt::LeftToRight</enum>
+                     <enum>Qt::LayoutDirection::LeftToRight</enum>
                     </property>
                     <property name="text">
                      <string>870 nm</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -616,13 +637,13 @@ QTabBar::tab:selected {
                      </size>
                     </property>
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                     <property name="invertedControls">
                      <bool>false</bool>
                     </property>
                     <property name="tickPosition">
-                     <enum>QSlider::NoTicks</enum>
+                     <enum>QSlider::TickPosition::NoTicks</enum>
                     </property>
                    </widget>
                   </item>
@@ -652,7 +673,7 @@ QTabBar::tab:selected {
              <string>Sweep Settings</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
-             <item row="0" column="0">
+             <item row="1" column="0">
               <layout class="QGridLayout" name="gridLayout_10">
                <item row="0" column="3">
                 <widget class="QDoubleSpinBox" name="sb_sweep_stop">
@@ -708,6 +729,15 @@ QTabBar::tab:selected {
           </item>
           <item row="3" column="0" colspan="2">
            <widget class="QGroupBox" name="group_motor_profile">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -717,7 +747,7 @@ QTabBar::tab:selected {
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>120</height>
+              <height>150</height>
              </size>
             </property>
             <property name="title">
@@ -728,10 +758,16 @@ QTabBar::tab:selected {
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
                 <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="1" column="1">
-                  <widget class="QDoubleSpinBox" name="sb_acc">
-                   <property name="suffix">
-                    <string> nm/s</string>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lbl_vel">
+                   <property name="text">
+                    <string>Velocity</string>
                    </property>
                   </widget>
                  </item>
@@ -742,15 +778,27 @@ QTabBar::tab:selected {
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="lbl_vel">
-                   <property name="text">
-                    <string>Velocity</string>
+                 <item row="0" column="1">
+                  <widget class="QDoubleSpinBox" name="sb_velocity">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
+                   <property name="suffix">
+                    <string> nm/s</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QDoubleSpinBox" name="sb_velocity">
+                 <item row="1" column="1">
+                  <widget class="QDoubleSpinBox" name="sb_acc">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
                    <property name="suffix">
                     <string> nm/s</string>
                    </property>
@@ -765,6 +813,12 @@ QTabBar::tab:selected {
                  </item>
                  <item row="2" column="1">
                   <widget class="QDoubleSpinBox" name="sb_dec">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
                    <property name="suffix">
                     <string> nm/s</string>
                    </property>
