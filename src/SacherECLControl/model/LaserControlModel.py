@@ -1,11 +1,11 @@
 # import mcpy
-import CaptDeviceControl as captdev
+import ADScopeControl as captdev
 
-from LaserControl.LaserConfig import LaserConfig
-from LaserControl.model.LaserControlSignals import LaserControlSignals
+from SacherECLControl.LaserConfig import LaserConfig
+from SacherECLControl.model.LaserControlSignals import LaserControlSignals
 
 
-# from LaserControl.model.LaserControlSignals import LaserControllerSignals
+# from SacherECLControl.model.LaserControlSignals import LaserControllerSignals
 # from LaserControlOld.LaserConfig import LaserConfig
 
 

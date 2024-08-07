@@ -16,16 +16,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDoubleSpinBox,
-    QFrame, QGridLayout, QGroupBox, QLCDNumber,
-    QLabel, QMainWindow, QPushButton, QSizePolicy,
-    QSlider, QTabWidget, QVBoxLayout, QWidget)
+    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
+    QLCDNumber, QLabel, QMainWindow, QPushButton,
+    QSizePolicy, QSlider, QTabWidget, QToolButton,
+    QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_LaserControlWindow(object):
     def setupUi(self, LaserControlWindow):
         if not LaserControlWindow.objectName():
             LaserControlWindow.setObjectName(u"LaserControlWindow")
-        LaserControlWindow.resize(697, 678)
+        LaserControlWindow.resize(697, 717)
         self.centralwidget = QWidget(LaserControlWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
@@ -463,35 +464,67 @@ class Ui_LaserControlWindow(object):
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.grd_tab_settings = QGridLayout()
         self.grd_tab_settings.setObjectName(u"grd_tab_settings")
-        self.grp_Connection = QGroupBox(self.tab_control)
-        self.grp_Connection.setObjectName(u"grp_Connection")
-        self.grp_Connection.setMinimumSize(QSize(250, 100))
-        self.grp_Connection.setMaximumSize(QSize(300, 110))
-        self.gridLayout_4 = QGridLayout(self.grp_Connection)
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.vgrd_connection_settings = QVBoxLayout()
-        self.vgrd_connection_settings.setObjectName(u"vgrd_connection_settings")
-        self.lbl_port_selection = QLabel(self.grp_Connection)
-        self.lbl_port_selection.setObjectName(u"lbl_port_selection")
-        self.lbl_port_selection.setMaximumSize(QSize(16777215, 12))
+        self.group_motor_profile = QGroupBox(self.tab_control)
+        self.group_motor_profile.setObjectName(u"group_motor_profile")
+        self.group_motor_profile.setEnabled(True)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.group_motor_profile.sizePolicy().hasHeightForWidth())
+        self.group_motor_profile.setSizePolicy(sizePolicy)
+        self.group_motor_profile.setMinimumSize(QSize(0, 0))
+        self.group_motor_profile.setMaximumSize(QSize(16777215, 150))
+        self.gridLayout_7 = QGridLayout(self.group_motor_profile)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.gridLayout_11 = QGridLayout()
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
+        self.gridLayout_11.setContentsMargins(-1, -1, 0, 0)
+        self.lbl_vel = QLabel(self.group_motor_profile)
+        self.lbl_vel.setObjectName(u"lbl_vel")
 
-        self.vgrd_connection_settings.addWidget(self.lbl_port_selection)
+        self.gridLayout_11.addWidget(self.lbl_vel, 0, 0, 1, 1)
 
-        self.cb_port_selection = QComboBox(self.grp_Connection)
-        self.cb_port_selection.setObjectName(u"cb_port_selection")
+        self.lbl_acc = QLabel(self.group_motor_profile)
+        self.lbl_acc.setObjectName(u"lbl_acc")
 
-        self.vgrd_connection_settings.addWidget(self.cb_port_selection)
+        self.gridLayout_11.addWidget(self.lbl_acc, 1, 0, 1, 1)
 
-        self.btn_connect = QPushButton(self.grp_Connection)
-        self.btn_connect.setObjectName(u"btn_connect")
+        self.sb_velocity = QDoubleSpinBox(self.group_motor_profile)
+        self.sb_velocity.setObjectName(u"sb_velocity")
+        self.sb_velocity.setEnabled(True)
+        self.sb_velocity.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
 
-        self.vgrd_connection_settings.addWidget(self.btn_connect)
+        self.gridLayout_11.addWidget(self.sb_velocity, 0, 1, 1, 1)
+
+        self.sb_acc = QDoubleSpinBox(self.group_motor_profile)
+        self.sb_acc.setObjectName(u"sb_acc")
+        self.sb_acc.setEnabled(True)
+        self.sb_acc.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
+
+        self.gridLayout_11.addWidget(self.sb_acc, 1, 1, 1, 1)
+
+        self.lbl_dec = QLabel(self.group_motor_profile)
+        self.lbl_dec.setObjectName(u"lbl_dec")
+
+        self.gridLayout_11.addWidget(self.lbl_dec, 2, 0, 1, 1)
+
+        self.sb_dec = QDoubleSpinBox(self.group_motor_profile)
+        self.sb_dec.setObjectName(u"sb_dec")
+        self.sb_dec.setEnabled(True)
+        self.sb_dec.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
+
+        self.gridLayout_11.addWidget(self.sb_dec, 2, 1, 1, 1)
 
 
-        self.gridLayout_4.addLayout(self.vgrd_connection_settings, 0, 0, 1, 1)
+        self.verticalLayout_2.addLayout(self.gridLayout_11)
 
 
-        self.grd_tab_settings.addWidget(self.grp_Connection, 0, 0, 1, 1)
+        self.gridLayout_7.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
+
+
+        self.grd_tab_settings.addWidget(self.group_motor_profile, 3, 0, 1, 2)
 
         self.group_wavelength_settings = QGroupBox(self.tab_control)
         self.group_wavelength_settings.setObjectName(u"group_wavelength_settings")
@@ -613,68 +646,6 @@ class Ui_LaserControlWindow(object):
 
         self.grd_tab_settings.addWidget(self.group_sweep_settings, 2, 0, 1, 2)
 
-        self.group_motor_profile = QGroupBox(self.tab_control)
-        self.group_motor_profile.setObjectName(u"group_motor_profile")
-        self.group_motor_profile.setEnabled(True)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.group_motor_profile.sizePolicy().hasHeightForWidth())
-        self.group_motor_profile.setSizePolicy(sizePolicy)
-        self.group_motor_profile.setMinimumSize(QSize(0, 0))
-        self.group_motor_profile.setMaximumSize(QSize(16777215, 150))
-        self.gridLayout_7 = QGridLayout(self.group_motor_profile)
-        self.gridLayout_7.setObjectName(u"gridLayout_7")
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.gridLayout_11 = QGridLayout()
-        self.gridLayout_11.setObjectName(u"gridLayout_11")
-        self.gridLayout_11.setContentsMargins(-1, -1, 0, 0)
-        self.lbl_vel = QLabel(self.group_motor_profile)
-        self.lbl_vel.setObjectName(u"lbl_vel")
-
-        self.gridLayout_11.addWidget(self.lbl_vel, 0, 0, 1, 1)
-
-        self.lbl_acc = QLabel(self.group_motor_profile)
-        self.lbl_acc.setObjectName(u"lbl_acc")
-
-        self.gridLayout_11.addWidget(self.lbl_acc, 1, 0, 1, 1)
-
-        self.sb_velocity = QDoubleSpinBox(self.group_motor_profile)
-        self.sb_velocity.setObjectName(u"sb_velocity")
-        self.sb_velocity.setEnabled(True)
-        self.sb_velocity.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
-
-        self.gridLayout_11.addWidget(self.sb_velocity, 0, 1, 1, 1)
-
-        self.sb_acc = QDoubleSpinBox(self.group_motor_profile)
-        self.sb_acc.setObjectName(u"sb_acc")
-        self.sb_acc.setEnabled(True)
-        self.sb_acc.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
-
-        self.gridLayout_11.addWidget(self.sb_acc, 1, 1, 1, 1)
-
-        self.lbl_dec = QLabel(self.group_motor_profile)
-        self.lbl_dec.setObjectName(u"lbl_dec")
-
-        self.gridLayout_11.addWidget(self.lbl_dec, 2, 0, 1, 1)
-
-        self.sb_dec = QDoubleSpinBox(self.group_motor_profile)
-        self.sb_dec.setObjectName(u"sb_dec")
-        self.sb_dec.setEnabled(True)
-        self.sb_dec.setCorrectionMode(QAbstractSpinBox.CorrectionMode.CorrectToNearestValue)
-
-        self.gridLayout_11.addWidget(self.sb_dec, 2, 1, 1, 1)
-
-
-        self.verticalLayout_2.addLayout(self.gridLayout_11)
-
-
-        self.gridLayout_7.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
-
-
-        self.grd_tab_settings.addWidget(self.group_motor_profile, 3, 0, 1, 2)
-
         self.grp_system_info = QGroupBox(self.tab_control)
         self.grp_system_info.setObjectName(u"grp_system_info")
         self.grp_system_info.setMinimumSize(QSize(0, 110))
@@ -688,6 +659,36 @@ class Ui_LaserControlWindow(object):
 
 
         self.grd_tab_settings.addWidget(self.grp_system_info, 0, 1, 1, 1)
+
+        self.grp_Connection = QGroupBox(self.tab_control)
+        self.grp_Connection.setObjectName(u"grp_Connection")
+        self.grp_Connection.setMinimumSize(QSize(250, 100))
+        self.grp_Connection.setMaximumSize(QSize(300, 110))
+        self.gridLayout_4 = QGridLayout(self.grp_Connection)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.vgrd_connection_settings = QVBoxLayout()
+        self.vgrd_connection_settings.setObjectName(u"vgrd_connection_settings")
+        self.lbl_port_selection = QLabel(self.grp_Connection)
+        self.lbl_port_selection.setObjectName(u"lbl_port_selection")
+        self.lbl_port_selection.setMaximumSize(QSize(16777215, 12))
+
+        self.vgrd_connection_settings.addWidget(self.lbl_port_selection)
+
+        self.cb_port_selection = QComboBox(self.grp_Connection)
+        self.cb_port_selection.setObjectName(u"cb_port_selection")
+
+        self.vgrd_connection_settings.addWidget(self.cb_port_selection)
+
+        self.btn_connect = QPushButton(self.grp_Connection)
+        self.btn_connect.setObjectName(u"btn_connect")
+
+        self.vgrd_connection_settings.addWidget(self.btn_connect)
+
+
+        self.gridLayout_4.addLayout(self.vgrd_connection_settings, 0, 0, 1, 1)
+
+
+        self.grd_tab_settings.addWidget(self.grp_Connection, 0, 0, 1, 1)
 
 
         self.gridLayout_9.addLayout(self.grd_tab_settings, 0, 0, 1, 1)
@@ -704,7 +705,52 @@ class Ui_LaserControlWindow(object):
         self.grd_uncertainty_dist.setObjectName(u"grd_uncertainty_dist")
         self.table_laser_control.addTab(self.tab_uncertainty_dist, "")
 
-        self.gridLayout_3.addWidget(self.table_laser_control, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.table_laser_control, 2, 0, 1, 1)
+
+        self.horizontalFrame = QFrame(self.centralwidget)
+        self.horizontalFrame.setObjectName(u"horizontalFrame")
+        self.horizontalFrame.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.horizontalLayout = QHBoxLayout(self.horizontalFrame)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.menuBar = QFrame(self.horizontalFrame)
+        self.menuBar.setObjectName(u"menuBar")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.menuBar.sizePolicy().hasHeightForWidth())
+        self.menuBar.setSizePolicy(sizePolicy1)
+        self.menuBar.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_2 = QHBoxLayout(self.menuBar)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.menu_file = QToolButton(self.menuBar)
+        self.menu_file.setObjectName(u"menu_file")
+
+        self.horizontalLayout_2.addWidget(self.menu_file)
+
+        self.menu_edit = QToolButton(self.menuBar)
+        self.menu_edit.setObjectName(u"menu_edit")
+
+        self.horizontalLayout_2.addWidget(self.menu_edit)
+
+        self.menu_run = QToolButton(self.menuBar)
+        self.menu_run.setObjectName(u"menu_run")
+
+        self.horizontalLayout_2.addWidget(self.menu_run)
+
+
+        self.horizontalLayout.addWidget(self.menuBar)
+
+        self.horizontalFrame1 = QFrame(self.horizontalFrame)
+        self.horizontalFrame1.setObjectName(u"horizontalFrame1")
+        self.horizontalLayout_3 = QHBoxLayout(self.horizontalFrame1)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+
+        self.horizontalLayout.addWidget(self.horizontalFrame1)
+
+
+        self.gridLayout_3.addWidget(self.horizontalFrame, 0, 0, 1, 1)
 
         LaserControlWindow.setCentralWidget(self.centralwidget)
 
@@ -718,9 +764,13 @@ class Ui_LaserControlWindow(object):
 
     def retranslateUi(self, LaserControlWindow):
         LaserControlWindow.setWindowTitle(QCoreApplication.translate("LaserControlWindow", u"MainWindow", None))
-        self.grp_Connection.setTitle(QCoreApplication.translate("LaserControlWindow", u"Connection Settings", None))
-        self.lbl_port_selection.setText(QCoreApplication.translate("LaserControlWindow", u"USB Port Connection", None))
-        self.btn_connect.setText(QCoreApplication.translate("LaserControlWindow", u"Connect", None))
+        self.group_motor_profile.setTitle(QCoreApplication.translate("LaserControlWindow", u"Motor Profile", None))
+        self.lbl_vel.setText(QCoreApplication.translate("LaserControlWindow", u"Velocity", None))
+        self.lbl_acc.setText(QCoreApplication.translate("LaserControlWindow", u"Acceleration", None))
+        self.sb_velocity.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
+        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
+        self.lbl_dec.setText(QCoreApplication.translate("LaserControlWindow", u"Deceleration", None))
+        self.sb_dec.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
         self.group_wavelength_settings.setTitle(QCoreApplication.translate("LaserControlWindow", u"Wavelength", None))
         self.lbl_wavelength.setText(QCoreApplication.translate("LaserControlWindow", u"Wavelength [nm]", None))
         self.btn_move_to_wavelength.setText(QCoreApplication.translate("LaserControlWindow", u"Move", None))
@@ -733,16 +783,15 @@ class Ui_LaserControlWindow(object):
         self.lbl_sweep_stop.setText(QCoreApplication.translate("LaserControlWindow", u"Sweep Stop [nm]", None))
         self.btn_start_sweep.setText(QCoreApplication.translate("LaserControlWindow", u"Start Sweep", None))
         self.sb_sweep_start.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm", u"nm/s"))
-        self.group_motor_profile.setTitle(QCoreApplication.translate("LaserControlWindow", u"Motor Profile", None))
-        self.lbl_vel.setText(QCoreApplication.translate("LaserControlWindow", u"Velocity", None))
-        self.lbl_acc.setText(QCoreApplication.translate("LaserControlWindow", u"Acceleration", None))
-        self.sb_velocity.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
-        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
-        self.lbl_dec.setText(QCoreApplication.translate("LaserControlWindow", u"Deceleration", None))
-        self.sb_dec.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
         self.grp_system_info.setTitle(QCoreApplication.translate("LaserControlWindow", u"System Information", None))
+        self.grp_Connection.setTitle(QCoreApplication.translate("LaserControlWindow", u"Connection Settings", None))
+        self.lbl_port_selection.setText(QCoreApplication.translate("LaserControlWindow", u"USB Port Connection", None))
+        self.btn_connect.setText(QCoreApplication.translate("LaserControlWindow", u"Connect", None))
         self.table_laser_control.setTabText(self.table_laser_control.indexOf(self.tab_control), QCoreApplication.translate("LaserControlWindow", u"Laser Control", None))
         self.table_laser_control.setTabText(self.table_laser_control.indexOf(self.tab_uncertainty), QCoreApplication.translate("LaserControlWindow", u"Uncertainty", None))
         self.table_laser_control.setTabText(self.table_laser_control.indexOf(self.tab_uncertainty_dist), QCoreApplication.translate("LaserControlWindow", u"Uncertainty Distribution", None))
+        self.menu_file.setText(QCoreApplication.translate("LaserControlWindow", u"File", None))
+        self.menu_edit.setText(QCoreApplication.translate("LaserControlWindow", u"Edit", None))
+        self.menu_run.setText(QCoreApplication.translate("LaserControlWindow", u"Run", None))
     # retranslateUi
 

@@ -1,13 +1,13 @@
 import logging
 from multiprocessing import Value, Lock
 
-import CaptDeviceControl as captdev
+import ADScopeControl as captdev
 import mpPy6
 from PySide6.QtCore import Signal
 from mpPy6.CProcessControl import CProcessControl
 
-from LaserControl.controller.multiprocess.MPLaserDevice import MPLaserDevice
-from LaserControl.model.LaserControlModel import LaserControlModel
+from SacherECLControl.controller.multiprocess.MPLaserDevice import MPLaserDevice
+from SacherECLControl.model.LaserControlModel import LaserControlModel
 
 
 class MPLaserDeviceControl(CProcessControl):

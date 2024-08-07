@@ -6,15 +6,13 @@ from multiprocessing import Value
 import mpPy6
 from mpPy6.CProperty import CProperty
 
-# from LaserControl.controller.LaserCon import LaserCon
-dir = pathlib.Path(f"{os.path.dirname(os.path.realpath(__file__))}/../../libs")
-dir = str(dir.resolve())
 
 # Copy the dll to the startup directory
 
 
-from LaserControl.libs import SacherMotorControl as LaserLib
-#from LaserControl.libs import LaserLibSimulator as LaserLib
+from SacherECLControl.libs.SacherLib.PythonMotorControlClass.lib.Python312 import SacherMotorControl as LaserLib
+
+#from SacherECLControl.libs import LaserLibSimulator as LaserLib
 
 
 class MPLaserDevice(mpPy6.CProcess):

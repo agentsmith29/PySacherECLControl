@@ -2,15 +2,18 @@ import logging
 import os
 
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QMainWindow, QProgressDialog
+from PySide6.QtGui import QIcon, QPixmap, QAction
+from PySide6.QtWidgets import QMainWindow, QProgressDialog, QToolButton, QMenu
+from WidgetCollection.Dialogs import AboutDialog
 from rich.logging import RichHandler
 
-from LaserControl.controller.LaserDeviceControl import MPLaserDeviceControl
-from LaserControl.model.LaserControlModel import LaserControlModel
-from LaserControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
-from LaserControl.view.WidgetLaserInformation import WidgetLaserInformation
+from SacherECLControl.controller.LaserDeviceControl import MPLaserDeviceControl
+from SacherECLControl.model.LaserControlModel import LaserControlModel
+from SacherECLControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
+from SacherECLControl.view.WidgetLaserInformation import WidgetLaserInformation
 
 
+from SacherECLControl import __version__, __author__, __license__, __description__, __url__
 class LaserControlView(QMainWindow):
 
     def __init__(self, model: LaserControlModel, controller: MPLaserDeviceControl):
@@ -21,6 +24,21 @@ class LaserControlView(QMainWindow):
         self._ui = Ui_LaserControlWindow()
         self._ui.setupUi(self)
 
+        self.setWindowTitle(f'Sacher External Cavity Laser Control - {__version__}')
+        self.setWindowIcon(QIcon(':/icons/icons/sacherelccontrol_icon.png'))
+
+        self.about_dialog = AboutDialog(
+            "ADScope Control",
+            __description__,
+            __version__,
+            f"2024 {__author__}",
+            __url__,
+            f"This project is open source and contributions are highly welcome.<br>"
+            f"<br>The project is licensed under <br>{__license__}.",
+            QPixmap(':/icons/icons/sacherelccontrol_icon.png')
+        )
+
+        self._init_menu_bar()
 
         self._enable_ui(enabled=False)
 
@@ -47,6 +65,28 @@ class LaserControlView(QMainWindow):
 
     # def _on_uncertainty_changed(self, uncertainty):
     #    self.uncertainty_dist_plot.uncertainty = uncertainty
+
+    def _init_menu_bar(self):
+        # Add menu bar
+        self.file_menu = QMenu('&Files', self)
+
+        self.act_connect = QAction('Connect', self)
+        self.file_menu.addAction(self.act_connect)
+
+        self.file_menu.addSeparator()
+
+        self.file_menu.addSeparator()
+
+        self.act_about = QAction('About', self)
+        self.act_about.triggered.connect(self.about_dialog.exec)
+        self.file_menu.addAction(self.act_about)
+
+        self.act_exit = QAction('Exit', self)
+        self.act_exit.setShortcut('Ctrl+Q')
+        self.file_menu.addAction(self.act_exit)
+
+        self._ui.menu_file.setMenu(self.file_menu)
+        self._ui.menu_file.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
 
     def connect_capturing_device(self, device):
         pass

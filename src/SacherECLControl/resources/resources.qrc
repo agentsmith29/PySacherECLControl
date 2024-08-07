@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/sacherelccontrol_icon.png</file>
     <file>icons/cil-airplane-mode-off.png</file>
     <file>icons/cil-alarm.png</file>
     <file>icons/cil-align-left.png</file>
@@ -257,5 +258,8 @@
     <file>icons/cil-face-dead.png</file>
     <file>icons/cil-input.png</file>
     <file>icons/cil-pen-alt.png</file>
+  </qresource>
+  <qresource prefix="icons-svg">
+    <file>icons/sacherelccontrol_icon.svg</file>
   </qresource>
 </RCC>

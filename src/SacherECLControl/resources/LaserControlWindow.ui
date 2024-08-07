@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>697</width>
-    <height>678</height>
+    <height>717</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -431,7 +431,7 @@ QTabBar::tab:selected {
 </string>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
+    <item row="2" column="0">
      <widget class="QTabWidget" name="table_laser_control">
       <property name="currentIndex">
        <number>0</number>
@@ -443,48 +443,104 @@ QTabBar::tab:selected {
        <layout class="QGridLayout" name="gridLayout_9">
         <item row="0" column="0">
          <layout class="QGridLayout" name="grd_tab_settings">
-          <item row="0" column="0">
-           <widget class="QGroupBox" name="grp_Connection">
+          <item row="3" column="0" colspan="2">
+           <widget class="QGroupBox" name="group_motor_profile">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>250</width>
-              <height>100</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>300</width>
-              <height>110</height>
+              <width>16777215</width>
+              <height>150</height>
              </size>
             </property>
             <property name="title">
-             <string>Connection Settings</string>
+             <string>Motor Profile</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_4">
+            <layout class="QGridLayout" name="gridLayout_7">
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="vgrd_connection_settings">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
-                <widget class="QLabel" name="lbl_port_selection">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>12</height>
-                  </size>
+                <layout class="QGridLayout" name="gridLayout_11">
+                 <property name="rightMargin">
+                  <number>0</number>
                  </property>
-                 <property name="text">
-                  <string>USB Port Connection</string>
+                 <property name="bottomMargin">
+                  <number>0</number>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="cb_port_selection"/>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btn_connect">
-                 <property name="text">
-                  <string>Connect</string>
-                 </property>
-                </widget>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lbl_vel">
+                   <property name="text">
+                    <string>Velocity</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="lbl_acc">
+                   <property name="text">
+                    <string>Acceleration</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QDoubleSpinBox" name="sb_velocity">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
+                   <property name="suffix">
+                    <string> nm/s</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QDoubleSpinBox" name="sb_acc">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
+                   <property name="suffix">
+                    <string> nm/s</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="lbl_dec">
+                   <property name="text">
+                    <string>Deceleration</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QDoubleSpinBox" name="sb_dec">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+                   </property>
+                   <property name="suffix">
+                    <string> nm/s</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -727,110 +783,6 @@ QTabBar::tab:selected {
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QGroupBox" name="group_motor_profile">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>150</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Motor Profile</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_7">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <layout class="QGridLayout" name="gridLayout_11">
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="lbl_vel">
-                   <property name="text">
-                    <string>Velocity</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="lbl_acc">
-                   <property name="text">
-                    <string>Acceleration</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QDoubleSpinBox" name="sb_velocity">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="correctionMode">
-                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
-                   </property>
-                   <property name="suffix">
-                    <string> nm/s</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QDoubleSpinBox" name="sb_acc">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="correctionMode">
-                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
-                   </property>
-                   <property name="suffix">
-                    <string> nm/s</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="lbl_dec">
-                   <property name="text">
-                    <string>Deceleration</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QDoubleSpinBox" name="sb_dec">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="correctionMode">
-                    <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
-                   </property>
-                   <property name="suffix">
-                    <string> nm/s</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QGroupBox" name="grp_system_info">
             <property name="minimumSize">
@@ -855,6 +807,54 @@ QTabBar::tab:selected {
             </layout>
            </widget>
           </item>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="grp_Connection">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>110</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Connection Settings</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <layout class="QVBoxLayout" name="vgrd_connection_settings">
+               <item>
+                <widget class="QLabel" name="lbl_port_selection">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>12</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>USB Port Connection</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cb_port_selection"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_connect">
+                 <property name="text">
+                  <string>Connect</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -871,6 +871,71 @@ QTabBar::tab:selected {
        </attribute>
        <layout class="QGridLayout" name="grd_uncertainty_dist"/>
       </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QFrame" name="horizontalFrame">
+      <property name="layoutDirection">
+       <enum>Qt::LayoutDirection::LeftToRight</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QFrame" name="menuBar">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="menu_file">
+            <property name="text">
+             <string>File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="menu_edit">
+            <property name="text">
+             <string>Edit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="menu_run">
+            <property name="text">
+             <string>Run</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="horizontalFrame">
+         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

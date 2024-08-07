@@ -1,5 +1,8 @@
 # Laser Control: Python Project for Sacher TEC Laser Control
-LaserControl is a Python project developed to control Sacher TEC lasers. This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various operations for laser control and management.
+PySacherECLManager (*Py*thon *Sacher* *E*xternal *C*avity *L*aser) is a Python project developed to control Sacher TEC 
+lasers. 
+This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various 
+operations for laser control and management.
 Features
 
 * Laser Parameter Adjustment: Laser Control allows users to adjust parameters such as wavelength and speed settings.

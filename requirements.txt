@@ -9,10 +9,9 @@ pyyaml
 # my packages
 mpPy6
 confPy6
+PyADScopeControl>=1.1.4
+PySide6WidgetCollection>=1.0.2, # important, otherwise AboutDialog is not available
 
-# add the git repo
-git+https://github.com/agentsmith29/fs.captdevicecontrol
-git+https://github.com/agentsmith29/fstools.fswidgets
 
 # Local installs
 #../confighandler

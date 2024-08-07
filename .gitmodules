@@ -1,3 +1,6 @@
 [submodule "src/LaserControl/libs/SacherLibrary"]
 	path = src/LaserControl/libs/SacherLibrary
 	url = https://github.com/agentsmith29/fs.sacherlib
+[submodule "src/SacherECLControl/libs/SacherLib"]
+	path = src/SacherECLControl/libs/SacherLib
+	url = https://github.com/agentsmith29/fs.sacherlib

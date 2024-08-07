@@ -1,26 +1,26 @@
 [project]
-name = "lasercontrol"
-version = "1.1.0"
+name = "PySacherECLControl"
+version = "1.1.2"
 authors = [
   { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
 ]
-description = "A UI for controlling the Sacher TEC Laser"
+description = "PySacherECLControl is a python project developed to control Sacher TEC lasers. This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various operations for laser control and management. "
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     'PySide6',
     'rich',
     'pyyaml',
-    'captdevicecontrol@git+https://github.com/agentsmith29/fs.captdevicecontrol@v.1.1.0',
-    'fswidgets@git+https://github.com/agentsmith29/fstools.fswidgets@v.0.0.3.1',
+    'PyADScopeControl>=1.1.4',
+    'PySide6WidgetCollection>=1.0.2', # important, otherwise AboutDialog is not available
     'mpPy6',
     'confPy6'
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License v3.0",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: Windows",
 ]
 
 [project.urls]
-"Homepage" = "https://gitlab.tugraz.at/flexsensor-public/lasercontrol"
+"Homepage" = "https://github.com/agentsmith29/PyADScopeControl"

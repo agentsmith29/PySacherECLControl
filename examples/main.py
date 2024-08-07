@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication
 from rich.logging import RichHandler
 
 sys.path.append('../src')
-import LaserControl as Laser
+import SacherECLControl as Laser
 
 if __name__ == "__main__":
     FORMAT = "%(name)s %(message)s"

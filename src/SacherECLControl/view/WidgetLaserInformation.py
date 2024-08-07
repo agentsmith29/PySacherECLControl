@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QLabel, QWidget
 
-from fswidgets.LEDIndicatorWidget import LEDIndicatorWidget
+from WidgetCollection.widgets.LEDIndicatorWidget import LEDIndicatorWidget
 
 
 class WidgetLaserInformation(QWidget):

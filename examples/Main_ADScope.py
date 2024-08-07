@@ -6,14 +6,14 @@ from multiprocessing import Value
 from rich.logging import RichHandler
 from PySide6.QtWidgets import QApplication
 
-import CaptDeviceControl as captdev
+import ADScopeControl as captdev
 
 file_path, _ = os.path.split(os.path.realpath(__file__))
 src_path = f"{file_path}/../src"
 print("src_path:", src_path)
 sys.path.append(src_path)
 
-import LaserControl as Laser
+import SacherECLControl as Laser
 
 if __name__ == "__main__":
     FORMAT = "%(name)s %(message)s"
@@ -37,12 +37,13 @@ if __name__ == "__main__":
     capt_dev_model = captdev.Model(conf_capt_dev)
     capt_dev_controller = captdev.Controller(capt_dev_model, start_capture_flag)
     capt_dev_window = captdev.View(capt_dev_model, capt_dev_controller)
-    capt_dev_window.show()
+
 
     conf = Laser.Config()
     model = Laser.Model(conf)
     controller = Laser.Controller(model, start_capture_flag)
     window = Laser.View(model, controller)
+    capt_dev_window.show()
 
     controller.connect_capture_device(capt_dev_controller)
 

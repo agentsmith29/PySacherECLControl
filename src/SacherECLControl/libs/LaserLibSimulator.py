@@ -3,7 +3,7 @@ import pathlib
 import time
 from random import randint
 
-from LaserControl.libs.LaserSceleton import LaserScelton
+from SacherECLControl.libs.LaserSceleton import LaserScelton
 import confPy6 as conf
 
 
