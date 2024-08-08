@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDoubl
     QLCDNumber, QLabel, QMainWindow, QPushButton,
     QSizePolicy, QSlider, QTabWidget, QToolButton,
     QVBoxLayout, QWidget)
-import resources_rc
+from . import resources_rc
 
 class Ui_LaserControlWindow(object):
     def setupUi(self, LaserControlWindow):
