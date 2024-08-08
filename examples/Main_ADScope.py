@@ -1,6 +1,7 @@
 import logging
 import sys
 import os
+import pathlib
 from multiprocessing import Value
 
 from rich.logging import RichHandler
@@ -32,6 +33,7 @@ if __name__ == "__main__":
     #conf_capt_dev.load("CaptDeviceConfig.yaml")
     conf_capt_dev.autosave()
 
+
     start_capture_flag = Value('i', 0)
 
     capt_dev_model = captdev.Model(conf_capt_dev)
@@ -40,6 +42,14 @@ if __name__ == "__main__":
 
 
     conf = Laser.Config()
+    # Set the path to the EposCmd64.dll and the SacherMotorControl.pyd
+    conf.epos_dll.set(pathlib.Path(
+        f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/EposCmd64.dll'))
+
+    conf.motor_control_pyd.set(pathlib.Path(
+        f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/'
+        f'lib/Python312/SacherMotorControl.pyd'))
+
     model = Laser.Model(conf)
     controller = Laser.Controller(model, start_capture_flag)
     window = Laser.View(model, controller)

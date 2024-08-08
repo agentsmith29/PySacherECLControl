@@ -4,29 +4,32 @@ import pathlib
 import shutil
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-
-# from SacherECLControl.controller.LaserCon import LaserCon
-dll_dir = pathlib.Path(
-    f"{os.path.dirname(os.path.realpath(__file__))}/libs/SacherLib/PythonMotorControlClass/EposCMD64.dll")
-dll_dir = str(dll_dir.resolve())
-dll_dest = f"{os.getcwd()}/EposCMD64.dll"
-# Copy the file "EposCMD64.dll" to the current dir
-if not pathlib.Path(dll_dest).exists():
-    shutil.copyfile(dll_dir, f"{os.getcwd()}/EposCMD64.dll")
-
 from WidgetCollection.Tools.PyProjectExtractor import extract_pyproject_info
 
-pytoml = pathlib.Path(__file__).parent.parent.parent
-if not (pytoml / "pyproject.toml").exists():
-    # if installed via pip
-    pytoml = pathlib.Path(__file__)
+from . import Helpers
 
-__version__ = extract_pyproject_info(pytoml, "version")
-__author__ = extract_pyproject_info(pytoml, "author")
-__description__ = extract_pyproject_info(pytoml, "description")
-__license__ = extract_pyproject_info(pytoml, "license")
-__url__ = extract_pyproject_info(pytoml, "url")
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+
+
+# ======================================================================================================================
+# The pyconfig.toml file is needed, to get the metadata. Depending on the installation method (pip or git) the file
+# is found in different places.
+# ======================================================================================================================
+pytoml = Helpers.get_pyprojecttoml()
+def try_and_set(func, *args, **kwargs):
+    try:
+        return func(*args, **kwargs)
+    except Exception as e:
+        print(f"Error reading '{args[1]}' from {pathlib.Path(args[0])}: {e}")
+        return "unknown"
+
+__rootdir__ = os.path.dirname(os.path.realpath(__file__))
+__version__ = try_and_set(extract_pyproject_info, pytoml.parent, "version")
+__author__ = try_and_set(extract_pyproject_info, pytoml.parent, "author")
+__description__ = try_and_set(extract_pyproject_info, pytoml.parent, "description")
+__license__ = try_and_set(extract_pyproject_info, pytoml.parent, "license")
+__url__ = try_and_set(extract_pyproject_info, pytoml.parent, "url")
 
 # For correctly display the icon in the taskbar
 myappid = f'agentsmith29.SacherECLControl.{__version__}'  # arbitrary string

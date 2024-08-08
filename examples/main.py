@@ -1,4 +1,6 @@
 import logging
+import os
+import pathlib
 import sys
 from PySide6.QtWidgets import QApplication
 from rich.logging import RichHandler
@@ -18,14 +20,23 @@ if __name__ == "__main__":
     else:
         app = QApplication.instance()
 
-
-
     conf = Laser.Config()
+    conf.save()
     #conf.load('./LaserConfig.yaml', as_auto_save=True)
     conf.autosave(True, './LaserConfig.yaml')
+
+    # Set the path to the EposCmd64.dll and the SacherMotorControl.pyd
+    conf.epos_dll.set(pathlib.Path(
+        f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/EposCmd64.dll'))
+
+    conf.motor_control_pyd.set(pathlib.Path(
+        f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/'
+        f'lib/Python312/SacherMotorControl.pyd'))
+
+
+
     conf.module_log_level = logging.DEBUG
     conf.module_log_enabled = True
-
 
     model = Laser.Model(conf)
     controller = Laser.Controller(model, None)
@@ -38,8 +49,6 @@ if __name__ == "__main__":
     #    model.sweep_stop_wavelength,
     #)
 
-
     window.show()
-
 
     sys.exit(app.exec())

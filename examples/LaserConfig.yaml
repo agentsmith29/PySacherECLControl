@@ -1,9 +1,11 @@
-# - Configuration file stored 2024-07-31 11:25:23.500548 - 
+# - Configuration file stored 2024-08-08 13:17:14.134241 - 
 LaserConfig: #!!python/object:controller.LaserConfig
+ epos_dll: "@Path:<C:/Users/myjustice/Documents/workspace/fs.lasercontrol/src/SacherECLControl/libs/SacherLib/PythonMotorControlClass/EposCmd64.dll>" # epos_dll: None
+ motor_control_pyd: "@Path:<C:/Users/myjustice/Documents/workspace/fs.lasercontrol/src/SacherECLControl/libs/SacherLib/PythonMotorControlClass/lib/Python312/SacherMotorControl.pyd>" # motor_control_pyd: None
  wl_sweep_start: 857 # wl_sweep_start: None
  wl_sweep_stop: 870 # wl_sweep_stop: None
- velocity: 10.0 # velocity: None
- acceleration: 2.0 # acceleration: None
- deceleration: 2.0 # deceleration: None
+ velocity: 2.0 # velocity: None
+ acceleration: 1.0 # acceleration: None
+ deceleration: 1.0 # deceleration: None
  available_ports: ['USB0', 'USB1', 'USB2', 'USB3', 'USB4', 'USB5', 'USB6', 'USB7', 'USB8', 'USB9'] # available_ports: None
  port: "USB0" # port: None

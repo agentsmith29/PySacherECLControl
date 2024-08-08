@@ -1,16 +1,25 @@
 import os
 import pathlib
+import sys
 import time
 from multiprocessing import Value
 
 import mpPy6
 from mpPy6.CProperty import CProperty
 
+from SacherECLControl import Helpers, __rootdir__
 
 # Copy the dll to the startup directory
 
+try:
+    spath = str(pathlib.Path(os.getenv("MOTOR_CONTROL_PYD")).absolute().parent.as_posix())
+    sys.path.append(spath)
+    import SacherMotorControl as LaserLib
 
-from SacherECLControl.libs.SacherLib.PythonMotorControlClass.lib.Python312 import SacherMotorControl as LaserLib
+except Exception as e:
+    print(f"Warning: Could not import SacherMotorControl: {e}. Using LaserLibSimulator instead.")
+    from SacherECLControl.libs import LaserLibSimulator as LaserLib
+
 
 #from SacherECLControl.libs import LaserLibSimulator as LaserLib
 
@@ -21,11 +30,21 @@ class MPLaserDevice(mpPy6.CProcess):
                  laser_moving_flag: Value,
                  laser_finished_flag: Value,
                  start_capture_flag: Value,
+                 dll_copy_path,
                  kill_flag: Value,
                  internal_log, internal_log_level, log_file):
         super().__init__(state_queue, cmd_queue,
                          kill_flag=kill_flag,
                          internal_log=internal_log, internal_log_level=internal_log_level, log_file=log_file)
+
+
+        self.dll_copy_path = dll_copy_path
+        #import importlib.util
+        #import sys
+        #spec = importlib.util.spec_from_file_location(module_name, module_name_path)
+        #foo = importlib.util.module_from_spec(spec)
+        #sys.modules[module_name] = foo
+        #spec.loader.exec_module(foo)
 
         # if not self.logger.handlers:
         #     self.logger.setLevel(level=logging.DEBUG)
@@ -50,6 +69,7 @@ class MPLaserDevice(mpPy6.CProcess):
         self._wavelength_sweep_running = False
 
     def postrun_init(self):
+        Helpers.copyEposDLL(f"{self.dll_copy_path}", logger=self.logger)
         self.laser = LaserLib.Motor()
 
     # ==================================================================================================================
@@ -316,9 +336,6 @@ class MPLaserDevice(mpPy6.CProcess):
         self.get_velocity()
         self.get_acceleration()
         self.get_deceleration()
-
-
-
 
     @CProperty
     def laser_is_moving(self):

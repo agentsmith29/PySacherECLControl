@@ -11,7 +11,7 @@ packages = ["src/SacherECLControl"]
 
 [project]
 name = "PySacherECLControl"
-version = "1.1.3"
+version = "1.1.5"
 authors = [
   { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
 ]
@@ -22,10 +22,10 @@ dependencies = [
     'PySide6',
     'rich',
     'pyyaml',
-    'PyADScopeControl>=1.1.4',
+    'PyADScopeControl>=1.1.7',
     'PySide6WidgetCollection>=1.0.2', # important, otherwise AboutDialog is not available
     'mpPy6',
-    'confPy6'
+    'confPy6>=1.3.1'
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

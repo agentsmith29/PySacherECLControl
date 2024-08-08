@@ -33,7 +33,24 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-# Usage
+After installing, you need to set the pathes to the Sacher Libaray using 
+the `config.py` file. 
+
+```python
+    conf = Laser.Config()
+    conf.save()
+    #conf.load('./LaserConfig.yaml', as_auto_save=True)
+    conf.autosave(True, './LaserConfig.yaml')
+    
+    # Set the path to the EposCmd64.dll and the SacherMotorControl.pyd
+    conf.epos_dll.set(pathlib.Path(
+    f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/EposCmd64.dll'))
+    
+    conf.motor_control_pyd.set(pathlib.Path(
+    f'{Laser.__rootdir__}/libs/SacherLib/PythonMotorControlClass/'
+    f'lib/Python312/SacherMotorControl.pyd'))
+```
+See (main.py)[./examples/main.py] for an example.
 
 Run the main script:
 

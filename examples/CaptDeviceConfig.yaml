@@ -1,4 +1,4 @@
-# - Configuration file stored 2024-08-07 15:54:06.643611 - 
+# - Configuration file stored 2024-08-08 13:18:18.949366 - 
 CaptDeviceConfig: #!!python/object:controller.CaptDeviceConfig
  selected_device_index: 0 # Selected device: Selected device from the device list provided by the DreamWaves API.
  sample_rate: 500 # Sample rate: Sample rate of the device

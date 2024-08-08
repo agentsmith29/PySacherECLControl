@@ -6,7 +6,7 @@ import mpPy6
 from PySide6.QtCore import Signal
 from mpPy6.CProcessControl import CProcessControl
 
-from SacherECLControl.controller.multiprocess.MPLaserDevice import MPLaserDevice
+from SacherECLControl import Helpers
 from SacherECLControl.model.LaserControlModel import LaserControlModel
 
 
@@ -46,6 +46,11 @@ class MPLaserDeviceControl(CProcessControl):
                  start_capture_flag: Value, module_log=True, module_log_level=logging.WARNING):
         super().__init__(module_log=module_log, module_log_level=module_log_level)
 
+        # This is a workaround, otherwise the dll and pyd object import would not work
+        # Reason: We need assign the correct path beforehand. If we would first try to import the MPLaserDevice class
+        # the pathes would net be set.
+        # TODO: Find a better approach than this hacky way?
+        from SacherECLControl.controller.multiprocess.MPLaserDevice import MPLaserDevice
         self.model = model
 
         self.lock = Lock()
@@ -57,7 +62,8 @@ class MPLaserDeviceControl(CProcessControl):
         self.register_child_process(MPLaserDevice,
                                     self._laser_moving_flag,
                                     self._laser_finished_flag,
-                                    start_capture_flag)
+                                    start_capture_flag,
+                                    self.model.laser_config.epos_dll.get())
 
         self.connected_changed.connect(self._on_connected_changed)
 
