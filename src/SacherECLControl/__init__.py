@@ -12,16 +12,15 @@ dll_dir = pathlib.Path(
 dll_dir = str(dll_dir.resolve())
 dll_dest = f"{os.getcwd()}/EposCMD64.dll"
 # Copy the file "EposCMD64.dll" to the current dir
-if not  pathlib.Path(dll_dest).exists():
+if not pathlib.Path(dll_dest).exists():
     shutil.copyfile(dll_dir, f"{os.getcwd()}/EposCMD64.dll")
 
 from WidgetCollection.Tools.PyProjectExtractor import extract_pyproject_info
 
-# Directly in the repo
 pytoml = pathlib.Path(__file__).parent.parent.parent
-if not pytoml.exists():
+if not (pytoml / "pyproject.toml").exists():
     # if installed via pip
-    pytoml = pathlib.Path(__file__).parent
+    pytoml = pathlib.Path(__file__)
 
 __version__ = extract_pyproject_info(pytoml, "version")
 __author__ = extract_pyproject_info(pytoml, "author")
@@ -37,4 +36,3 @@ from .controller.LaserDeviceControl import MPLaserDeviceControl as Controller
 from .model.LaserControlModel import LaserControlModel as Model
 from .view.LaserControlView import LaserControlView as View
 from .LaserConfig import LaserConfig as Config
-
