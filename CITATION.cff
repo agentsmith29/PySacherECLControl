@@ -1,1 +1,17 @@
-
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Schmidt"
+  given-names: "Christoph"
+  orcid: "https://orcid.org/0009-0000-6625-3316"
+- family-names: "Hinum-Wagner"
+  given-names: "Jakob"
+- family-names: "Klambauer"
+  given-names: "Reinhard"
+- family-names: "Bergmann"
+  given-names: "Alexander"
+title: "Flexsensor: Automated Measurement Software for Rapid Photonic Circuits Capturing"
+version: 2.0.4
+doi: https://doi.org/10.2139/ssrn.4828876 
+date-released: 2017-12-18
+url: "https://github.com/agentsmith29/flexsensor"
