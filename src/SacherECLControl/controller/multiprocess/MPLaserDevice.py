@@ -69,9 +69,12 @@ class MPLaserDevice(mpPy6.CProcess):
         self._wavelength_sweep_running = False
 
     def postrun_init(self):
-        Helpers.copyEposDLL(f"{self.dll_copy_path}", logger=self.logger)
+        try:
+            self.logger.info(f"Copying DLL to {self.dll_copy_path}")
+            Helpers.copyEposDLL(f"{self.dll_copy_path}", logger=self.logger)
+        except Exception as e:
+            self.logger.error(f"Error copying DLL: {e}")
         self.laser = LaserLib.Motor()
-
     # ==================================================================================================================
     # Properties
     # ==================================================================================================================
@@ -326,7 +329,7 @@ class MPLaserDevice(mpPy6.CProcess):
         else:
             raise Exception("Deceleration could not be set. Laser is not connected.")
 
-    @mpPy6.CProcess.register_signal(postfix="_changed")
+    @mpPy6.CProcess.register_signal(signal_name="laser_settings_changed")
     def get_laser_settings(self, *args, **kwargs):
         self.logger.info(f"Reading laser settings.")
 
@@ -370,7 +373,7 @@ class MPLaserDevice(mpPy6.CProcess):
                 self.logger.info(
                     f"******************** Capture flag set to {self.start_capture_flag.value} **********************")
 
-            time.sleep(1)
+            #time.sleep(1)
             self.laser.moveToWavelength(wavelength, False, trigger=0)
             self.start_capture_flag.value = int(False)
             self._module_logger.info(

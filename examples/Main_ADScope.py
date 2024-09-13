@@ -11,7 +11,6 @@ import ADScopeControl as captdev
 
 file_path, _ = os.path.split(os.path.realpath(__file__))
 src_path = f"{file_path}/../src"
-print("src_path:", src_path)
 sys.path.append(src_path)
 
 import SacherECLControl as Laser
@@ -55,7 +54,7 @@ if __name__ == "__main__":
     window = Laser.View(model, controller)
     capt_dev_window.show()
 
-    controller.connect_capture_device(capt_dev_controller)
+    controller.supervise(capt_dev_controller)
 
     window.show()
 

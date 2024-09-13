@@ -1,7 +1,7 @@
 import logging
 from multiprocessing import Value, Lock
 
-import ADScopeControl as captdev
+#import ADScopeControl as captdev
 import mpPy6
 from PySide6.QtCore import Signal
 from mpPy6.CProcessControl import CProcessControl
@@ -22,7 +22,7 @@ class MPLaserDeviceControl(CProcessControl):
     deceleration_changed = Signal(float, name='deceleration_changed')
 
     ## Triggered when the laser settings are changed
-    laser_settings_changed = Signal(float, name='laser_settings_changed')
+    get_laser_settings_changed = Signal( name='get_laser_settings_changed')
 
 
 
@@ -141,7 +141,7 @@ class MPLaserDeviceControl(CProcessControl):
     def get_connected(self):
         self._module_logger.info("Reading current connection state from process.")
 
-    @mpPy6.CProcessControl.register_function(laser_settings_changed)
+    @mpPy6.CProcessControl.register_function(get_laser_settings_changed)
     def get_laser_settings(self):
         self._module_logger.info("Reading current laser status.")
 
@@ -156,17 +156,21 @@ class MPLaserDeviceControl(CProcessControl):
     # ==================================================================================================================
     #
     # ==================================================================================================================
-    def connect_capture_device(self, device: captdev.Controller):
-        self.logger.info(
-            "***********************************************Connecting to capture device..***********************************")
-        if isinstance(device, captdev.Controller):
+    def supervise(self, device):
+        self.logger.info(f"Connecting to capture device for supervising. Device: {device.__class__.__name__}")
+        if device.__class__.__name__ == "BaseADScopeController":
             self.model.capturing_device = device
             self.model.capturing_device.model.device_information.signals.device_connected_changed.connect(
                 lambda x: type(self.model).capturing_device_connected.fset(self.model, x)
             )
 
+            device.model.supervisor_information.supervised = True
+            device.model.supervisor_information.supervisor = self
+
+
     def _move_to_wavelength_finished(self, wavelength: float):
         self.logger.info(f"Move to wavelength finished. Current wavelength: {wavelength}")
+
 
     def _laser_is_moving_changed(self, is_moving: bool, to_wavelength: float):
         self.model.laser_is_moving = (is_moving, to_wavelength)

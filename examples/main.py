@@ -21,7 +21,7 @@ if __name__ == "__main__":
         app = QApplication.instance()
 
     conf = Laser.Config()
-    conf.save()
+    conf.sav()
     #conf.load('./LaserConfig.yaml', as_auto_save=True)
     conf.autosave(True, './LaserConfig.yaml')
 

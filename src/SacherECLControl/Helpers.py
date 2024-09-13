@@ -19,7 +19,7 @@ def copyEposDLL(epos_dll="./EposCMD64.dll", logger=None):
     logger(f"Copying {dll_dir} to {os.getcwd()}")
 
     if not dll_dir.exists():
-        raise FileNotFoundError(f"Could not find {epos_dll}")
+         raise FileNotFoundError(f"Could not find {epos_dll}")
 
     dll_dir = str(dll_dir.resolve())
     dll_dest = f"{os.getcwd()}/{dll_name}"  # Copy the file to the workspace folder
