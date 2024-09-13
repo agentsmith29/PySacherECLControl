@@ -1,0 +1,62 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  FlexSensor: Automated measurement software for rapid
+  photonic circuits capturing
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Christoph
+    family-names: Schmidt
+    affiliation: Graz University of Technology
+    email: christoph.schmidt@tugraz.at
+    orcid: 'https://orcid.org/0009-0000-6625-3316'
+  - given-names: Jakob Wilhelm
+    family-names: Hinum-Wagner
+    affiliation: ams-OSRAM AG
+  - given-names: 'Reinhard '
+    family-names: Klambauer
+    affiliation: Graz University of Technology
+  - given-names: Alexander
+    family-names: Bergmann
+    affiliation: Graz University of Technology
+identifiers:
+  - type: doi
+    value: 10.1016/j.softx.2024.101879
+repository-code: 'https://github.com/agentsmith29/flexsensor'
+url: 'https://github.com/agentsmith29/flexsensor'
+abstract: >-
+  This paper introduces the automation measurement software
+  FlexSensor for capturing resonant spectra, an innovative
+  and extensible software program developed explicitly for
+  measuring and evaluating wafer-level Silicon Photonic
+  (SiPh) circuits. Wafer-level Silicon Photonics allows the
+  integration of numerous optical components and structures
+  on a single wafer. However, researchers and engineers need
+  precise and repeatable measurements to characterize them
+  and face significant challenges when dealing with large
+  numbers of complex systems on a single wafer. A toolchain
+  gap hampers the measuring of such highly integrated
+  photonic structures: While the setup necessitates the
+  integration of an optimized hardware and software
+  toolchain, there is neither software nor a standardized
+  way to implement a reproducible measurement routine for a
+  massive set of measurements.
+
+
+  FlexSensor allows integration and control of external
+  hardware (tunable lasers, analog–digital converters) and
+  supports measurement data storage and evaluation. The
+  software enables researchers and engineers to efficiently
+  analyze the spectral response of photonic structures and
+  facilitate rapid measuring.
+keywords:
+  - Silicon photonics
+  - Wafer-level measurements
+  - Measurement automation
+  - Graphical user interface
+license: CC-BY-4.0

@@ -68,4 +68,11 @@ Contributions to Laser Control are welcome! If you have suggestions for improvem
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
+# Citing
+This project is part of the Software [FlexSensor](https://github.com/agentsmith29/flexsensor) whgich has been published under DOI [10.2139/ssrn.4828876](https://doi.org/10.2139/ssrn.4828876).
+
+Please cite it correctly.
+```
+Schmidt, Christoph and Hinum-Wagner, Jakob Wilhelm and Klambauer, Reinhard and Bergmann, Alexander, Flexsensor: Automated Measurement Software for Rapid Photonic Circuits Capturing. Available at SSRN: https://ssrn.com/abstract=4828876 or http://dx.doi.org/10.2139/ssrn.4828876 
+```
 # Acknowledgements
