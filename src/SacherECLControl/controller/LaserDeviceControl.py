@@ -8,6 +8,7 @@ from mpPy6.CProcessControl import CProcessControl
 
 from SacherECLControl import Helpers
 from SacherECLControl.model.LaserControlModel import LaserControlModel
+from SacherECLControl.libs.sweepHelpers import ramp
 
 
 class MPLaserDeviceControl(CProcessControl):
@@ -43,7 +44,7 @@ class MPLaserDeviceControl(CProcessControl):
     start_wavelength_sweep = Signal(float, float, name='start_wavelength_sweep')
 
     def __init__(self, model: LaserControlModel,
-                 start_capture_flag: Value, module_log=True, module_log_level=logging.WARNING):
+                 start_capture_flag: Value = None, module_log=True, module_log_level=logging.WARNING):
         super().__init__(module_log=module_log, module_log_level=module_log_level)
 
         # This is a workaround, otherwise the dll and pyd object import would not work
@@ -217,3 +218,26 @@ class MPLaserDeviceControl(CProcessControl):
             if stop_wavelength is None:
                 stop_wavelength = self.model.sweep_stop_wavelength
             self.wavelength_sweep(self.model.port, start_wavelength, stop_wavelength)
+
+    def process_capture(self, data):
+        try:
+            startWavelength = self.model.sweep_start_wavelength
+            distance = (
+                self.model.sweep_stop_wavelength
+                - startWavelength      
+            )
+            wavelengthRamp = ramp(
+                t=data['time (s)'].to_numpy(),
+                distance=distance,
+                speed=self.model.velocity,
+                acceleration=self.model.acceleration,
+                deceleration=self.model.deceleration
+            )
+            data['wavelength (nm)'] = (
+                wavelengthRamp + startWavelength
+            )
+        except Exception as e:
+            Warning(str(e))
+        else:
+            pass
+        return data
