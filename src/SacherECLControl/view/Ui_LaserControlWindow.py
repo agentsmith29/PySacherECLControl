@@ -613,7 +613,7 @@ class Ui_LaserControlWindow(object):
         self.gridLayout_8.setObjectName(u"gridLayout_8")
         self.gridLayout_10 = QGridLayout()
         self.gridLayout_10.setObjectName(u"gridLayout_10")
-        self.sb_sweep_stop = QDoubleSpinBox(self.group_sweep_settings)
+        self.sb_sweep_stop = QDoubleSpinBox(self.group_sweep_settings, decimals=2)
         self.sb_sweep_stop.setObjectName(u"sb_sweep_stop")
 
         self.gridLayout_10.addWidget(self.sb_sweep_stop, 0, 3, 1, 1)
@@ -635,7 +635,7 @@ class Ui_LaserControlWindow(object):
 
         self.gridLayout_10.addWidget(self.btn_start_sweep, 1, 0, 1, 4)
 
-        self.sb_sweep_start = QDoubleSpinBox(self.group_sweep_settings)
+        self.sb_sweep_start = QDoubleSpinBox(self.group_sweep_settings, decimals=2)
         self.sb_sweep_start.setObjectName(u"sb_sweep_start")
 
         self.gridLayout_10.addWidget(self.sb_sweep_start, 0, 1, 1, 1)
@@ -768,9 +768,9 @@ class Ui_LaserControlWindow(object):
         self.lbl_vel.setText(QCoreApplication.translate("LaserControlWindow", u"Velocity", None))
         self.lbl_acc.setText(QCoreApplication.translate("LaserControlWindow", u"Acceleration", None))
         self.sb_velocity.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
-        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
+        self.sb_acc.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s^2", None))
         self.lbl_dec.setText(QCoreApplication.translate("LaserControlWindow", u"Deceleration", None))
-        self.sb_dec.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s", None))
+        self.sb_dec.setSuffix(QCoreApplication.translate("LaserControlWindow", u" nm/s^2", None))
         self.group_wavelength_settings.setTitle(QCoreApplication.translate("LaserControlWindow", u"Wavelength", None))
         self.lbl_wavelength.setText(QCoreApplication.translate("LaserControlWindow", u"Wavelength [nm]", None))
         self.btn_move_to_wavelength.setText(QCoreApplication.translate("LaserControlWindow", u"Move", None))

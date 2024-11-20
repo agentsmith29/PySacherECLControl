@@ -107,8 +107,8 @@ class LaserControlView(QMainWindow):
         self._ui.btn_start_sweep.clicked.connect(self._on_btn_start_sweep_clicked)
 
         # Connect the Spinboxes for the sweep settings. A change in values sets the new sweep settings
-        self._ui.sb_sweep_start.editingFinished.connect(self._on_sb_sweep_start_changed)
-        self._ui.sb_sweep_stop.editingFinished.connect(self._on_sb_sweep_stop_changed)
+        self._ui.sb_sweep_start.valueChanged.connect(self._on_sb_sweep_start_changed)
+        self._ui.sb_sweep_stop.valueChanged.connect(self._on_sb_sweep_stop_changed)
 
         #self._ui.btn_save_velocity_params.clicked.connect(self._on_btn_save_velocity_params_clicked)
         self._ui.sb_velocity.editingFinished.connect(self._on_sb_velocity_editing_finished)
@@ -203,7 +203,7 @@ class LaserControlView(QMainWindow):
         # self._ui.sb_set_wavelength.setMaximum(self.model.max_laser_wavelength)
 
         # Set the minimum and maximum values for the sweep start and stop
-        self._ui.sb_set_wavelength.setValue(wavelength)
+        #self._ui.sb_set_wavelength.setValue(wavelength)
         self._ui.lcd_wavelength.display(wavelength)
         self._ui.slider_wavelength.setValue(wavelength)
 
@@ -279,18 +279,18 @@ class LaserControlView(QMainWindow):
     def _on_sb_sweep_start_changed(self, value):
         try:
             self.logger.debug(f"Sweep start changed. New Range {value}-{self.model.sweep_stop_wavelength}")
-            self.model.sweep_start_wavelength = int(value)
+            self.model.sweep_start_wavelength = float(value)
         except Exception as e:
             self.logger.error(e)
-            self.model.sweep_stop_wavelength = int(value)
+            self.model.sweep_start_wavelength = float(value)
 
     def _on_sb_sweep_stop_changed(self, value):
         try:
             self.logger.debug(f"Sweep stop changed. New Range {self.model.sweep_start_wavelength}-{value}")
-            self.model.sweep_stop_wavelength = int(value)
+            self.model.sweep_stop_wavelength = float(value)
         except Exception as e:
             self.logger.error(e)
-            self.model.sweep_start_wavelength = int(value)
+            self.model.sweep_stop_wavelength = float(value)
         # self.controller.set_sweep_wavelength_range(self._ui.sb_sweep_start.value(), self._ui.sb_sweep_stop.value())
 
     def _on_btn_start_sweep_clicked(self):
