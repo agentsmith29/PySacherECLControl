@@ -1,6 +1,7 @@
 import logging
 import os
 import pathlib
+from pathlib import Path
 import sys
 from PySide6.QtWidgets import QApplication
 from rich.logging import RichHandler
@@ -21,9 +22,13 @@ if __name__ == "__main__":
         app = QApplication.instance()
 
     conf = Laser.Config()
-    conf.sav()
+    conf_file = Path('./LaserConfig.yaml')
+    if conf_file.exists():
+        conf.load(conf_file, as_auto_save=True)
+    conf.autosave(True, './')
+    
+    #conf.save()
     #conf.load('./LaserConfig.yaml', as_auto_save=True)
-    conf.autosave(True, './LaserConfig.yaml')
 
     # Set the path to the EposCmd64.dll and the SacherMotorControl.pyd
     conf.epos_dll.set(pathlib.Path(
