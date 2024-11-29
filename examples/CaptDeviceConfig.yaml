@@ -1,8 +1,0 @@
-# - Configuration file stored 2024-08-08 13:18:18.949366 - 
-CaptDeviceConfig: #!!python/object:controller.CaptDeviceConfig
- selected_device_index: 0 # Selected device: Selected device from the device list provided by the DreamWaves API.
- sample_rate: 500 # Sample rate: Sample rate of the device
- streaming_rate: 500 # Streaming rate: Streaming rate in Hz (should be below 1kHz)
- ain_channel: <1>[(0, 'Channel 0'), (1, 'Channel 1')]> # -> 1 # Analog In Channel: Analog in channel. Defines which channel is used for capturing.
- show_simulator: True # Show Simulators: Show available simulators in the device list provided by the DreamWaves API.
- streaming_history: <3>[(100, '100 ms'), (200, '200 ms'), (500, '500 ms'), (1000, '1 s'), (2000, '2 s'), (5000, '5 s'), (10000, '10 s'), (20000, '20 s'), (30000, '30 s')]> # -> 1000 # Streaming history: Defines the range of the stream in ms
