@@ -11,7 +11,7 @@ packages = ["src/SacherECLControl"]
 
 [project]
 name = "PySacherECLControl"
-version = "1.2.1"
+version = "1.2.2"
 authors = [
   { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
 ]
