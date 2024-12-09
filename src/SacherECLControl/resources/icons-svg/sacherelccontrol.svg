@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="sacherelccontrol.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.79998597"
+     inkscape:cx="722.51267"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#2c495b;fill-opacity:1;stroke-width:0.139588"
+       id="rect2"
+       width="35.71875"
+       height="35.71875"
+       x="83.806808"
+       y="15.013404"
+       ry="3.9801021" />
+    <g
+       id="shape26-1"
+       transform="matrix(0.42823066,0,0,0.36966318,87.340547,5.3539419)">
+			<title
+   id="title247">Tabelle.26</title>
+
+			<rect
+   x="0"
+   y="37.4161"
+   width="70.866096"
+   height="70.866096"
+   class="st1"
+   id="rect249"
+   style="fill:none;stroke:none;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" />
+
+		</g>
+    <path
+       d="m 100.41142,35.363278 -3.581173,3.581165 a 0.9349738,0.9349738 0 0 0 1.32201,1.32201 l 3.581173,-3.581165 a 4.6683458,4.6683458 0 0 1 -1.32201,-1.32201 z m 3.88558,-5.331525 a 2.765783,2.765783 0 0 0 -2.3918,1.365495 H 89.828817 a 1.404635,1.404635 0 1 0 0,2.807095 h 12.080733 a 2.7679573,2.7679573 0 1 0 2.39179,-4.17259 z m -0.93715,7.327585 v 5.35544 a 0.93714815,0.93714815 0 1 0 1.87212,0 v -5.35544 a 4.627033,4.627033 0 0 1 -1.87212,0 z m 3.49854,-0.67405 4.86404,4.86621 a 0.93714815,0.93714815 0 0 0 1.32418,-1.32418 l -4.85751,-4.86404 a 4.6400792,4.6400792 0 0 1 -1.32202,1.32201 z m 1.99823,-2.94843 h 5.35545 a 0.93714815,0.93714815 0 0 0 0,-1.87212 h -5.35545 a 4.7335766,4.7335766 0 0 1 0,1.87212 z m -0.66752,-3.49854 5.21845,-5.218459 a 0.9349738,0.9349738 0 0 0 -1.32201,-1.322011 l -5.21846,5.21846 a 4.6400792,4.6400792 0 0 1 1.32202,1.32201 z m -2.95713,-1.998235 v -5.355444 a 0.93714815,0.93714815 0 0 0 -1.87212,0 v 5.355444 a 4.7335766,4.7335766 0 0 1 1.87212,0 z m -3.49854,0.667525 -3.546383,-3.542028 a 0.93557118,0.93557118 0 1 0 -1.32201,1.324184 l 3.546383,3.548554 a 4.6683458,4.6683458 0 0 1 1.32201,-1.33071 z"
+       id="path1-0"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.217436" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.7556px;font-family:Arial;-inkscape-font-specification:Arial;fill:#ffffff;stroke:#d8d8d8;stroke-width:1.003;stroke-dasharray:none"
+       x="10.252783"
+       y="71.108009"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-size:19.7556px;fill:none;stroke:#2e2e2e;stroke-width:1.003;stroke-dasharray:none;stroke-opacity:1"
+         x="10.252783"
+         y="71.108009">PySacherELCControl</tspan></text>
+  </g>
+</svg>

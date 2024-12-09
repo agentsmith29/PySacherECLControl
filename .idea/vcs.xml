@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/SacherECLControl/libs/-SacherLib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/SacherECLControl/libs/SacherLib" vcs="Git" />
   </component>
 </project>
