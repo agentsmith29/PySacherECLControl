@@ -7,8 +7,8 @@ on:
       - '*'
 
 jobs:
-  build-lasercontrol:
-    name: Build lasercontrol executable
+  build-and-release:
+    name: Build and Release Executable
     runs-on: windows-latest
 
     steps:
@@ -39,71 +39,27 @@ jobs:
 
       # Build the lasercontrol executable
       - name: Build lasercontrol executable
-        run: pyinstaller pyinstaller/lasercontrol.spec
-
-      # Upload lasercontrol as an artifact
-      - name: Upload lasercontrol artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lasercontrol-latest
-          path: dist/lasercontrol.exe
-
-  build-lasercontrol-scope:
-    name: Build lasercontrol_scope executable
-    runs-on: windows-latest
-
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITRUNNER_ACCESS_TOKEN }}
-
-      # Update submodules
-      - name: Update Submodules
         run: |
-          git submodule sync
-          git submodule update --init --recursive
-
-      # Set up Python environment
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: 'pip'
-
-      # Install dependencies
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+          pyinstaller pyinstaller/lasercontrol.spec
+          echo "Lasercontrol build complete. Checking dist directory."
+          ls -R dist || echo "No files in dist directory!"
 
       # Build the lasercontrol_scope executable
       - name: Build lasercontrol_scope executable
-        run: pyinstaller pyinstaller/lasercontrol_scope.spec
+        run: |
+          pyinstaller pyinstaller/lasercontrol_scope.spec
+          echo "Lasercontrol_scope build complete. Checking dist directory."
+          ls -R dist || echo "No files in dist directory!"
 
-      # Upload lasercontrol_scope as an artifact
-      - name: Upload lasercontrol_scope artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lasercontrol_scope-latest
-          path: dist/lasercontrol_scope.exe
+      # Verify executables exist
+      - name: Verify executables exist
+        run: |
+          test -f dist/lasercontrol.exe || (echo "Error: lasercontrol.exe not found!" && exit 1)
+          test -f dist/lasercontrol_scope.exe || (echo "Error: lasercontrol_scope.exe not found!" && exit 1)
 
-  release:
-    name: Create Release
-    runs-on: windows-latest
-    needs:
-      - build-lasercontrol
-      - build-lasercontrol-scope
-
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # Create a release (only for tag pushes)
+      # Create or Update Release (only for tag pushes)
       - name: Create or Update Release
-        if: startsWith(github.ref, 'refs/tags/')     
+        if: startsWith(github.ref, 'refs/tags/')
         id: create_release
         uses: actions/create-release@v1
         env:
