@@ -15,7 +15,7 @@ from SacherECLControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
 from SacherECLControl.view.WidgetLaserInformation import WidgetLaserInformation
 
 
-from SacherECLControl import __version__, __author__, __license__, __description__, __url__
+from SacherECLControl import __version__, __author__, __license__, __description__, __url__, __appname__
 class LaserControlView(QMainWindow):
 
     def __init__(self, model: LaserControlModel, controller: MPLaserDeviceControl):
@@ -30,14 +30,15 @@ class LaserControlView(QMainWindow):
         self.setWindowIcon(QIcon(':/icons/icons/sacherelccontrol_icon.png'))
 
         self.about_dialog = AboutDialog(
-            "ADScope Control",
+            __appname__,
             __description__,
             __version__,
             f"2024 {__author__}",
             __url__,
             f"This project is open source and contributions are highly welcome.<br>"
             f"<br>The project is licensed under <br>{__license__}.",
-            QPixmap(':/icons/icons/sacherelccontrol_icon.png')
+            QPixmap(':/icons/icons/sacherelccontrol_icon.png'),
+            copyright_information="The software uses properitary code by Sacher Lasertechnik GmbH."
         )
 
         self._init_menu_bar()

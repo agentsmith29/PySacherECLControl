@@ -1,4 +1,4 @@
-name: PyInstaller
+name: Building executable with PyInstaller
 on:
   push:
     branches:
@@ -9,26 +9,56 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup python
+        with:
+          submodules: true # Ensure submodules are initialized
+          fetch-depth: 0 # Fetch all history for submodules
+
+      # Set up Git credentials for accessing private submodules
+      - name: Setup Git for private submodules
+        env:
+          # Use a personal access token (PAT) or SSH key here
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global url."https://$GITHUB_TOKEN@github.com".insteadOf "https://github.com"
+
+      # Manually update submodules if needed
+      - name: Update Submodules
+        run: |
+          git submodule sync
+          git submodule update --init --recursive
+
+      # Set up Python environment
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip' # caching pip dependencies
+
+      # Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      # Build the first executable
       - name: Build executable
         run: |
           pyinstaller pyinstaller/lasercontrol.spec
+
+      # Upload the first executable as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: lasercontrol.exe
           path: dist/lasercontrol.exe
+
+      # Build the second executable
       - name: Build executable scope
         run: |
           pyinstaller pyinstaller/lasercontrol_scope.spec
+
+      # Upload the second executable as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:

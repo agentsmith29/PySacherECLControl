@@ -40,6 +40,7 @@ def try_and_set(func, *args, **kwargs):
         return "unknown"
 
 __rootdir__ = os.path.dirname(os.path.realpath(__file__))
+__appname__ = try_and_set(extract_pyproject_info, pytoml, "name")
 __version__ = try_and_set(extract_pyproject_info, pytoml, "version")
 __author__ = try_and_set(extract_pyproject_info, pytoml, "author")
 __description__ = try_and_set(extract_pyproject_info, pytoml, "description")
