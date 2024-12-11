@@ -7,7 +7,6 @@ rich
 pyyaml
 toml
 pyinstaller
-tkinter
 
 # my packages
 mpPy6
