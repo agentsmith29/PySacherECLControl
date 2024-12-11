@@ -11,19 +11,19 @@ packages = ["src/SacherECLControl"]
 
 [project]
 name = "PySacherECLControl"
-version = "1.1.7"
+version = "1.2.4"
 authors = [
-  { name="Christoph Schmidt", email="cschmidt.fs@gmail.com" },
+  { name="Christoph Schmidt", email="christoph.schmidt@tugraz.at" },
 ]
-description = "PySacherECLControl is a python project developed to control Sacher TEC lasers. This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various operations for laser control and management. "
+description = "PySacherECLControl is a python project developed to control Sacher TEC lasers. This project offers a convenient interface for users to interact with the laser, adjust parameters, and perform various operations for laser control and management."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = "==3.12"
 dependencies = [
     'PySide6',
     'rich',
     'pyyaml',
     'PyADScopeControl>=1.1.7',
-    'PySide6WidgetCollection>=1.0.2', # important, otherwise AboutDialog is not available
+    'PySide6WidgetCollection>=1.0.3', # important, otherwise AboutDialog is not available
     'mpPy6',
     'confPy6>=1.3.1'
 ]

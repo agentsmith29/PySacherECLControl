@@ -13,6 +13,8 @@ from SacherECLControl.libs.sweepHelpers import ramp
 
 class MPLaserDeviceControl(CProcessControl):
     connected_changed = Signal(bool, name='connected_changed')
+    usb_port_changed = Signal(str, name='usb_port_changed')
+    is_simulator_changed = Signal(bool, name='is_simulator_chaned')
 
     # Properties, automatically triggerd on a change by the process class
     current_wavelength_changed = Signal(float, name='current_wavelength_changed')
@@ -67,6 +69,11 @@ class MPLaserDeviceControl(CProcessControl):
                                     self.model.laser_config.epos_dll.get())
 
         self.connected_changed.connect(self._on_connected_changed)
+
+        self.usb_port_changed.connect(
+            lambda x: type(self.model).port.fset(self.model, x)
+        )
+
 
         self.current_wavelength_changed.connect(
             lambda x: type(self.model).current_wavelength.fset(self.model, x))
@@ -137,6 +144,10 @@ class MPLaserDeviceControl(CProcessControl):
 
     def set_start_capture_flag(self, start_capture_flag: Value):
         self._start_capture_flag = start_capture_flag
+
+    #@mpPy6.CProcessControl.register_function(USB_port_changed)
+    #def get_USB_port(self):
+    #    self._module_logger.info("Reading current usb port")
 
     @mpPy6.CProcessControl.register_function(connected_changed)
     def get_connected(self):

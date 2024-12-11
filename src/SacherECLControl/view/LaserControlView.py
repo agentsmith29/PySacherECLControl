@@ -1,6 +1,8 @@
 import logging
 import os
 
+from PySide6.QtWidgets import QMessageBox
+
 from PySide6.QtCore import QTimer
 from PySide6.QtGui import QIcon, QPixmap, QAction
 from PySide6.QtWidgets import QMainWindow, QProgressDialog, QToolButton, QMenu
@@ -13,7 +15,7 @@ from SacherECLControl.view.Ui_LaserControlWindow import Ui_LaserControlWindow
 from SacherECLControl.view.WidgetLaserInformation import WidgetLaserInformation
 
 
-from SacherECLControl import __version__, __author__, __license__, __description__, __url__
+from SacherECLControl import __version__, __author__, __license__, __description__, __url__, __appname__
 class LaserControlView(QMainWindow):
 
     def __init__(self, model: LaserControlModel, controller: MPLaserDeviceControl):
@@ -28,14 +30,15 @@ class LaserControlView(QMainWindow):
         self.setWindowIcon(QIcon(':/icons/icons/sacherelccontrol_icon.png'))
 
         self.about_dialog = AboutDialog(
-            "ADScope Control",
+            __appname__,
             __description__,
             __version__,
             f"2024 {__author__}",
             __url__,
             f"This project is open source and contributions are highly welcome.<br>"
             f"<br>The project is licensed under <br>{__license__}.",
-            QPixmap(':/icons/icons/sacherelccontrol_icon.png')
+            QPixmap(':/icons/icons/sacherelccontrol_icon.png'),
+            copyright_information="The software uses properitary code by Sacher Lasertechnik GmbH."
         )
 
         self._init_menu_bar()
@@ -62,6 +65,7 @@ class LaserControlView(QMainWindow):
 
         self._connect_controls()
         self._connect_signals()
+
 
     # def _on_uncertainty_changed(self, uncertainty):
     #    self.uncertainty_dist_plot.uncertainty = uncertainty
@@ -120,6 +124,7 @@ class LaserControlView(QMainWindow):
         # Triggerd if the laser connection status changes
         self.model.signals.connected_changed.connect(self._on_laser_connected_changed)
         self.model.signals.laser_is_moving_changed.connect(self._on_laser_is_moving_changed)
+        self.controller.is_simulator_changed.connect(self._on_simulator_changed)
 
         # Capturing device signals
         self.model.signals.capturing_device_connected_changed.connect(self._on_capture_device_connected_changed)
@@ -142,6 +147,26 @@ class LaserControlView(QMainWindow):
         # ==================================================================================================================
         # Slots that are triggerd if the laser connection changes
         # ==================================================================================================================
+    def _on_simulator_changed(self, is_simulator):
+        print(F"*************** {is_simulator}")
+        if is_simulator:
+            # create a message box
+            self.msg_is_sim = QMessageBox()
+            self.msg_is_sim.setIcon(QMessageBox.Information)
+            self.msg_is_sim.setText("Simulator mode is active")
+            #self.msg_is_sim.setInformativeText(msg)
+            self.msg_is_sim.setWindowTitle("Simulator mode")
+            self.msg_is_sim.setStandardButtons(QMessageBox.Ok)
+            self.msg_is_sim.exec()
+        else:
+            self.msg_is_sim = QMessageBox()
+            self.msg_is_sim.setIcon(QMessageBox.Information)
+            self.msg_is_sim.setText("Simulator mode is active")
+            #self.msg_is_sim.setInformativeText(msg)
+            self.msg_is_sim.setWindowTitle("Simulator mode")
+            self.msg_is_sim.setStandardButtons(QMessageBox.Ok)
+            self.msg_is_sim.exec()
+
 
     def _enable_ui(self, enabled=True):
         self._ui.group_motor_profile.setEnabled(enabled)
