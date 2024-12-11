@@ -1,10 +1,11 @@
 # -*- mode: python ; coding: utf-8 -*-
+import pathlib
 
 epos_dll_path =   pathlib.Path('../src/SacherECLControl/libs/SacherLib/PythonMotorControlClass/EposCmd64.dll')
 sacher_pyd_path = pathlib.Path('../src/SacherECLControl/libs/SacherLib/PythonMotorControlClass/lib/Python312/SacherMotorControl.pyd')
 
 a = Analysis(
-    ['lasercontrol_scope.py'],
+    ['../src/lasercontrol_scope.py'],
     pathex=[],
     binaries=[
         (str(epos_dll_path), '.'),
@@ -39,7 +40,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
