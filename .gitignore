@@ -325,3 +325,6 @@ fabric.properties
 
 *LaserConfig.yaml
 *CaptDeviceConfig.yaml
+*build/
+*dist/
+.sim/

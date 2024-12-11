@@ -10,16 +10,16 @@ from mpPy6.CProperty import CProperty
 from SacherECLControl import Helpers, __rootdir__
 
 # Copy the dll to the startup directory
-
+IS_SIMULATOR = False
 try:
     spath = str(pathlib.Path(os.getenv("MOTOR_CONTROL_PYD")).absolute().parent.as_posix())
     sys.path.append(spath)
     import SacherMotorControl as LaserLib
-
+    IS_SIMULATOR = False
 except Exception as e:
     print(f"Warning: Could not import SacherMotorControl: {e}. Using LaserLibSimulator instead.")
     from SacherECLControl.libs import LaserLibSimulator as LaserLib
-
+    IS_SIMULATOR = True
 
 #from SacherECLControl.libs import LaserLibSimulator as LaserLib
 
@@ -52,6 +52,8 @@ class MPLaserDevice(mpPy6.CProcess):
         # print(self.logger)
         # self.logger.info(f"Created logger for {self.__class__.__name__}({os.getpid()})")
         self._connected = False
+        self._usb_port = None
+        self._is_simulator = IS_SIMULATOR
         self._current_wavelength = -1
 
         self._min_wavelength = 0
@@ -87,6 +89,25 @@ class MPLaserDevice(mpPy6.CProcess):
     def connected(self, value: float):
         """ Sets the connected state of the laser. Only used internally by the process. """
         self._connected = value
+    
+    @CProperty
+    def usb_port(self):
+        return self._usb_port
+    
+    @usb_port.setter('usb_port_changed')
+    def usb_port(self, value: str):
+        """ Sets the connected state of the laser. Only used internally by the process. """
+        self._usb_port = value
+    
+    @CProperty
+    def is_simulator(self) -> bool:
+        return self._is_simulator # Returns the simulator state and a reason
+
+    @is_simulator.setter('is_simulator_changed')
+    def is_simulator(self, value: bool):
+       print(f">>>>>>>>> Setting simulator to {value}")
+       self._is_simulator = value
+
 
     @CProperty
     def current_wavelength(self):
@@ -195,6 +216,11 @@ class MPLaserDevice(mpPy6.CProcess):
         try:
             self.laser.connect(usb_port)
             self.connected = True
+            if IS_SIMULATOR:
+                self.usb_port = "*Simulator*"
+                self.is_simulator = IS_SIMULATOR
+            else:
+                self.usb_port = usb_port
         except Exception as e:
             self.logger.error(f"Error connecting to laser: {e}")
             self.connected = False
@@ -202,6 +228,8 @@ class MPLaserDevice(mpPy6.CProcess):
 
         self.get_laser_settings()
         return self._connected
+    
+
 
     @mpPy6.CProcess.register_signal()
     def disconnect_device(self) -> bool:
@@ -285,6 +313,7 @@ class MPLaserDevice(mpPy6.CProcess):
         else:
             self.velocity = float(self.laser.getVelocityParameter()[0])
         return self._velocity
+
 
     @mpPy6.CProcess.register_signal()
     def set_velocity(self, velocity: float) -> None:

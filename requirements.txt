@@ -7,12 +7,13 @@ rich
 pyyaml
 toml
 pyinstaller
+tkinter
 
 # my packages
 mpPy6
 confPy6>=1.3.1
 PyADScopeControl>=1.2.6
-PySide6WidgetCollection>=1.0.2, # important, otherwise AboutDialog is not available
+PySide6WidgetCollection>=1.0.2 # important, otherwise AboutDialog is not available
 
 # Local installs
 #../confighandler

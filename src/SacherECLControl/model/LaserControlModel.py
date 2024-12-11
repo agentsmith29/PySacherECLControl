@@ -17,7 +17,6 @@ class LaserControlModel(object):
         self._laser_config: LaserConfig = laser_config
 
         self._connected = False
-        self._port = None
 
         self._laser_connected = False
         self._laser_at_position = False
@@ -132,6 +131,7 @@ class LaserControlModel(object):
 
     @port.setter
     def port(self, value):
+        # Check if the keyword is in the available ports, otherwise add it        
         self.laser_config.port.set(value)
         self.signals.port_changed.emit(self.port)
 
