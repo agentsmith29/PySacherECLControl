@@ -20,7 +20,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Build executable
         run: |
-          pyinstaller src/lasercontrol.spec
+          pyinstaller pyinstaller/lasercontrol.spec
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -28,7 +28,7 @@ jobs:
           path: dist/lasercontrol.exe
       - name: Build executable scope
         run: |
-          pyinstaller src/lasercontrol_scope.spec
+          pyinstaller pyinstaller/lasercontrol_scope.spec
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
