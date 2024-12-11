@@ -15,14 +15,7 @@ jobs:
         with:
           submodules: true # Ensure submodules are initialized
           fetch-depth: 0 # Fetch all history for submodules
-
-      # Set up Git credentials for accessing private submodules
-      - name: Setup Git for private submodules
-        env:
-          # Use a personal access token (PAT) or SSH key here
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global url."https://$GITHUB_TOKEN@github.com".insteadOf "https://github.com"
+          token: ${{ secrets.GITRUNNER_ACCESS_TOKEN }}
 
       # Manually update submodules if needed
       - name: Update Submodules
