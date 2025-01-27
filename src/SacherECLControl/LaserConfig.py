@@ -17,8 +17,8 @@ class LaserConfig(cfg.ConfigNode):
             Path(f"./SacherMotorControl.pyd"),
             env_var="MOTOR_CONTROL_PYD")
 
-        self.wl_sweep_start = cfg.Field(857)
-        self.wl_sweep_stop = cfg.Field(870)
+        self.wl_sweep_start = cfg.Field(845)
+        self.wl_sweep_stop = cfg.Field(855)
         self.velocity = cfg.Field(2.0)
         self.acceleration = cfg.Field(1.0)
         self.deceleration = cfg.Field(1.0)
